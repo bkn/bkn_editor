@@ -1,0 +1,204 @@
+body {
+	margin-left:50px;
+	color:black;
+	font-family: Baskerville,"Baskerville old face","Hoefler Text",Garamond,"Times New Roman",serif;
+	font-size: 12pt;
+
+}	
+.page_header_wrapper {	
+    margin-bottom:0.125in;
+	height: 1in;
+	width: 8.5in;
+	padding-left:0.5in;
+    padding-bottom: 0.0625in;
+	text-align: left; 
+	font-weight:bold;
+	border-bottom: 1pt solid #ff0000;
+}
+.logo {
+	font-size: 36pt;
+	color: #ff0000;
+}
+.page_subheader {
+	margin-left:0.25in;
+	margin-bottom:0.25in;
+	font-size: 12pt;
+    font-style: italic; 
+	color: black;
+}
+.file_getter{
+	margin:20px;
+	padding:5px;
+	font-weight:bold;				
+}
+
+.center_block {
+	position: absolute;
+	top: 1.25in;
+	left: 2.5in;
+	width: 6in;	
+	margin-bottom:0.5in;
+	padding-top: 0.25in;
+    padding-left:0.25in;
+	height: auto;
+	
+}
+.left_sidebar {
+	position: absolute;
+	top: 1.25in;
+    width: 2in;
+	left: 0.5in;
+	height: 11in;
+	border-right: 1pt solid black;
+	padding-top: 0.25in;
+	padding-right: 0.125in;
+}
+
+.block_header {
+	padding-top:0.125in;
+	padding-bottom:0.125in;
+	font-weight:bold;
+}
+
+.repository_list {
+	width:1.75in;
+	border-bottom: 1pt solid black;	
+	margin-left: 0.25in;
+	margin-top: 0.0625in;
+	margin-bottom: 0.25in;
+	padding-bottom: 0.25in;
+}
+
+.dataset_list {
+	width:1.75in;
+	margin-left: 0.25in;
+	margin-top: 0.0625in;
+	margin-bottom: 0.25in;
+	padding-bottom: 0.25in;
+	border-top: 1pt solid #ff0000;
+	font-weight:normal;					
+}
+.dataset_table {
+	margin-top:20px;
+	padding-left:10px;
+	font-weight:normal;					
+}
+
+.data_wrapper {
+	border-top: 1pt solid #ff0000;
+	border-bottom: 1pt solid #ff0000;
+	width: 8.5in;
+	margin:20px;
+	padding:10px;
+}
+
+
+.json_attribute{
+	margin-left:5px;
+	padding:5px;
+	font-weight:bold;
+}
+.json_object{
+	font-weight:bold;				
+	padding:10px;
+	vertical-align:top;
+	border-top: 1pt solid gray;
+	border-bottom: 1pt solid gray;
+	border-right: 1pt solid gray;				
+}
+.json_array {
+	font-size:10pt;
+	font-weight:bold;				
+	padding:10px;
+	vertical-align:top;
+	border-top: 1pt solid gray;
+	border-bottom: 1pt solid gray;
+	border-right: 1pt solid gray;				
+}
+.json_string {
+	margin-left:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:25px;
+	padding-right:25px;
+}
+.json_input {
+	padding:5px;
+	border: 1pt solid blue;
+	color:black;
+}
+
+.info_title {
+	padding:5px;
+	font-weight:bold;					
+	font-size: 10pt;
+	
+}
+
+.repository_root {
+	margin-left:5px;
+		padding:5px;
+	font-weight:normal;	
+}
+.dataset_id {
+	margin-left:5px;
+	padding:5px;
+	font-weight:normal;					
+}
+	
+.record_id {
+	margin-left:5px;
+	padding:5px;
+	font-weight:normal;					
+}
+
+.record_form {
+	margin-bottom:20px;
+	padding:10px;
+	font-weight:normal;					
+}
+
+.record_list {
+	margin-top:20px;
+	border-top: 1pt solid #ff0000;
+	padding-left:10px;
+	font-weight:normal;					
+}
+.record_table {
+	margin-top:20px;
+	border-top: 1pt solid #ff0000;
+	padding-left:10px;
+	font-weight:normal;					
+}
+
+
+.edit_button {
+	margin-right:2px;
+	margin-left:2px;
+	font-weight:normal;					
+	font-size:10pt;
+	
+}
+
+._button {
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-right:20px;
+	margin-left:2px;
+	font-weight:normal;					
+	font-size:8pt;
+	
+}
+
+.status {
+	padding:10px;
+	border-top: solid 1px red;
+	font-weight:bold;					
+	color:red;
+	font-size: 12pt;
+}
+
+.debug_area {
+	border-top: 1pt solid #ff0000;
+}
+	
