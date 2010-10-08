@@ -1,0 +1,19 @@
+
+{
+  "dataset":{
+    "id":"anyting",
+    "description":"just a test",
+    "createdDate":"2010-04-10",
+    "creator":"Jack Alves",
+    "curator":"",
+
+  },
+  "recordList":[{
+      "type":"display_hints",
+      "schema":["http://www.tigerlight.com/bkn/identifiers.json",
+        "http://www.tigerlight.com/bkn/types.json"
+      ]
+    }
+  ]
+}
+

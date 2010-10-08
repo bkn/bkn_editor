@@ -1,0 +1,51 @@
+{
+  "recordList":[{
+      "picture":"http://hub.hku.hk",
+      "scopus_data":{
+        "AuthorID":"%3Ca%20target%3D%22_blank%22%20href%3D%22http%3A//eproxy.lib.hku.hk/login%3Furl%3Dhttp%3A//www.scopus.com/authid/detail.url%3FauthorId%3D26634245300%22%3E26634245300%3C/a%3E",
+        "DocumentCount":"%3Ca%20target%3D%22_blank%22%20href%3D%22http%3A//eproxy.lib.hku.hk/login%3Furl%3Dhttp%3A//www.scopus.com/search/submit/author.url%3Fauthor%3DPalmer%252CDavid+T.%26origin%3DAuthorProfile%26authorId%3D26634245300%22%3E%201%3C/a%3E",
+        "Co-authors":"%3Ca%20target%3D%22_blank%22%20href%3D%22http%3A//eproxy.lib.hku.hk/login%3Furl%3Dhttp%3A//www.scopus.com/search/submit/coAuthorSearch.url%3FauthorId%3D26634245300%26origin%3DAuthorProfile%26sot%3Dal%26sdt%3Dcoaut%26st1%3DPalmer%26st2%3DDavid+T.%22%3E%3C/a%3E"
+      },
+      "name_abbr":"Palmer, DT",
+      "name":"Palmer, David Townsend",
+      "source_owner":"The University of Hong Kong Libraries",
+      "isi_data":{
+        "RID":"%3Ca%20target%3D%22_blank%22%20href%3D%22http%3A//eproxy.lib.hku.hk/login%3Furl%3Dhttp%3A//www.researcherid.com/rid/A-4416-2009%22%3EA-4416-2009%3C/a%3E",
+        "Co-authors":"%3Ca%20target%3D%22_blank%22%20href%3D%22http%3A//eproxy.lib.hku.hk/login%3Furl%3Dhttp%3A//labs.researcherid.com/mashlets/rid/mashletsServer.jsp%3Frid%3DA-4416-2009%26mid%3DCollaborationNetwork%22%3ECollaboration%20Network%3C/a%3E"
+      },
+      "source_url":"http://hub.hku.hk/rp/rp00001",
+      "affiliation":{
+        "department":"University Libraries",
+        "organization":"University of Hong Kong"
+      },
+      "names":["鵬大衛",
+        "パーマー・デｨビｯド",
+        "팔머 데이비드",
+        "Palmer, David T",
+        "Palmer, D"
+      ],
+      "source_title":"HKU ResearcherPage - Palmer, DT",
+      "name_prefix":"Mr",
+      "id":"rp00001"
+    }
+  ],
+  "dataset":{
+    "id":"http://people.bibkn.org/conStruct/datasets/hku/resource/",
+    "linkage":[{
+        "typeList":{
+          "Person":{
+            "mapTo":"http://xmlns.com/foaf/0.1/Person"
+          }
+        },
+        "linkedType":"application/rdf+xml",
+        "attributeList":{
+          "homepage":{
+            "mapTo":"http://xmlns.com/foaf/0.1/homepage"
+          }
+        }
+      },
+      "http://www.bibkn.org/drupal/bibjson/iron_linkage.json"
+    ],
+    "schema":"http://www.bibkn.org/drupal/bibjson/bibjson_schema.json"
+  }
+}

@@ -1,0 +1,2018 @@
+{
+  "rp00999": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/776490", 
+      "ns3:mrauthid": "776490"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/847196", 
+      "ns3:mrauthid": "847196"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/737876", 
+      "ns3:mrauthid": "737876"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/868435", 
+      "ns3:mrauthid": "868435"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/721724", 
+      "ns3:mrauthid": "721724"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Chun Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/658315", 
+      "ns3:mrauthid": "658315"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Rui Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/825321", 
+      "ns3:mrauthid": "825321"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Du, Chun Juan", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/820700", 
+      "ns3:mrauthid": "820700"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Juan  Du", 
+      "search_term": "Du, Juan", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/109384", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=109384"
+    }
+  ], 
+  "rp00998": [], 
+  "rp00997": [], 
+  "rp00996": [], 
+  "rp00995": [], 
+  "rp00994": [], 
+  "rp00993": [], 
+  "rp00992": [], 
+  "rp00991": [], 
+  "rp00990": [], 
+  "rp01020": [], 
+  "rp01021": [], 
+  "rp01022": [], 
+  "rp01023": [], 
+  "rp01024": [], 
+  "rp01025": [], 
+  "rp01026": [], 
+  "rp01027": [], 
+  "rp01028": [], 
+  "rp01029": [], 
+  "rp01149": [], 
+  "rp01148": [], 
+  "rp01147": [], 
+  "rp01146": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Fung, Wing Kam", 
+      "search_term": "Fung, Kam Wing", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/284234", 
+      "ns3:mrauthid": "284234"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Tony Wing Kam Fung", 
+      "search_term": "Fung, Kam Wing", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/138745", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=138745"
+    }
+  ], 
+  "rp01145": [], 
+  "rp01144": [], 
+  "rp01143": [], 
+  "rp01142": [], 
+  "rp01141": [], 
+  "rp01019": [], 
+  "rp01018": [], 
+  "rp01015": [], 
+  "rp01014": [], 
+  "rp01017": [], 
+  "rp01016": [], 
+  "rp01011": [], 
+  "rp01010": [], 
+  "rp01013": [], 
+  "rp01012": [], 
+  "rp01095": [], 
+  "rp01094": [], 
+  "rp01097": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tao, Zhigang", 
+      "search_term": "Tao, Zhigang", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/872620", 
+      "ns3:mrauthid": "872620"
+    }, 
+    {
+      "ns2:altLabel": "Tao", 
+      "ns2:prefLabel": "Zhigang Tao", 
+      "ns4:": "Tao", 
+      "ns0:givenname": "Zhigang", 
+      "ns3:repecPage": "http://econpapers.repec.org/RAS/pta163.htm", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:2006-05-17:zhigang_tao", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:repecHandle": "pta163", 
+      "search_term": "Tao, Zhigang"
+    }
+  ], 
+  "rp01096": [], 
+  "rp01158": [], 
+  "rp01159": [], 
+  "rp01093": [
+    {
+      "ns2:altLabel": "Qiu", 
+      "ns2:prefLabel": "Larry Dongxiao Qiu", 
+      "ns0:givenname": "Larry", 
+      "ns4:repecHandle": "pqi8", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:1961-10-06:larry_dongixao_qiu", 
+      "ns0:phone": "852-2859-1043", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns4:postalCode": "School of Economics and Finance, The University of Hong Kong, Pokfulam Rd., Hong Kong", 
+      "ns3:": "Qiu", 
+      "ns4:repecPage": "http://econpapers.repec.org/RAS/pqi8.htm", 
+      "search_term": "Qiu, Larry Dongxiao"
+    }
+  ], 
+  "rp01092": [], 
+  "rp01154": [], 
+  "rp01155": [], 
+  "rp01156": [], 
+  "rp01157": [], 
+  "rp01150": [], 
+  "rp01151": [], 
+  "rp01152": [], 
+  "rp01153": [], 
+  "rp01099": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tse, Chung Yi", 
+      "search_term": "Tse, Chung Yi", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/685694", 
+      "ns3:mrauthid": "685694"
+    }, 
+    {
+      "ns2:altLabel": "Tse", 
+      "ns2:prefLabel": "Chung-Yi Tse", 
+      "ns4:": "Tse", 
+      "ns0:givenname": "Chung-Yi", 
+      "ns3:repecPage": "http://econpapers.repec.org/RAS/pts45.htm", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:2007-09-08:chung_yi_tse", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:repecHandle": "pts45", 
+      "search_term": "Tse, Chung Yi"
+    }
+  ], 
+  "rp01098": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/647977", 
+      "ns3:mrauthid": "647977"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhao, Tian Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/680617", 
+      "ns3:mrauthid": "680617"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/710840", 
+      "ns3:mrauthid": "710840"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/701835", 
+      "ns3:mrauthid": "701835"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/814742", 
+      "ns3:mrauthid": "814742"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/859729", 
+      "ns3:mrauthid": "859729"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/201014", 
+      "ns3:mrauthid": "201014"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/631398", 
+      "ns3:mrauthid": "631398"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/617642", 
+      "ns3:mrauthid": "617642"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tian, Feng-chun", 
+      "search_term": "Tian, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/764082", 
+      "ns3:mrauthid": "764082"
+    }
+  ], 
+  "rp01008": [], 
+  "rp01009": [], 
+  "rp01002": [], 
+  "rp01003": [], 
+  "rp01000": [], 
+  "rp01001": [], 
+  "rp01006": [], 
+  "rp01007": [], 
+  "rp01004": [], 
+  "rp01005": [], 
+  "rp01082": [], 
+  "rp01083": [
+    {
+      "ns2:altLabel": "Luo", 
+      "ns2:prefLabel": "Yulei Luo", 
+      "ns0:givenname": "Yulei", 
+      "ns4:repecHandle": "plu70", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:2004-07-15:yulei_luo", 
+      "ns0:phone": "(852)28591042", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns4:postalCode": "School of Economics and Finance The University of Hong Kong Pokfulam Road Hong Kong SAR", 
+      "ns3:": "Luo", 
+      "ns4:repecPage": "http://econpapers.repec.org/RAS/plu70.htm", 
+      "search_term": "Luo, Yulei"
+    }
+  ], 
+  "rp01080": [], 
+  "rp01081": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lu, Zheng Yi", 
+      "search_term": "Lu, Yi", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/257080", 
+      "ns3:mrauthid": "257080"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Steven Shin-Yi Lu", 
+      "search_term": "Lu, Yi", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/18832", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=18832"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Yi  Lu", 
+      "search_term": "Lu, Yi", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/99973", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=99973"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Yi  Lu", 
+      "search_term": "Lu, Yi", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/114871", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=114871"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Yi  Lu", 
+      "search_term": "Lu, Yi", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/134624", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=134624"
+    }, 
+    {
+      "ns2:altLabel": "Lu", 
+      "ns2:prefLabel": "Yi Lu", 
+      "ns4:": "Lu", 
+      "ns0:givenname": "Yi", 
+      "ns3:repecPage": "http://econpapers.repec.org/RAS/plu192.htm", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:2009-08-25:yi_lu", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:repecHandle": "plu192", 
+      "search_term": "Lu, Yi"
+    }
+  ], 
+  "rp01086": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Meng, Rujing", 
+      "search_term": "Meng, Rujing", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/853950", 
+      "ns3:mrauthid": "853950"
+    }
+  ], 
+  "rp01087": [], 
+  "rp01084": [], 
+  "rp01085": [], 
+  "rp01160": [], 
+  "rp01088": [], 
+  "rp01089": [], 
+  "rp01091": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Qiu Cheng", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/816210", 
+      "ns3:mrauthid": "816210"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Qiu, Cheng Gang", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/842177", 
+      "ns3:mrauthid": "842177"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zheng, Qiu Cheng", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/263988", 
+      "ns3:mrauthid": "263988"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Qiu, Cheng Tong", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/522313", 
+      "ns3:mrauthid": "522313"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Qiu, Cheng-Wei", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/804319", 
+      "ns3:mrauthid": "804319"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Qiu, Fu Cheng", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/282477", 
+      "ns3:mrauthid": "282477"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Qiu, Zhao Cheng", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/869454", 
+      "ns3:mrauthid": "869454"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Qiu, Zhi-cheng", 
+      "search_term": "Qiu, Cheng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/806008", 
+      "ns3:mrauthid": "806008"
+    }
+  ], 
+  "rp01079": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Xiao Hong", 
+      "search_term": "Liu, Xiao Hong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/829740", 
+      "ns3:mrauthid": "829740"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Xiao Hong", 
+      "search_term": "Liu, Xiao Hong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/820673", 
+      "ns3:mrauthid": "820673"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Xiao Hong", 
+      "search_term": "Liu, Xiao Hong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/662036", 
+      "ns3:mrauthid": "662036"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Xiao Hong", 
+      "search_term": "Liu, Xiao Hong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/872316", 
+      "ns3:mrauthid": "872316"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Xiao-Hong", 
+      "search_term": "Liu, Xiao Hong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/873545", 
+      "ns3:mrauthid": "873545"
+    }
+  ], 
+  "rp01078": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Qiao Hua", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/712427", 
+      "ns3:mrauthid": "712427"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Qiao", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/831368", 
+      "ns3:mrauthid": "831368"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Qiao Ling", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/349898", 
+      "ns3:mrauthid": "349898"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Qiao Liang", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/283002", 
+      "ns3:mrauthid": "283002"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Qiao", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/833558", 
+      "ns3:mrauthid": "833558"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Hua Qiao", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/845099", 
+      "ns3:mrauthid": "845099"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Jun Qiao", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/748253", 
+      "ns3:mrauthid": "748253"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Li Qiao", 
+      "search_term": "Liu, Qiao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/710934", 
+      "ns3:mrauthid": "710934"
+    }, 
+    {
+      "ns2:altLabel": "Liu", 
+      "ns2:prefLabel": "Qiao Liu", 
+      "ns4:": "Liu", 
+      "ns0:givenname": "Qiao", 
+      "ns3:repecPage": "http://econpapers.repec.org/RAS/pli425.htm", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:1970-05-23:qiao_liu", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:repecHandle": "pli425", 
+      "search_term": "Liu, Qiao"
+    }
+  ], 
+  "rp01077": [
+    {
+      "ns2:altLabel": "Lin", 
+      "ns2:prefLabel": "Tse-Chun Lin", 
+      "ns0:givenname": "Tse-Chun", 
+      "ns4:repecHandle": "pli503", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:2009-10-15:tse_chun_lin", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:": "Lin", 
+      "ns4:repecPage": "http://econpapers.repec.org/RAS/pli503.htm", 
+      "search_term": "Lin, Tse-Chun"
+    }
+  ], 
+  "rp01076": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/337865", 
+      "ns3:mrauthid": "337865"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/775174", 
+      "ns3:mrauthid": "775174"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Mei, Lin Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/305563", 
+      "ns3:mrauthid": "305563"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/831869", 
+      "ns3:mrauthid": "831869"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Bao, Lin Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/812716", 
+      "ns3:mrauthid": "812716"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/721867", 
+      "ns3:mrauthid": "721867"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/211455", 
+      "ns3:mrauthid": "211455"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/677153", 
+      "ns3:mrauthid": "677153"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/831490", 
+      "ns3:mrauthid": "831490"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Ma, Lin-Tao", 
+      "search_term": "Lin, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/872735", 
+      "ns3:mrauthid": "872735"
+    }
+  ], 
+  "rp01075": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Mei Li", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/873118", 
+      "ns3:mrauthid": "873118"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Lin Mei", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/869482", 
+      "ns3:mrauthid": "869482"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Mei Rong", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/804341", 
+      "ns3:mrauthid": "804341"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Mei Yu", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/361251", 
+      "ns3:mrauthid": "361251"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Mei Juan", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/786575", 
+      "ns3:mrauthid": "786575"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liang, Lin-Mei", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/681230", 
+      "ns3:mrauthid": "681230"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Mei-Ling", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/735455", 
+      "ns3:mrauthid": "735455"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Dong Mei", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/709381", 
+      "ns3:mrauthid": "709381"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Yun Mei", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/361057", 
+      "ns3:mrauthid": "361057"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lin, Dong Mei", 
+      "search_term": "Lin, Mei", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/800132", 
+      "ns3:mrauthid": "800132"
+    }
+  ], 
+  "rp01074": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Li, Zhigang", 
+      "search_term": "Li, Zhigang", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/832625", 
+      "ns3:mrauthid": "832625"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Li, Zhigang", 
+      "search_term": "Li, Zhigang", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/677864", 
+      "ns3:mrauthid": "677864"
+    }
+  ], 
+  "rp01073": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lau, Sau-Him Paul", 
+      "search_term": "Lau, Sau Him", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/622486", 
+      "ns3:mrauthid": "622486"
+    }
+  ], 
+  "rp01072": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lau, Amy Hing-Ling", 
+      "search_term": "Lau, Amy Hing-Ling", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/681382", 
+      "ns3:mrauthid": "681382"
+    }
+  ], 
+  "rp01071": [], 
+  "rp01070": [], 
+  "rp01090": [], 
+  "rp01103": [], 
+  "rp01102": [], 
+  "rp01101": [], 
+  "rp01100": [], 
+  "rp01107": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wang, Jian-Cai", 
+      "search_term": "Wang, Jiancai", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/866476", 
+      "ns3:mrauthid": "866476"
+    }
+  ], 
+  "rp01106": [], 
+  "rp01105": [], 
+  "rp01104": [], 
+  "rp01109": [], 
+  "rp01108": [], 
+  "rp01039": [], 
+  "rp01038": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/608403", 
+      "ns3:mrauthid": "608403"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/653867", 
+      "ns3:mrauthid": "653867"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/722665", 
+      "ns3:mrauthid": "722665"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/882835", 
+      "ns3:mrauthid": "882835"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/848689", 
+      "ns3:mrauthid": "848689"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/852466", 
+      "ns3:mrauthid": "852466"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/703750", 
+      "ns3:mrauthid": "703750"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/838978", 
+      "ns3:mrauthid": "838978"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Hai Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/864077", 
+      "ns3:mrauthid": "864077"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhu, Song Tao", 
+      "search_term": "Zhu, Tao", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/311133", 
+      "ns3:mrauthid": "311133"
+    }
+  ], 
+  "rp01068": [], 
+  "rp01069": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Xie, Hui Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/238525", 
+      "ns3:mrauthid": "238525"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wang, Hui Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/810552", 
+      "ns3:mrauthid": "810552"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Hui Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/804789", 
+      "ns3:mrauthid": "804789"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Hui, Chun Yin", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/882707", 
+      "ns3:mrauthid": "882707"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Peng, Hui Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/792253", 
+      "ns3:mrauthid": "792253"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lo, Hui Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/653279", 
+      "ns3:mrauthid": "653279"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhao, Hui Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/236670", 
+      "ns3:mrauthid": "236670"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Chen, Hui-Chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/862581", 
+      "ns3:mrauthid": "862581"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Shieh, Hui-chun", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/538319", 
+      "ns3:mrauthid": "538319"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Xu, Chun Hui", 
+      "search_term": "Hui, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/313868", 
+      "ns3:mrauthid": "313868"
+    }
+  ], 
+  "rp01064": [], 
+  "rp01065": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Guo, Di", 
+      "search_term": "Guo, Di", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/357499", 
+      "ns3:mrauthid": "357499"
+    }
+  ], 
+  "rp01066": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun Wei", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/352851", 
+      "ns3:mrauthid": "352851"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/814150", 
+      "ns3:mrauthid": "814150"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun Qiang", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/735244", 
+      "ns3:mrauthid": "735244"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/849739", 
+      "ns3:mrauthid": "849739"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Chen, Han Jun", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/827306", 
+      "ns3:mrauthid": "827306"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/616322", 
+      "ns3:mrauthid": "616322"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Han Jun", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/248486", 
+      "ns3:mrauthid": "248486"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun Lin", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/864756", 
+      "ns3:mrauthid": "864756"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Han, Jun Lin", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/700527", 
+      "ns3:mrauthid": "700527"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zeng, Han-Jun", 
+      "search_term": "Han, Jun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/820495", 
+      "ns3:mrauthid": "820495"
+    }
+  ], 
+  "rp01067": [], 
+  "rp01060": [], 
+  "rp01061": [], 
+  "rp01062": [], 
+  "rp01063": [], 
+  "rp01110": [], 
+  "rp01111": [], 
+  "rp01112": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wong, Kit Pong", 
+      "search_term": "Wong, Kit Pong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/716826", 
+      "ns3:mrauthid": "716826"
+    }
+  ], 
+  "rp01113": [], 
+  "rp01114": [], 
+  "rp01115": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Sheng", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/643491", 
+      "ns3:mrauthid": "643491"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/334038", 
+      "ns3:mrauthid": "334038"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/214816", 
+      "ns3:mrauthid": "214816"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Jin", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/204182", 
+      "ns3:mrauthid": "204182"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/712910", 
+      "ns3:mrauthid": "712910"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/343967", 
+      "ns3:mrauthid": "343967"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/758455", 
+      "ns3:mrauthid": "758455"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/845595", 
+      "ns3:mrauthid": "845595"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Xian", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/277914", 
+      "ns3:mrauthid": "277914"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Zhen", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/305735", 
+      "ns3:mrauthid": "305735"
+    }
+  ], 
+  "rp01116": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Xia, Chun Lin", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/798274", 
+      "ns3:mrauthid": "798274"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Xia, Chun Guang", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/846204", 
+      "ns3:mrauthid": "846204"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Tang, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/840493", 
+      "ns3:mrauthid": "840493"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wei, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/783442", 
+      "ns3:mrauthid": "783442"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhao, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/698851", 
+      "ns3:mrauthid": "698851"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wang, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/791139", 
+      "ns3:mrauthid": "791139"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Xiao, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/700649", 
+      "ns3:mrauthid": "700649"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/779311", 
+      "ns3:mrauthid": "779311"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Gao, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/723971", 
+      "ns3:mrauthid": "723971"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Lan, Chun Xia", 
+      "search_term": "Xia, Chun", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/766869", 
+      "ns3:mrauthid": "766869"
+    }
+  ], 
+  "rp01117": [], 
+  "rp01118": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Xu, Cheng-gang", 
+      "search_term": "Xu, Chenggang", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/743860", 
+      "ns3:mrauthid": "743860"
+    }
+  ], 
+  "rp01119": [], 
+  "rp01059": [], 
+  "rp01058": [], 
+  "rp01051": [], 
+  "rp01050": [], 
+  "rp01053": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Chen, Kaiji", 
+      "search_term": "Chen, Kaiji", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/811233", 
+      "ns3:mrauthid": "811233"
+    }, 
+    {
+      "ns2:altLabel": "Chen", 
+      "ns2:prefLabel": "Kaiji Chen", 
+      "ns4:": "Chen", 
+      "ns0:givenname": "Kaiji", 
+      "ns3:repecPage": "http://econpapers.repec.org/RAS/pch372.htm", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:1975-04-12:kaiji_chen", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:postalCode": "Department of Economics, University of Oslo, Box 1095, Blindern, N-0317 Oslo, Norway", 
+      "ns0:phone": "47-2285-5495", 
+      "ns3:repecHandle": "pch372", 
+      "search_term": "Chen, Kaiji"
+    }
+  ], 
+  "rp01052": [], 
+  "rp01055": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Cheung, Yin-Wong", 
+      "search_term": "Cheung, Yin Wong", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/340457", 
+      "ns3:mrauthid": "340457"
+    }, 
+    {
+      "ns2:altLabel": "Cheung", 
+      "ns2:prefLabel": "Yin-Wong Cheung", 
+      "ns4:": "Cheung", 
+      "ns0:givenname": "Yin-Wong", 
+      "ns3:repecPage": "http://econpapers.repec.org/RAS/pch261.htm", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/125/resource/http://people.bibkn.org/conStruct/datasets/125/resource/RePEc:per:2004-07-07:yin_wong_cheung", 
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/125/"
+      }, 
+      "ns3:repecHandle": "pch261", 
+      "search_term": "Cheung, Yin Wong"
+    }
+  ], 
+  "rp01054": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Cheung, Michael Tow", 
+      "search_term": "Cheung, Michael Tow", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/348627", 
+      "ns3:mrauthid": "348627"
+    }
+  ], 
+  "rp01057": [], 
+  "rp01056": [], 
+  "rp01042": [], 
+  "rp01043": [], 
+  "rp01046": [], 
+  "rp01047": [], 
+  "rp01044": [], 
+  "rp01045": [], 
+  "rp01129": [], 
+  "rp01128": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Xue", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/719834", 
+      "ns3:mrauthid": "719834"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Li", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/678533", 
+      "ns3:mrauthid": "678533"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Hui", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/716064", 
+      "ns3:mrauthid": "716064"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wenli", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/839273", 
+      "ns3:mrauthid": "839273"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Hua", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/815642", 
+      "ns3:mrauthid": "815642"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Xiang", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/771311", 
+      "ns3:mrauthid": "771311"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Shu", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/686786", 
+      "ns3:mrauthid": "686786"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/779305", 
+      "ns3:mrauthid": "779305"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/872990", 
+      "ns3:mrauthid": "872990"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Wen Jun", 
+      "search_term": "Zhou, Wen", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/659756", 
+      "ns3:mrauthid": "659756"
+    }
+  ], 
+  "rp01040": [], 
+  "rp01041": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Indranil  Bose", 
+      "search_term": "Bose, Indranil", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/67591", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=67591"
+    }
+  ], 
+  "rp01125": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin Liang", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/876605", 
+      "ns3:mrauthid": "876605"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin Xia", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/664880", 
+      "ns3:mrauthid": "664880"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin Hua", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/860090", 
+      "ns3:mrauthid": "860090"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin Yan", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/213407", 
+      "ns3:mrauthid": "213407"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Huang, Zhang Jin", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/737769", 
+      "ns3:mrauthid": "737769"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/840582", 
+      "ns3:mrauthid": "840582"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin Jun", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/611756", 
+      "ns3:mrauthid": "611756"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin Shun", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/650798", 
+      "ns3:mrauthid": "650798"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/711050", 
+      "ns3:mrauthid": "711050"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Jin", 
+      "search_term": "Zhang, Jin", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/341764", 
+      "ns3:mrauthid": "341764"
+    }
+  ], 
+  "rp01124": [], 
+  "rp01127": [], 
+  "rp01126": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zheng, Hong Liu", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/290757", 
+      "ns3:mrauthid": "290757"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/191018", 
+      "ns3:mrauthid": "191018"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/841414", 
+      "ns3:mrauthid": "841414"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/833250", 
+      "ns3:mrauthid": "833250"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng Xin", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/647909", 
+      "ns3:mrauthid": "647909"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng Kai", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/686727", 
+      "ns3:mrauthid": "686727"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng Lin", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/362430", 
+      "ns3:mrauthid": "362430"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng Fu", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/235093", 
+      "ns3:mrauthid": "235093"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng Quan", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/333121", 
+      "ns3:mrauthid": "333121"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Liu, Zheng Shi", 
+      "search_term": "Zheng, Liu", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/657600", 
+      "ns3:mrauthid": "657600"
+    }
+  ], 
+  "rp01121": [], 
+  "rp01120": [], 
+  "rp01048": [], 
+  "rp01049": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Chan, William", 
+      "search_term": "Chan, William", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/818534", 
+      "ns3:mrauthid": "818534"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Chan, William M.", 
+      "search_term": "Chan, William", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/327167", 
+      "ns3:mrauthid": "327167"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Chan, William C. Y.", 
+      "search_term": "Chan, William", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/628148", 
+      "ns3:mrauthid": "628148"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/115/"
+      }, 
+      "ns2:prefLabel": "Woon Chung William Chan", 
+      "search_term": "Chan, William", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/115/resource/71848", 
+      "ns3:mgpWebPage": "http://www.genealogy.ams.org/id.php?id=71848"
+    }
+  ], 
+  "rp01123": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Yuen, Chi-Wa", 
+      "search_term": "Yuen, Chi Wa", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/694363", 
+      "ns3:mrauthid": "694363"
+    }
+  ], 
+  "rp01122": [], 
+  "rp01033": [], 
+  "rp01032": [], 
+  "rp01031": [], 
+  "rp01030": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Sheng", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/643491", 
+      "ns3:mrauthid": "643491"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/334038", 
+      "ns3:mrauthid": "334038"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/214816", 
+      "ns3:mrauthid": "214816"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Jin", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/204182", 
+      "ns3:mrauthid": "204182"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/712910", 
+      "ns3:mrauthid": "712910"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/343967", 
+      "ns3:mrauthid": "343967"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/758455", 
+      "ns3:mrauthid": "758455"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/845595", 
+      "ns3:mrauthid": "845595"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Xian", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/277914", 
+      "ns3:mrauthid": "277914"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Wu, Min Zhen", 
+      "search_term": "Wu, Min", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/305735", 
+      "ns3:mrauthid": "305735"
+    }
+  ], 
+  "rp01037": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Rong", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/882491", 
+      "ns3:mrauthid": "882491"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/657582", 
+      "ns3:mrauthid": "657582"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Guo", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/755919", 
+      "ns3:mrauthid": "755919"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Ling", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/366934", 
+      "ns3:mrauthid": "366934"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Xiang", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/265057", 
+      "ns3:mrauthid": "265057"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Xiang", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/624107", 
+      "ns3:mrauthid": "624107"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Yun", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/763351", 
+      "ns3:mrauthid": "763351"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng Lin", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/864416", 
+      "ns3:mrauthid": "864416"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/810736", 
+      "ns3:mrauthid": "810736"
+    }, 
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhang, Feng", 
+      "search_term": "Zhang, Feng", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/840244", 
+      "ns3:mrauthid": "840244"
+    }
+  ], 
+  "rp01036": [], 
+  "rp01035": [], 
+  "rp01034": [], 
+  "rp01130": [
+    {
+      "ns1:isPartOf": {
+        "uri": "http://people.bibkn.org/wsf/datasets/132/"
+      }, 
+      "ns2:prefLabel": "Zhou, Xiao-Hua", 
+      "search_term": "Zhou, Xiaohua", 
+      "uri": "http://people.bibkn.org/conStruct/datasets/132/resource/332147", 
+      "ns3:mrauthid": "332147"
+    }
+  ], 
+  "rp01131": []
+}

@@ -1,0 +1,47 @@
+{
+		"scopus_author_id":{
+			"id_key":"scopus_author_id",
+			"description":"Use to retrieve bibliometric data",
+			"url_template" :[
+				{
+					"name": "Author Detail",
+					"url": "http://www.scopus.com/authid/detail.url?authorId=${key}"
+				},
+				{
+					"name": "Cited By",
+					"url": "http://www.scopus.com/author/citedby.url?origin=authorCitedBy&citedAuthorId=${key}"
+				},
+				{
+					"name": "Co-Authors",
+					"url": "http://www.scopus.com/search/submit/coAuthorSearch.url?origin=AuthorProfile&sot=al&sdt=coaut&authorId=${key}"
+				},
+				{
+					"name": "Documents",
+					"url": "http://www.scopus.com/search/submit/author.url?origin=AuthorProfile&authorId=${key}"
+				}
+			]
+		},
+		"researcherid_id":{
+			"id_key":"researcherid_id",
+			"also_known_as":"",
+			"description":"Use to retrieve bibliometric data",
+			"url_template" :[
+				{
+					"name": "Author Detail",
+					"url": "http://www.researcherid.com/rid/${key}"
+				},
+				{
+					"name": "Cited By",
+					"url": "http://labs.researcherid.com/mashlets/rid/mashletsServer.jsp?mid=CitationDistribution&rid=${key}"
+				},
+				{
+					"name": "Co-Authors",
+					"url": "http://labs.researcherid.com/mashlets/rid/mashletsServer.jsp?mid=CollaborationNetwork&rid=${key}"
+				},
+				{
+					"name": "Documents",
+					"url": "http://www.researcherid.com/citation/${key}"
+				}
+			]			
+		}
+}		

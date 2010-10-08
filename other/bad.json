@@ -1,0 +1,47 @@
+
+{
+"description":"This describes schema and display recommendations in the form of types and attributes. All attributes implicitly include type 'string' and 'object'. An empty type object means the implicit types should be sufficient. Any attribute can be an array.",
+"type_hints":{
+
+	"person": {
+		"id":					{},
+		"name":					{},
+	    "headshot": 			{"type":"Image"},
+		"affiliation": 			{"type": "affiliation"},            					
+	    "also_known_as": 		{},
+	    "biography":			{"type":"Document"},
+	    "photo_gallery": 		{"type":"Image"},
+		"identifiers" :			{"type":"identifier"},
+		"source":				{"type": "source"},
+		"bibliometrics": 		{"type": "bibliometric"}	
+	},
+	"affiliation": {
+		"id":					{},
+		"name":					{},
+		"start":				{"type": "date"},
+		"end" :					{"type": "date"},
+		"person":				{"type": "person"},
+	    "department": 			{"type": "department"}, 
+	 	"organization": 		{"type": "organization"},
+	},
+	"url": {},
+	"webpage": {
+		"name":				 	{},
+		"url":					{"type": "url"}	
+	},
+	"source": {
+		"id":					{},
+		"name":					{"type": "organization","person"},
+		"owner":				{"type": "organization","person"},
+		"url":					{"type": "url"}
+	},
+	"bibliometrics": {
+		"cited_count": 			 {"type": "number"},
+		"co_authors_count": 	 {"type": "number"},
+		"document_count": 		 {"type": "number"},		
+		"hIndex": 				 {"type": "number"},
+		"source": 				 {"type": "source", "url"}
+		}
+	
+
+}}
