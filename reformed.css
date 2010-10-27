@@ -22,11 +22,12 @@ h1 a em{
 	margin: 2px;
 }
 .readonly_input { /* added by Jack Alves 8/9/2010 */
-	border:None;
-	background-color:None;
+	border:none;
+	height: auto;
+	width: auto;	
 }
 .remove_link {  /* added by Jack Alves 8/9/2010 */
-	border: None;
+	border: none;
 	text-decoration: none;		
 	font-size:8pt;
 	text-align: right;
@@ -35,40 +36,45 @@ h1 a em{
 }
 
 .jsonkey {
-	border: None;
+	border: none;
 	width:85px;
-	background-color:None;
 	text-align: right;
 	font-weight: bold;
 	margin-right: 10px;
 	padding: 3px;
 }
+.jsonvalue {
+	height: auto;
+	width: auto;	
+}
 
-.jsonkey_add {
-	background-color:None;
-	text-align: right;
-	font-weight: bold;
-	margin-right: 10px;
-	padding: 3px;
+.add_value_button {
+	padding-left: 10px;
+	font-size: small;
 }
 
 /* This is the attribute box
    changed by Jack Alves 8/9/2010, 
+
+
+	background-color:none;
 */
-.kvp { /* '> input:first-child' */
-	border:None;
-	background-color:None;
 /*	background: lightblue; */
 /*	border: 1px solid #333; */
+.kvp { /* '> input:first-child' */
+	height: auto;
+	width: auto;
+	border:none;
 	padding: 3px;
 }
 .object{
 	border: 1px dotted #999;
-	margin-left: 15px;
+	margin-left: 35px;
 }
 .array{
 	border: 1px dashed #999;
-	margin-left: 15px;
+	width: auto;
+	margin-left: 120px;
 }
 
 .left{

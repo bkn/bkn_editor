@@ -143,7 +143,7 @@ BKN_WSF = function (v) {
 
 		response_format = 'jsonp';
 		if (accept) {response_format = accept;};
-	//deb(wsf_php_proxy +"?"+wsf_params);
+//	deb(wsf_php_proxy +"?"+wsf_params);
 		var d = new Date();
 		request_stack.push({
 			"time": d.getTime(),
@@ -375,6 +375,18 @@ Record = function (v) {
 		return id;
 	}
 
+	Record.extract_dataset_uri = function (v) {
+		var ds_uri = '';
+		// trailing slash differentiates a dataset uri from a record uri
+		if (v) {
+			// find '/' preceding record id
+			var end = v.lastIndexOf('/');
+			// root ends with '/'
+			ds_uri = slash_end(v.slice(0,end)); 	
+		}
+		return ds_uri;
+	}
+
 	// init
 	if (v) {
 		arg = v
@@ -399,7 +411,8 @@ Display = function () {
 			request = BKN_WSF.pluck('show_record');
 			if (request && ('service' in request)) {
 				var service = request['service'];
-				if ((service == 'record_update') || (service == 'record_add')) {
+				// 10/26/10 removed (service == 'record_update') || 
+				if ((service == 'record_add')) {
 					get_record_list(Dataset.get());
 				}
 			}
@@ -462,18 +475,24 @@ function record_to_json() {
 	var json = {};
 	var _kvp = null;
 	$('#record_form > .kvp').each(function (idx) {
-	    _kvp = kvp($(this));
+		_kvp = kvp($(this));
+
+//show_json(_kvp);		
+		
 	    for (attrname in _kvp) {
 	    	json[attrname] = _kvp[attrname];
 	    }	
 	});
+
    return json;
 }	
+
+
 
 function add_to_json() {
 	var json = {};
 	var _kvp = null;
-	$('#add_record_form > .kvp').each(function (idx) {
+	$('#more_attribute_form > .kvp').each(function (idx) {
 	    _kvp = kvp($(this));
 	    for (attrname in _kvp) {
 	    	json[attrname] = _kvp[attrname];
@@ -495,6 +514,8 @@ function reform_json_to_record(record, form) {
 
 
 function dataset_create(dataset_id, title, description) {
+	clear_record_form();
+	clear_record_list();
 	status("Creating dataset ...");
 	var params = ''; 
 	Dataset.set(dataset_id);
@@ -520,48 +541,41 @@ function show_dataset_create_form() {
 		dataset_create(id, title, description);
 		show_template_dataset_list();
 		});	
-
-	
 }
 
 
-
-function show_attribute_add_box() {
+function show_more_box() {
 	var content = '';
-	// 	output += '<a  class="remove_link" href="javascript:\{remove_from_form(\''+el_id+'\');\}">remove</a>';
-
+	// class 'kvp' is used by reformed to parse form
+	// the anchor for remove_link may also be necessary
 	content += '<div class="kvp">';
-	content += '<a></a>'; // fill space where 'remove' would be
-	content += '<input class="jsonkey_add" type="text" value="" />';
+	content += '<a class="remove_link"></a>'; // fill space where 'remove' would be
+	content += '<input class="more_attr_key" type="text" value="" />';
 	content += '<input type="text" value="" />';
 	content += "</div>";
-	$('#add_record_form').append(content);
+	$('#more_attribute_form').append(content);
 	
 }
 
-// YOU ARE HERE
-// preparing to implement add_attribute
-// use new form under existing record?
-// use /crud/create for new attributes  
-//
-// create new record
-// how do we tell when the record is new
-// may not matter if /crud/update/ is used
-
+function show_template_more_attributes() {
+	$('#more_attribute_form').html("");
+	show_more_box();
+	content = "<a href='javascript:\{show_more_box();\}'>more</a>";
+	$('#more_attribute_button').html(content);
+	
+}
 
 function display_record_form (record) {
 	var content = '';
-	//content = reform_json_to_record(record);
-//	var existing_record = new ReformedObject('record_form');
-//	var new_attributes = new ReformedObject('add_record_form');
 	content = "";
-	content += Reformed.show(record, 'record_form');	
-	$('#record_form').html(content);
-	
-	$('#add_record_form').html("");
-	show_attribute_add_box();
-	content = "<div><a href='javascript:\{show_attribute_add_box();\}'>add</a></div>";
-	$('#add_attribute_button').html(content);
+	content += Reformed.show(record);	
+	$('#record_form').html(content);	
+
+	show_template_more_attributes();
+//	$('#more_attribute_form').html("");
+//	show_more_box();
+//	content = "<div><a href='javascript:\{show_more_box();\}'>more</a></div>";
+//	$('#more_attribute_button').html(content);
 
 	content = "";
 	content += "<input type='button' value='Save' id='save_button' class='_button'/>";
@@ -620,15 +634,17 @@ function show_template_page () {
 	$('body').append("<div id='left_sidebar' class='left_sidebar'></div>");
 	$('body').append("<div id='center_block' class='center_block'></div>");
 	$('#left_sidebar').append("<div id='repository_list' class='repository_list'></div>");	
+	$('#left_sidebar').append("<div id='search_form' class='search_form'></div>");
 	$('#left_sidebar').append("<div id='dataset_list' class='dataset_list'></div>");
 	$('#center_block').append("<div id='active_info' class='active_info'></div>");
 	$('#center_block').append("<div id='record_wrapper' class='record_wrapper'></div>");
 	$('#center_block').append("<div id='record_list' class='record_list'></div>");
 	$('#center_block').append("<div id='record_nav' class='record_nav'></div>");
 
-	$('#active_info').append("<div class=info_title>Repository URI <span id='repository_root' class='repository_root'></span></div>");
-	$('#active_info').append("<div class=info_title>Dataset Id <span id='dataset_id' class='dataset_id'></span></div>");
-	$('#active_info').append("<div class=info_title>Record Id <span id='record_id' class='record_id'></span></div>");
+	$('#active_info').append("<div class='info_title'>Repository URI <span id='repository_root' class='repository_root'></span></div>");
+	$('#active_info').append("<div class='info_title'>Dataset Id <span id='dataset_id' class='dataset_id'></span></div>");
+	$('#active_info').append("<div class='info_title'>Record Id <span id='record_id' class='record_id'></span></div>");
+	$('#active_info').append("<div class='permalink' id='permalink'></div>");
 	$('#active_info').append("<div id='status' class='status'></div>");
 
 	show_template_record();
@@ -638,6 +654,14 @@ function show_ids() {
 	$('#repository_root').html(BKN_WSF.get('url'));
 	$('#dataset_id').html(Dataset.get('id'));
 	$('#record_id').html(Record.get('id'));
+	var permalink = '';
+	permalink += 'http://localhost/bkn/bkn_editor/bkn_editor.html?';
+	permalink += '&repository='+ BKN_WSF.get('root');
+	permalink += '&dataset='+Dataset.get();
+	permalink += '&record='+Record.get();
+	permalink = '<a href="'+permalink+'" >permalink</a>';
+	//Record.get('id')
+	$('#permalink').html(permalink);
 }
 
 function show_repository_list () {
@@ -657,7 +681,51 @@ function show_repository_list () {
 	}
 }
 
+//-----------------------------
+// SEARCH
 
+
+function show_search_result(response) {
+	show_record_list(response)
+//	show_json(response)	
+}
+
+
+function get_search_result (query, dataset_uri, page) {
+	var params = '';
+	clear_record_form();
+	clear_record_list();
+	status('Fetching list of records ...');
+	if (!dataset_uri) {
+		dataset_uri = Dataset.get();
+		//Record.set(null); // sometimes we want to keep the record just refresh list
+	}
+	else {
+		Dataset.set(dataset_uri,'uri')
+	}
+	//show_ids();
+	if (page) {
+		Dataset.set(page, 'page');
+	}
+	params += '&query=' + query;
+	params += '&datasets=' + dataset_uri;
+	params += '&items='+ Dataset.get('page_size');
+	params += '&page='+ Dataset.get('page');
+	bkn_wsf_call(show_search_result, "search", params);	
+}
+
+function show_search_form() {
+	var content = '<div>';
+	content += '<input id="search_form_input" class="search_input" type="text" value="" />';
+	content += "<input type='button' value='Search' id='search_button' class='_button'/>";	
+	content += "</div>";
+	$('#search_form').html(content);
+	$('#search_button').click(function () {
+		var keyword = $('#search_form_input').val();
+		get_search_result (keyword, 'all')
+//		show_search_result();
+		});		
+}
 
 //-----------------------------
 // DATASETS
@@ -688,6 +756,10 @@ function show_dataset_row (d) {
 		}
 		else {
 			link_name = Dataset.extract_id(d['id']);			
+		}
+		if (link_name.length > 20) {
+			// truncate so label doesn't spill into center panel
+			link_name = link_name.substring(0,17)+'...'
 		}
 		content += "<td><a class='dataset_link' ";
 		content += " href=\'javascript:{select_dataset(\""+d['id']+"\",\"0\");}\'>";
@@ -726,12 +798,18 @@ function show_dataset_list(bibjson) {
 
 function get_dataset_list () {
 	var params = '';
+	clear_record_list();
 	status('Fetching list of datasets ...');
-	bkn_wsf_call(show_dataset_list, "dataset_list", params);	
+// workaround issue: slow response time retrieving dataset names on bknpeople
+	if (BKN_WSF.get('root') == 'http://people.bibkn.org/wsf/') {
+		bkn_wsf_call(show_dataset_list, "dataset_list_ids", params);			
+	}
+	else {
+		bkn_wsf_call(show_dataset_list, "dataset_list", params);		
+	}
 }
 
 function select_dataset (dataset_id, page) {
-	
 	Dataset.set(dataset_id);
 	show_template_record();
 	show_ids();
@@ -742,7 +820,19 @@ function select_dataset (dataset_id, page) {
 //-----------------------------
 //RECORDS
 
+function clear_record_form() {
+	$('#record_buttons').html("");	
+	$('#more_attribute_button').html("");
+	$('#more_attribute_form').html("");
+	$('#record_form').html("");
+	// show_template_record
+}
+function clear_record_list() {
+	$('#record_list').html(content);
+}
+
 function show_record (bibjson) {
+	status('')
 	$('#record_form').html("");
 	$('#record_buttons').html("");
 	
@@ -776,6 +866,9 @@ function show_record (bibjson) {
 
 function get_record (record_uri) {
 	var params = '';
+	clear_record_form();
+	status('Fetching record detail ...');
+	Dataset.set(Record.extract_dataset_uri(record_uri));
 	params += '&uri=' + Record.set(record_uri); // set
 	params += '&dataset=' + Dataset.get();      // use current dataset
 	bkn_wsf_call(show_record, "record_read", params);	
@@ -847,7 +940,6 @@ function show_record_nav (record_count) {
 	$('#record_nav').html(content);
 	
 }
-
 function show_record_list(bibjson) {
 	var content = '';
 	status('');
@@ -893,6 +985,7 @@ function page_record_list (dataset_uri, page) {
 
 function get_record_list (dataset_uri, page) {
 	var params = '';
+	clear_record_list();
 	status('Fetching list of records ...');
 	if (!dataset_uri) {
 		dataset_uri = Dataset.get();
@@ -914,8 +1007,8 @@ function show_template_record() {
 
 	$('#record_wrapper').html("");
 	$('#record_wrapper').append("<form><div id='record_form' class='record_form'></div></form>");
-	$('#record_wrapper').append("<form><div id='add_record_form' class='record_form'></div></form>");
-	$('#record_wrapper').append("<div id='add_attribute_button'></div>");
+	$('#record_wrapper').append("<form><div id='more_attribute_form' class='more_attr_form'></div></form>");
+	$('#record_wrapper').append("<div id='more_attribute_button' class='more_attr_button'></div>");
 	$('#record_wrapper').append("<form><div id='record_buttons'></div></form>");
 	Record.set(null);
 	show_ids();
@@ -924,13 +1017,15 @@ function show_template_record() {
 function show_template_record_create (record_uri, dataset_uri) {
 	Record.set(null);
 	$('#record_id').html("");
+	show_template_record();
 	show_record(null);
 	var content = "";
 
-	$('#add_record_form').html("");
-	show_attribute_add_box();
-	content = "<div><a href='javascript:\{show_attribute_add_box();\}'>add</a></div>";
-	$('#add_attribute_button').html(content);
+	show_template_more_attributes();
+//	$('#more_attribute_form').html("");
+//	show_more_box();
+//	content = "<div><a href='javascript:\{show_more_box();\}'>more</a></div>";
+//	$('#more_attribute_button').html(content);
 	
 	content = "<input type='button' value='Create' id='create_record_button' class='_button'/>";
 	$('#record_buttons').html(content);	
@@ -967,12 +1062,14 @@ function set_add_update_params(record, record_uri, dataset_uri) {
 	params += '&dataset=' + Dataset.set(dataset_uri); // set
 	
 	// STRIP THE DATASET URI PREFIX
-	if ('id' in record) {
+	if (('id' in record) && record['id']) {
 		record['id'] = record['id'].replace(dataset_uri,'')
 		Record.set(record['id']);
 	}
 	else {
-		status('Record requires an "id" attribute.');
+		record['id'] = Math.uuid();
+		Record.set(record['id']);
+		status('Unique id generated: '+record['id']);
 	}
 	
 	// TODO: this should not be necessary. It record_uri is sent by record_update
@@ -1041,14 +1138,6 @@ $(document).ready(function() {
 
 /*
  * STUFF FOR TESTING
-	bibjson = {
-			'id':'1',
-			'name': 'fiend'
-	}
-	
-	//deb("To test the stable prototype use, <a hre='http://services.bibsoup.org/structwsf/test.html'>http://services.bibsoup.org/structwsf/test.html</a>")
-	//deb("<br>");
-
 //	BKN_WSF.set('http://people.bibkn.org/wsf/','root');
 //	Dataset.set('jack_update_test');	
 //	show_template_page();
@@ -1059,7 +1148,6 @@ $(document).ready(function() {
 	BKN_WSF();
 	Dataset(); 
 	Record();
-	
     if ($(document).getUrlParam("repository")) {
     	BKN_WSF(decodeURIComponent($(document).getUrlParam("repository")));
     }
@@ -1084,38 +1172,28 @@ $(document).ready(function() {
 	debug_id = document.getElementById('debug_area');
     deb('BELOW IS THE DEBUG AREA')	
 
-
-	//deb('service'+BKN_WSF.get('service_root'));
-//deb('datasetroot'+Dataset.get('root'));
-//deb('recorduri:'+Record.get('uri')+':')
-//deb('dataseturi:'+Dataset.get('uri')+':')
-//deb( ""+window.location.hostname + window.location.pathname + "?");
 	show_repository_list();
+	show_search_form();
 	if (BKN_WSF.get('root')) {
 		var params = '';
+	    var ds = $(document).getUrlParam("dataset");
+	    var rec = $(document).getUrlParam("record");
+		get_dataset_list();
+		if ((ds != null) && (rec != null)) {
+			Dataset.set(decodeURIComponent(ds));
+			Record.set(decodeURIComponent(rec));
+			get_record_list(Dataset.get());
+		}
 		if (Record.get('uri')) {
 			params += '&dataset=' + Dataset.get();
-			params += '&uri=' + Record.get('uri');//ds_uri+ 'f2';
+			params += '&uri=' + Record.get();//ds_uri+ 'f2';
 			bkn_wsf_call(show_record, "record_read", params);	
-		}   // show_record calls show_dataset
-		else { 			
-			get_dataset_list();
-		}		
+		}   
 	}
-	
-
-	// I JUST LEARNED THAT ID AND URI MUST BE THE SAME VALUE
-	
-	// YOU ARE HERE - ABOUT TO TEST 
-	// TODO
-	//	ADD RECORD
-	//	ADD/UPDATE ATTRIBUTE
-	//	SEARCH W/ PAGING
 	//  DISPLAY FACETS
 	// 
 	// NEED TO TRACK STATE OF BKN_WSF CALLS
 	//  may want to refresh dataset list
 	//  may want to prevent actions (edit/delete) while one is in progress
-	
 }); // document ready
 

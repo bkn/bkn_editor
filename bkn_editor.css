@@ -68,6 +68,14 @@ body {
 	margin-bottom: 0.25in;
 	padding-bottom: 0.25in;
 }
+.search_form {
+	width:1.75in;
+	margin-left: 0.25in;
+	margin-top: 0.0625in;
+	margin-bottom: 0.25in;
+	padding-bottom: 0.25in;
+	font-weight:normal;					
+}
 
 .dataset_list {
 	width:1.75in;
@@ -152,6 +160,37 @@ body {
 	font-weight:normal;					
 }
 
+.permalink {
+	margin-left:525px;
+	margin-bottom:5px;
+	font-size: x-small;
+}
+
+.more_attr_form {
+	margin-top: 0px;	
+	margin-left: 30px;	
+	padding-top:0px;	
+}
+
+.more_attr_key {
+	border-top: none;	
+	border-left: none;	
+	border-right: none;	
+	border-bottom: 1pt solid black;	
+	text-align: right;
+	font-weight: bold;
+	width: 100px;
+	margin-right: 10px;
+}
+
+.more_attr_button {
+	margin-top: 0px;	
+	margin-left: 260px;	
+	padding-top:0px;		
+	padding-bottom:5px;		
+	font-size: small;
+}
+
 .record_form {
 	margin-bottom:20px;
 	padding:10px;
@@ -160,12 +199,15 @@ body {
 
 .record_list {
 	margin-top:20px;
-	border-top: 1pt solid #ff0000;
+	padding-top:10px;
 	padding-left:10px;
 	font-weight:normal;					
+	border-top: 1pt solid #ff0000;
 }
 .record_table {
 	margin-top:20px;
+	padding-top:10px;
+	padding-bottom:10px;
 	border-top: 1pt solid #ff0000;
 	padding-left:10px;
 	font-weight:normal;					

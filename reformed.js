@@ -17,10 +17,16 @@ function kvp(el) {
 //	var k = el.children().val();
 //	var v = $(el.children()[1]);
 	// skip the anchor tag
+	var k;
+	var key_element = $(el).find('input'); 
+	k = key_element.eq(0).val();
+//	k = $(el).find('input').eq(0).val();
+	var v = key_element.next();
 	
-	var k = $(el).find('input').eq(0).val();
-	var v = $(el).find('input').eq(1);
-
+//	var v = $(el).find('input').eq(1);
+	var x = 0
+	
+	
 	// && v[0] &&	('tagName' in v[0])	
 	if (v && (v[0].tagName == 'INPUT') && k && v.val()) {
 		//treat all values as strings
@@ -28,12 +34,15 @@ function kvp(el) {
 	    _kvp[k] = v.val();				
 	} else if (v.hasClass('array')) {
 		var _ary = [];
-		if (v.children('fieldset.object').length > 0) {
-			v.children('fieldset.object').each(function() {
+		var nested_objects = v.find('fieldset.object')
+		if (nested_objects && (nested_objects.length > 0)) {
+			nested_objects.each(function() {
 				_ary.push(obj($(this)));
 			});
-		} else {
-			v.children('input').each(function() {
+		}
+		else {
+//			v.children('input').each(function() {
+				v.find('input').each(function() {
 				_ary.push($(this).val());
 			});
 		}
@@ -68,7 +77,121 @@ function set_read_only(attrlist){
 	read_only = attrlist;
 }
 
-// Class
+function remove_from_form(el_id) {
+	$('#'+el_id).remove();
+}
+
+function array_value_box(value) {
+	var el_id = 'array_value_wrap' + Reformed.count['array']++;
+	var output = '';
+	if (!value) {value = '';}
+	// link to remove array element
+	output += '<div id="'+el_id+'">';
+	// javascript:{$('#array_value_wrap14').remove();}
+	output += '<a  class="remove_link" href="javascript:\{remove_from_form(\''+el_id+'\');\}"> - </a>';
+//	output += '<a class="remove_link" href="javascript:\{\$(\'\#'+el_id+'\').remove();\}"> - </a>';
+	el_id = 'array_value' + Reformed.count['array'];
+	if (typeof value == 'string' || typeof value == 'number') {
+		output += '<input id="'+el_id+'" class="jsonvalue" type="text" value="'+value+'" />';
+	} else if (jQuery.isPlainObject(value)) {
+		output += object_t(value, 'array');
+	} else if (jQuery.isArray(value)) {
+		output += array_t(value, 'array');
+	}
+	output += '</div>';
+	return output;
+}
+
+
+function add_value_to_array_form(add_el_id) {
+
+	$('#'+add_el_id).before(array_value_box());
+	
+}
+
+function make_array_form(el_id, add_el_id) {
+	
+	var value = $('#'+el_id).val();
+	$('#'+el_id).remove();
+	var arr = [value,''];
+	var output = array_t(arr);
+	$('#'+add_el_id).before(output);
+	$('#'+add_el_id).remove();
+}
+
+/** templates **/
+function kvp_t(key, value, parent_type) {
+	if (!parent_type) {parent_type = '';}
+	var el_id = 'kvp'+parent_type + Reformed.count['key']++;
+	var output = '';
+	output += '<div id="'+el_id+'" class="kvp">';
+	// link to remove div with key and value input 
+	output += '<a  class="remove_link" href="javascript:\{remove_from_form(\''+el_id+'\');\}">remove</a>';
+	el_id = 'key'+parent_type + Reformed.count['key']++;
+	output += '<input id="'+el_id+'" ';
+	output += ' class="jsonkey" type="text" value="'+key+'" />';
+	 
+	el_id = 'value'+parent_type + Reformed.count['value']++;
+	if (typeof value == 'string' || typeof value == 'number') {
+		if ($.inArray(key,read_only) == -1) {
+			output += '<input  id="'+el_id+'"';
+			output += 'class="jsonvalue" type="text" value="'+value+'" />';
+			// need to wrap current value in an array and change the 'add' link
+			var add_el_id = 'add'+ el_id			
+			output += '<a class="add_value_button" id="'+add_el_id+'" href="javascript:';
+			output += '\{make_array_form(\''+el_id+'\',\''+add_el_id+'\');\}">add</a>';		
+		}
+		else {
+			output += '<input  id="'+el_id+'" ';
+			output += ' class="readonly_input" type="text" readonly="readonly" value="'+value+'" />';
+		}
+	} else if (jQuery.isPlainObject(value)) {
+		output += object_t(value, parent_type);
+	} else if (jQuery.isArray(value)) {
+		output += array_t(value, parent_type);
+	}
+	output += '</div>'
+		
+//	// TEST
+//	deb('-----------------------------');
+//	$('#debug_area').append(output);
+		
+	return output;
+}
+
+function object_t(object, parent_type) {
+	if (!parent_type) {parent_type = '';}
+	var el_id = 'object_field'+parent_type + Reformed.count['object']++;
+	var output = '<fieldset id="'+el_id+'" class="object">';
+	for (attrname in object) {
+		output += kvp_t(attrname, object[attrname], parent_type);
+	}
+	output += '</fieldset>';
+	if (parent_type != 'array') {
+		var add_el_id = 'add'+ el_id
+//		output += '<a  class="add_value_button" id="'+add_el_id+'" href="javascript:';
+//		output += '\{make_array_form(\''+el_id+'\',\''+add_el_id+'\');\}">add</a>';		
+	}
+	return output;
+}
+
+function array_t(array, parent_type) {
+	if (!parent_type) {parent_type = '';}
+	var array_el_id = 'array_field'+parent_type + Reformed.count['array']++;
+	var output = '<fieldset id="'+array_el_id+'"  class="array">';
+	$.each(array, function (index, value) {
+		output += array_value_box(value);
+	});
+	add_el_id = 'add' + array_el_id
+	output += '<a class="add_value_button" id="'+add_el_id+'" href="javascript:\{add_value_to_array_form(\''+add_el_id+'\');\}">add</a>';
+	output += '</fieldset>';
+	return output;
+}
+
+
+
+
+//Class
 Reformed = function () {
 	var count = {};
 	init = function () {
@@ -80,83 +203,14 @@ Reformed = function () {
 		};		
 	};
 	init();
-	Reformed.show = function (record, json_block_id) {
+	Reformed.show = function (record) {
 		var content = "";
 		if (record) {
 			for (attrname in record) {
-				content += kvp_t(attrname, record[attrname], json_block_id);
+				content += kvp_t(attrname, record[attrname]);
 			}			
 		}
 		return content;		
 	}
 };
 Reformed();
-
-
-function remove_from_form(el_id) {
-	$('#'+el_id).remove();
-}
-
-/** templates **/
-function kvp_t(key, value, json_block_id) {
-	if (!json_block_id) {json_block_id = ''}
-	var el_id = 'kvp'+json_block_id + Reformed.count['key']++;
-	var output = '';
-	output += '<div id="'+el_id+'" class="kvp">';
-	// link to remove div with key and value input 
-	output += '<a  class="remove_link" href="javascript:\{remove_from_form(\''+el_id+'\');\}">remove</a>';
-	el_id = 'key'+json_block_id + Reformed.count['key']++;
-	output += '<input id="'+el_id+'" ';
-	output += ' class="jsonkey" type="text" value="'+key+'" />';
-	 
-	el_id = 'value'+json_block_id + Reformed.count['value']++;
-	if (typeof value == 'string' || typeof value == 'number') {
-		if ($.inArray(key,read_only) == -1) {
-			output += '<input  id="'+el_id+'" type="text" value="'+value+'" />';
-		}
-		else {
-			output += '<input  id="'+el_id+'" ';
-			output += ' class="readonly_input" type="text" readonly="readonly" value="'+value+'" />';
-		}
-	} else if (jQuery.isPlainObject(value)) {
-		output += object_t(value, json_block_id);
-	} else if (jQuery.isArray(value)) {
-		output += array_t(value, json_block_id);
-	}
-	output += '</div>'
-	return output;
-}
-
-function object_t(object, json_block_id) {
-	if (!json_block_id) {json_block_id = ''}
-	var el_id = 'object+field'+json_block_id + Reformed.count['object']++;
-	var output = '<fieldset id="'+el_id+'" class="object">';
-	for (attrname in object) {
-		output += kvp_t(attrname, object[attrname], json_block_id);
-	}
-	output += '</fieldset>';
-	return output;
-}
-
-function array_t(array, json_block_id) {
-	if (!json_block_id) {json_block_id = ''}
-	var el_id = 'array_field'+json_block_id + Reformed.count['array']++;
-	var output = '<fieldset id="'+el_id+'"  class="array">';
-	$.each(array, function (index, value) {
-		el_id = 'array_value_wrap'+json_block_id + Reformed.count['array']++;
-		// link to remove array element
-		output += '<span id="'+el_id+'">';
-		output += '<a class="remove_link" href="javascript:\{\$(\'\#'+el_id+'\').remove();\}">-</a>';
-		el_id = 'array_value'+json_block_id + Reformed.count['array'];
-		if (typeof value == 'string' || typeof value == 'number') {
-			output += '<input id="'+el_id+'" type="text" value="'+value+'" />';
-		} else if (jQuery.isPlainObject(value)) {
-			output += object_t(value, json_block_id);
-		} else if (jQuery.isArray(value)) {
-			output += array_t(value, json_block_id);
-		}
-		output += '</span>';		
-	});
-	output += '</fieldset>';
-	return output;
-}
