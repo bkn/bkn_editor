@@ -1,4 +1,67 @@
 
+
+
+function download_content(section) {
+	
+	var data = '';
+	var file_name = 'bkn_editor.json'
+	var script = "http://" + window.location.hostname + "/";
+	script += "cgi-bin/test/save_file.py";
+	
+	if (section == 'selected_records') {
+		var t = new Date;
+		data = formattedJSON(Selection.get_records(), 'file');
+		file_name = 'selected_records';
+		file_name += ''+t.getFullYear()+t.getMonth()+t.getDay()+t.getHours()+t.getMinutes()+t.getSeconds();     
+		file_name += '.json';
+	}
+	
+	var service = "http://" + window.location.hostname + "/";
+	service += "cgi-bin/file_op/save_file.py";
+	
+	var params ='&file=' + file_name
+	params += '&folder=user_files';
+	// YOU ARE HERE
+//	data = Utf8.encode(data);
+	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
+	//http://services.bibsoup.org/cgi-bin/structwsf/save_file.py?file=jane.txt&folder=user_files&data=testing
+
+    $.ajax({
+        url: service,
+        data: params,
+        type: "post",
+        cache: false,
+        dataType: "jsonp", 
+        error: function(xobj, status, error){
+			deb('error');
+			        },
+        success: function (response) {
+			// this could happen if a python services fails.
+			if ((typeof response) == 'string') {
+				deb(response);
+			}				
+			window.location.href = response['location_url'];	
+		    }
+    }); 
+}
+
+function show_template_selected_records() {
+
+	var content = '';
+	content += "<div class='block_header'>Selected Records</div>"
+	content += "<div id='selected_records' class='selected_records'></div>";
+	$('#selected_records_section').append(content);
+	content = "<div>";
+	content += "<a class='selected_records_download' href=\'javascript:{Selection.download();}\'>";
+	content += "Download selected records</a>";
+	content += "</div>";
+	$('#selected_records_section').append(content);
+	
+}
+	
+
+
+
 BKN_WSF = function (v) {
 	part = {
 		'root': '', // http://people.bibkn.org/wsf/
@@ -49,6 +112,7 @@ BKN_WSF = function (v) {
 			return part.root;			
 		}		
 	}
+	
 	BKN_WSF.pluck = function (k) {
 		var response = {};
 		if (request_stack.length == 0) {
@@ -101,6 +165,10 @@ BKN_WSF = function (v) {
 		//var xobj = '';
 		var error = ('error' in response) ? response['error'] : "UNKNOWN ERROR";
 		var code = '';
+		// this could happen if a python services fails.
+		if ((typeof response) == 'string') {
+			deb(response);
+		}
 		if ('status' in response) {
 			// the response is an http response, the http request failed, request not sent ot bkn_wsf.py
 			code = response['status'];
@@ -161,15 +229,20 @@ BKN_WSF = function (v) {
 	        dataType: "jsonp", //response_format,
 	        error: function(xobj, status, error){
 				    	BKN_WSF.error({'xobj':xobj, 'status':status,'error':error});
-				        },
+			},
 	        success: function (response) {
+						// this could happen if a python services fails.
+						if ((typeof response) == 'string') {
+							deb(response);
+						}				
+
 			        	if (response && ('error' in response)) {
 			        		BKN_WSF.error(response);
 			        	}
 			        	else {
 		        			callback(response);		        		
 			        	}
-			      	}
+			}
 	    }); 
 	}
 
@@ -420,13 +493,15 @@ Display = function () {
 		case 'show_record_list':
 			request = BKN_WSF.pluck();
 			if (request && ('service' in request) && (request['service'] == 'record_delete')) {
-				$('#record_form').html('');
+				$('#more_attribute_button').html("");
 				$('#record_buttons').html('');
+				$('#record_form').html('');
 				status('Fresh list of records.');
 			}			
 			break;
 		case 'show_dataset_list':
 			request = BKN_WSF.pluck();
+			$('#more_attribute_button').html("");
 			$('#record_form').html('');
 			$('#record_buttons').html('');
 			$('#record_list').html('');
@@ -438,6 +513,113 @@ Display = function () {
 	}
 }
 Display(); // instantiate
+
+//-----------------------------
+// SELECTION
+
+Selection = function () {
+	var record_lookup = {};
+
+	Selection.add_record = function (record_uri, link_name) {
+		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
+		var content = ''
+		content += "<div id='"+item_id+"'>";
+		// link to remove from selection
+		content += "<a title='Remove from Selected Records' ";
+		content += " href=\'javascript:{Selection.remove_record(\""+record_uri+"\",\""+link_name+"\");}\'>";
+		content += "<img src='gold_dot.gif' class='select_link'></img></a>";	
+		// link to display record
+		content += "&nbsp;&nbsp;<a title='Display Record Detail' class='record_link' ";
+		content += " href=\'javascript:{get_record(\""+record_uri+"\");}\'>";
+		content += link_name+"</a></div>";	
+		
+		$('#selected_records').append(content);
+//		$('#'+item_id).append('<div>'+record_uri+'</div>')
+
+		record_lookup[record_uri] = null;
+		Selection.fetch_record_detail(record_uri)
+		return record_lookup.length;
+	};
+
+	Selection.remove_record = function(record_uri){
+		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
+		$('#'+item_id).remove();
+		delete record_lookup[record_uri];
+		return record_lookup.length;
+	};
+
+	Selection.fetch_record_detail = function(record_uri) {
+		var params = ''
+		params += '&uri=' + Record.set(record_uri); // set
+		params += '&dataset=' + Record.extract_dataset_uri(record_uri);
+		bkn_wsf_call(function (response) {
+				var id = '';
+				if (('recordList' in response) && (response['recordList']) && 
+					($.isArray(response['recordList'])) && (response['recordList'].length > 0) &&
+					(response['recordList'][0]) && ('id' in response['recordList'][0]) &&
+					(response['recordList'][0]['id'])
+					) {
+					id = response['recordList'][0]['id'];
+					record_lookup[id] = response;					
+				}
+			}, 
+			"record_read", 
+			params);	
+		
+	}
+	Selection.get_records = function ()	{
+		return record_lookup;
+	};
+	
+	Selection.download = function () {
+		// setTimeout(expression, delay), clearTimeout(id)
+		// id = setInterval(expression, delay), clearInterval(id)
+		// Make sure all record data has been fetched
+		var fetches_complete = false;
+		var timer_id, interval_id;
+		var timeout = false;
+		status('Fetching Selected Records detail ...');
+		interval_id = setInterval( function () {
+				var fetch_check = true;
+				if (timeout || fetches_complete) {
+					clearInterval(interval_id);
+				}
+				else if (!fetches_complete) {
+					for (var r in record_lookup) {
+						if (record_lookup[r] == null) {
+							fetch_check = false;
+						}
+					}
+					fetches_complete = fetch_check;
+					if (fetches_complete) {
+						clearTimeout(timer_id);
+						status('');
+						download_content('selected_records');
+					}
+				}
+			}
+			,500);				
+
+		timer_id = setTimeout(function() {
+				if (!fetches_complete) {
+					clearInterval(interval_id);
+					timeout = true;
+					status('Timed out while fetching selected record detail.');
+				}
+				
+			}, 7000);
+
+//		do  {
+//			
+//		} while (!fetches_complete && !timeout);
+//		
+//		clearInterval(interval_id);
+
+	};
+
+}
+Selection(); // instantiate
+
 
 
 function status (message) {
@@ -479,7 +661,7 @@ function record_to_json() {
 
 //show_json(_kvp);		
 		
-	    for (attrname in _kvp) {
+	    for (var attrname in _kvp) {
 	    	json[attrname] = _kvp[attrname];
 	    }	
 	});
@@ -494,7 +676,7 @@ function add_to_json() {
 	var _kvp = null;
 	$('#more_attribute_form > .kvp').each(function (idx) {
 	    _kvp = kvp($(this));
-	    for (attrname in _kvp) {
+	    for (var attrname in _kvp) {
 	    	json[attrname] = _kvp[attrname];
 	    }	
 	});
@@ -560,9 +742,8 @@ function show_more_box() {
 function show_template_more_attributes() {
 	$('#more_attribute_form').html("");
 	show_more_box();
-	content = "<a href='javascript:\{show_more_box();\}'>more</a>";
+	var content = "<a title='Show another pair of input boxes' href='javascript:\{show_more_box();\}'>more</a>";
 	$('#more_attribute_button').html(content);
-	
 }
 
 function display_record_form (record) {
@@ -580,6 +761,7 @@ function display_record_form (record) {
 	content = "";
 	content += "<input type='button' value='Save' id='save_button' class='_button'/>";
 	content += "<input type='button' value='Delete' id='delete_button' class='_button'/>";
+	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
 	$('#record_buttons').html(content);
 	
 	$('#save_button').click(function () {
@@ -588,6 +770,12 @@ function display_record_form (record) {
 	$('#delete_button').click(function () {
 		record_delete(Record.get('uri'), Dataset.get());
 		});	
+
+	$('#new_record_button').click(function () {
+		show_template_record_create(Record.get('uri'));
+		});	
+	
+
 }
 
 function slash_end (v) {
@@ -633,21 +821,24 @@ function show_template_page () {
 	
 	$('body').append("<div id='left_sidebar' class='left_sidebar'></div>");
 	$('body').append("<div id='center_block' class='center_block'></div>");
+	$('#left_sidebar').append("<div id='active_info' class='active_info'></div>");
 	$('#left_sidebar').append("<div id='repository_list' class='repository_list'></div>");	
-	$('#left_sidebar').append("<div id='search_form' class='search_form'></div>");
+//	$('#left_sidebar').append("<div id='search_form' class='search_form'></div>");
 	$('#left_sidebar').append("<div id='dataset_list' class='dataset_list'></div>");
-	$('#center_block').append("<div id='active_info' class='active_info'></div>");
+	$('#center_block').append("<div id='status' class='status'></div>");
 	$('#center_block').append("<div id='record_wrapper' class='record_wrapper'></div>");
+	$('#center_block').append("<div id='selected_records_section' class='selected_records_section'></div>");
 	$('#center_block').append("<div id='record_list' class='record_list'></div>");
 	$('#center_block').append("<div id='record_nav' class='record_nav'></div>");
 
-	$('#active_info').append("<div class='info_title'>Repository URI <span id='repository_root' class='repository_root'></span></div>");
-	$('#active_info').append("<div class='info_title'>Dataset Id <span id='dataset_id' class='dataset_id'></span></div>");
-	$('#active_info').append("<div class='info_title'>Record Id <span id='record_id' class='record_id'></span></div>");
+	$('#active_info').append('<div class="block_header">Now Showing</div>');
+	$('#active_info').append("<div class='info_title'>Repository<div id='repository_root' class='repository_root'></div></div>");
+	$('#active_info').append("<div class='info_title'>Dataset<div id='dataset_id' class='dataset_id'></div></div>");
+	$('#active_info').append("<div class='info_title'>Record<div id='record_id' class='record_id'></div></div>");
 	$('#active_info').append("<div class='permalink' id='permalink'></div>");
-	$('#active_info').append("<div id='status' class='status'></div>");
 
 	show_template_record();
+	show_template_selected_records();
 }
 
 function show_ids() {
@@ -659,7 +850,7 @@ function show_ids() {
 	permalink += '&repository='+ BKN_WSF.get('root');
 	permalink += '&dataset='+Dataset.get();
 	permalink += '&record='+Record.get();
-	permalink = '<a href="'+permalink+'" >permalink</a>';
+	permalink = '<a title="Link to current display" href="'+permalink+'" >permalink</a>';
 	//Record.get('id')
 	$('#permalink').html(permalink);
 }
@@ -670,16 +861,19 @@ function show_repository_list () {
 	app_url +=  window.location.hostname + window.location.pathname + "?";
 	var content = '';
 	var repos = [ 'http://datasets.bibsoup.org',
-	              'http://www.bibkn.org',
+//	              'http://www.bibkn.org',
 	              'http://people.bibkn.org',
 	             ];
+	$('#repository_list').append('<div id="repository_table" class="repository_table"></div>');
 	for (var i=0; i < repos.length; i++) {
-		content = '<div><a class="repo_item" href="';
+		content = '<div><a title= "Display list of datasets for this repository" class="repo_item" href="';
 		content += app_url+'repository='+repos[i]+'/wsf/">';
 		content += repos[i].replace('http://','')+'</a></div>';
-		$('#repository_list').append(content);		
+		$('#repository_table').append(content);		
 	}
+	status('Select a repository.')
 }
+
 
 //-----------------------------
 // SEARCH
@@ -734,6 +928,7 @@ function show_template_dataset_list() {
 	var content = "";
 	$('#dataset_list').html("");
 	$('#dataset_list').append("<div class='block_header'>Datasets</div>");
+	$('#dataset_list').append("<div id='search_form' class='search_form'></div>");
 	content = "<form><div id='dataset_create_form' class='dataset_create_form'></div></form>"; 
 	$('#dataset_list').append(content)
 	content = "<form><input type='button' value='New Dataset' id='new_dataset_button' class='_button'/></form>";
@@ -741,7 +936,7 @@ function show_template_dataset_list() {
 	$('#new_dataset_button').click(function () {
 		show_dataset_create_form();
 		});		
-	
+	show_search_form();
 	$('#dataset_list').append("<table id='dataset_table' class='dataset_table'></table>");	
 }
 
@@ -761,7 +956,7 @@ function show_dataset_row (d) {
 			// truncate so label doesn't spill into center panel
 			link_name = link_name.substring(0,17)+'...'
 		}
-		content += "<td><a class='dataset_link' ";
+		content += "<td><a title='Display list of records for this dataset' class='dataset_link' ";
 		content += " href=\'javascript:{select_dataset(\""+d['id']+"\",\"0\");}\'>";
 		content += link_name+"</a></td>";	
 	}
@@ -789,6 +984,11 @@ function show_dataset_list(bibjson) {
 			d = bibjson['recordList'][i];
 			show_dataset_row(d);
 		}
+// this should only display if a dataset is not selected
+	if (!Dataset.get('id')) {
+		status('Select a dataset.');		
+	}
+	
 	}
 	else {
 		status("Error: No datasets. See details below.");
@@ -821,6 +1021,7 @@ function select_dataset (dataset_id, page) {
 //RECORDS
 
 function clear_record_form() {
+//	$('#more_attribute_section').html("");
 	$('#record_buttons').html("");	
 	$('#more_attribute_button').html("");
 	$('#more_attribute_form').html("");
@@ -879,13 +1080,18 @@ function show_record_row (r) {
 	var link_name = ""
 
 	if (r && ('id' in r) && (r['id'])) {
+
 		if (('name' in r) && r['name']) {
 			link_name = r['name'];
 		}
 		else {
 			link_name = Record.extract_id(r['id']);			
 		}
-		content += "<td><a class='record_link' ";
+		content += "<td><a title='Add to Selected Records' ";
+		content += " href=\'javascript:{Selection.add_record(\""+r['id']+"\",\""+link_name+"\");}\'>";
+		content += "<img src='gold_dot.gif' class='select_link'></img></a></td>";	
+		
+		content += "<td><a title='Display Record Detail' class='record_link' ";
 		content += " href=\'javascript:{get_record(\""+r['id']+"\");}\'>";
 		content += link_name+"</a></td>";	
 	}
@@ -943,14 +1149,14 @@ function show_record_nav (record_count) {
 function show_record_list(bibjson) {
 	var content = '';
 	status('');
-	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
-	$('#record_list').html(content);
-	
-	$('#new_record_button').click(function () {
-		show_template_record_create(Record.get('uri'));
-		});	
-	
-	$('#record_list').append("<div></div>");
+//	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
+//	$('#record_list').html(content);
+//	
+//	$('#new_record_button').click(function () {
+//		show_template_record_create(Record.get('uri'));
+//		});	
+//	
+	$('#record_list').append("<div class='block_header'>Records</div>");
 	$('#record_list').append("<table id='record_table' class='record_table'></table>");
 
 	Display.refresh('show_record_list'); // this also pops the request stack
@@ -970,6 +1176,7 @@ function show_record_list(bibjson) {
 			show_record_row(r);
 		}
 		show_record_nav(record_count);
+		status('Select a record.')
 	}
 	else {
 		status("Error: No recordList in dataset. See details below.");
@@ -1007,13 +1214,14 @@ function show_template_record() {
 
 	$('#record_wrapper').html("");
 	$('#record_wrapper').append("<form><div id='record_form' class='record_form'></div></form>");
-	$('#record_wrapper').append("<form><div id='more_attribute_form' class='more_attr_form'></div></form>");
-	$('#record_wrapper').append("<div id='more_attribute_button' class='more_attr_button'></div>");
-	$('#record_wrapper').append("<form><div id='record_buttons'></div></form>");
+	$('#record_wrapper').append("<div id='more_attribute_section' class='more_attr_section'></div>");
+	$('#more_attribute_section').append("<span class='more_attr_heading'></span>");
+	$('#more_attribute_section').append("<form><div id='more_attribute_form' class='more_attr_form'></div></form>");
+	$('#more_attribute_section').append("<div id='more_attribute_button' class='more_attr_button'></div>"); 
+	$('#more_attribute_section').append("<form><div id='record_buttons' class='record_buttons'></div></form>");
 	Record.set(null);
-	show_ids();
+	show_ids();	
 }
-
 function show_template_record_create (record_uri, dataset_uri) {
 	Record.set(null);
 	$('#record_id').html("");
@@ -1170,19 +1378,26 @@ $(document).ready(function() {
 	Dataset.set(BKN_WSF.get()+'datasets/','root')
 	$('#center_block').append("<div id='debug_area' class='debug_area></div>");
 	debug_id = document.getElementById('debug_area');
-    deb('BELOW IS THE DEBUG AREA')	
+    deb('The section below is for test and debug information.')	
 
 	show_repository_list();
-	show_search_form();
 	if (BKN_WSF.get('root')) {
 		var params = '';
 	    var ds = $(document).getUrlParam("dataset");
 	    var rec = $(document).getUrlParam("record");
+//		show_search_form();
 		get_dataset_list();
 		if ((ds != null) && (rec != null)) {
-			Dataset.set(decodeURIComponent(ds));
-			Record.set(decodeURIComponent(rec));
+			if (ds == 'all/') {	// this means search, but we aren't saving the search term yet
+				Dataset.set(Record.extract_dataset_uri(rec));
+			}
+			else {
+				Dataset.set(decodeURIComponent(ds));			
+			}
 			get_record_list(Dataset.get());
+			if (rec != null) {
+				Record.set(decodeURIComponent(rec));
+			}
 		}
 		if (Record.get('uri')) {
 			params += '&dataset=' + Dataset.get();
@@ -1190,10 +1405,37 @@ $(document).ready(function() {
 			bkn_wsf_call(show_record, "record_read", params);	
 		}   
 	}
+	
+// TODO	
+// big bugs
+//	- New Record button doesn't display
+
+// big features
+	// display expanded record detail in record list
+	// save selected records
+	//	- to dataset, 
+	//	- to file, 
+	//	- display json
+	// link 'ref' to display new record (with or without Save?)	
 	//  DISPLAY FACETS
+	// upload json file
+	//	- to edit
+	//	- of selected records
+	// export dataset (json, csv, html, repository)
+	// change dataset permissions
+	//	- make public
+	//	- add user (query for list of users to get ip addresses)
+	// check list of datasets to search
+	// bulk query given list of names
+
+// little features
+//	clicking 'more' should move focus to attribute input box
+//	pressing 'enter' while in search box should submit search
+
 	// 
 	// NEED TO TRACK STATE OF BKN_WSF CALLS
 	//  may want to refresh dataset list
 	//  may want to prevent actions (edit/delete) while one is in progress
+	
 }); // document ready
 

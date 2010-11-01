@@ -50,44 +50,73 @@ body {
 	left: 0.5in;
 	height: 11in;
 	border-right: 1pt solid black;
-	padding-top: 0.25in;
+	padding-top: 0.125in;
 	padding-right: 0.125in;
 }
 
 .block_header {
-	padding-top:0.125in;
-	padding-bottom:0.125in;
+	padding-top:5px;
+	padding-bottom:5px;
 	font-weight:bold;
+}
+.active_info {
+	margin-left: 0.25in;	
+}
+
+.info_title {
+	margin-left: 5px;	
+	font-weight:bold;					
+	font-size: 10pt;	
+}
+
+.repository_root {
+	margin-left:5px;
+	font-weight:normal;	
+}
+.dataset_id {
+	margin-left:5px;
+	font-weight:normal;					
+}
+	
+.record_id {
+	margin-left:5px;
+	font-weight:normal;					
+}
+
+.permalink {
+	margin-left:1.25in;
+	font-size: x-small;
 }
 
 .repository_list {
 	width:1.75in;
-	border-bottom: 1pt solid black;	
 	margin-left: 0.25in;
-	margin-top: 0.0625in;
-	margin-bottom: 0.25in;
-	padding-bottom: 0.25in;
+	margin-top: 5px;
+	padding-bottom: 10px;
 }
+.repository_table {
+	padding-left:5px;
+	font-weight:normal;					
+}
+
 .search_form {
 	width:1.75in;
-	margin-left: 0.25in;
-	margin-top: 0.0625in;
-	margin-bottom: 0.25in;
-	padding-bottom: 0.25in;
+	border-bottom: 1pt dotted gray;
+	margin-bottom: 5px;	
+	padding-top: 2px;
+	padding-bottom: 2px;
 	font-weight:normal;					
 }
 
 .dataset_list {
 	width:1.75in;
 	margin-left: 0.25in;
-	margin-top: 0.0625in;
+	margin-top: 5px;
 	margin-bottom: 0.25in;
 	padding-bottom: 0.25in;
-	border-top: 1pt solid #ff0000;
 	font-weight:normal;					
 }
 .dataset_table {
-	margin-top:20px;
 	padding-left:10px;
 	font-weight:normal;					
 }
@@ -136,40 +165,37 @@ body {
 	color:black;
 }
 
-.info_title {
-	padding:5px;
-	font-weight:bold;					
-	font-size: 10pt;
-	
+.selected_records_section {
+	padding-top:5px;
+	padding-bottom:5px;
 }
 
-.repository_root {
-	margin-left:5px;
-		padding:5px;
-	font-weight:normal;	
-}
-.dataset_id {
-	margin-left:5px;
-	padding:5px;
-	font-weight:normal;					
-}
-	
-.record_id {
-	margin-left:5px;
-	padding:5px;
-	font-weight:normal;					
+.selected_records {
+	padding-top:10px;
+	padding-bottom:5px;
 }
 
-.permalink {
-	margin-left:525px;
-	margin-bottom:5px;
-	font-size: x-small;
+.selected_records_download {
+	margin-top:20px;
+	margin-bottom:10px;
+	
+}
+.select_link {
+    border-style:none;
+    height:12px;
+}
+
+.more_attribute_section {
+	margin-top: 0px;	
+	padding-top:0px;		
+}
+.more_attr_heading {
+	font-size: small;
+	margin-left:15px;	
 }
 
 .more_attr_form {
-	margin-top: 0px;	
 	margin-left: 30px;	
-	padding-top:0px;	
 }
 
 .more_attr_key {
@@ -182,7 +208,6 @@ body {
 	width: 100px;
 	margin-right: 10px;
 }
-
 .more_attr_button {
 	margin-top: 0px;	
 	margin-left: 260px;	
@@ -191,26 +216,30 @@ body {
 	font-size: small;
 }
 
+.record_buttons {
+	padding-left:5px;	
+}
+
 .record_form {
-	margin-bottom:20px;
-	padding:10px;
+	margin-bottom:5px;
+	padding-top:5px;
+	padding-left:10px;
 	font-weight:normal;					
 }
 
 .record_list {
-	margin-top:20px;
-	padding-top:10px;
-	padding-left:10px;
+	margin-top:5px;
+	padding-left:5px;
 	font-weight:normal;					
 	border-top: 1pt solid #ff0000;
 }
+
 .record_table {
-	margin-top:20px;
-	padding-top:10px;
 	padding-bottom:10px;
-	border-top: 1pt solid #ff0000;
 	padding-left:10px;
 	font-weight:normal;					
+/*	border-top: 1pt solid #ff0000;
+*/
 }
 
 
