@@ -848,7 +848,9 @@ function show_ids() {
 	$('#dataset_id').html(Dataset.get('id'));
 	$('#record_id').html(Record.get('id'));
 	var permalink = '';
-	permalink += 'http://localhost/bkn/bkn_editor/bkn_editor.html?';
+	permalink += "" + window.location.protocol + "//" 
+	permalink +=  window.location.hostname + window.location.pathname + "?";	
+//	permalink += 'http://localhost/bkn/bkn_editor/bkn_editor.html?';
 	permalink += '&repository='+ BKN_WSF.get('root');
 	permalink += '&dataset='+Dataset.get();
 	permalink += '&record='+Record.get();
