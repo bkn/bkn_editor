@@ -761,7 +761,8 @@ function display_record_form (record) {
 	content = "";
 	content += "<input type='button' value='Save' id='save_button' class='_button'/>";
 	content += "<input type='button' value='Delete' id='delete_button' class='_button'/>";
-	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
+// THIS SHOULD BE IN RECORD LIST
+//	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
 	$('#record_buttons').html(content);
 	
 	$('#save_button').click(function () {
@@ -771,9 +772,10 @@ function display_record_form (record) {
 		record_delete(Record.get('uri'), Dataset.get());
 		});	
 
-	$('#new_record_button').click(function () {
-		show_template_record_create(Record.get('uri'));
-		});	
+// THIS SHOULD BE IN RECORD LIST
+//	$('#new_record_button').click(function () {
+//		show_template_record_create(Record.get('uri'));
+//		});	
 	
 
 }
@@ -888,10 +890,10 @@ function show_search_result(response) {
 function get_search_result (query, dataset_uri, page) {
 	var params = '';
 	clear_record_form();
-	clear_record_list();
+	clear_record_list(); // This sets dataset to null
 	status('Fetching list of records ...');
 	if (!dataset_uri) {
-		dataset_uri = Dataset.get();
+		dataset_uri = 'all'; //Dataset.get();
 		//Record.set(null); // sometimes we want to keep the record just refresh list
 	}
 	else {
@@ -1022,6 +1024,8 @@ function select_dataset (dataset_id, page) {
 
 function clear_record_form() {
 //	$('#more_attribute_section').html("");
+	Record.set(null);
+	show_ids();
 	$('#record_buttons').html("");	
 	$('#more_attribute_button').html("");
 	$('#more_attribute_form').html("");
@@ -1029,6 +1033,8 @@ function clear_record_form() {
 	// show_template_record
 }
 function clear_record_list() {
+	Dataset.set(null);
+	show_ids();
 	$('#record_list').html(content);
 }
 
@@ -1149,13 +1155,16 @@ function show_record_nav (record_count) {
 function show_record_list(bibjson) {
 	var content = '';
 	status('');
-//	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
-//	$('#record_list').html(content);
-//	
-//	$('#new_record_button').click(function () {
-//		show_template_record_create(Record.get('uri'));
-//		});	
-//	
+	var current_dataset = Dataset.get();
+	$('#record_list').html(content);
+	if (current_dataset && (current_dataset != 'all/')) {
+		content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
+		$('#record_list').html(content);
+		$('#new_record_button').click(function () {
+			show_template_record_create(Record.get('uri'));
+			});			
+	}
+	
 	$('#record_list').append("<div class='block_header'>Records</div>");
 	$('#record_list').append("<table id='record_table' class='record_table'></table>");
 
