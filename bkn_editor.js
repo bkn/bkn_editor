@@ -749,30 +749,46 @@ function show_dataset_create_form() {
 
 
 function show_more_box() {
+	var el_id = 'kvp_more_attr' + Reformed.count['key']++;
 	var content = '';
 	// class 'kvp' is used by reformed to parse form
 	// the anchor for remove_link may also be necessary
 	content += '<div class="kvp">';
 	content += '<a class="remove_link"></a>'; // fill space where 'remove' would be
-	content += '<input class="more_attr_key" type="text" value="" />';
+	content += '<input class="more_attr_key" id="'+el_id+'" ';
+	content += ' type="text" value="" />';
 	content += '<input type="text" value="" />';
 	content += "</div>";
 	$('#more_attribute_form').append(content);
+	$('#'+el_id).focus();
+
 	
 }
 
 function show_template_more_attributes() {
 	$('#more_attribute_form').html("");
 	show_more_box();
-	var content = "<a title='Show another pair of input boxes' href='javascript:\{show_more_box();\}'>more</a>";
+	var content ="";
+	content +=  "<a title='Show another pair of input boxes'";
+	content += " href='javascript:\{show_more_box();\}'>more</a>";
 	$('#more_attribute_button').html(content);
+	$('#more_attribute_button').keypress(function(e) {
+	        if (e.which == 32) // spacebar
+	        {
+				show_more_box();
+	        }
+		});
+	
+//	$('#more_attribute_button').click(function() {
+//		show_more_box();
+//	});
 }
 
 function display_record_form (record) {
 	var content = '';
 	content = "";
 	content += Reformed.show(record);	
-	$('#record_form').html(content);	
+	$('#record_form').html(content);
 
 	show_template_more_attributes();
 //	$('#more_attribute_form').html("");
@@ -934,6 +950,11 @@ function get_search_result (query, dataset_uri, page) {
 	bkn_wsf_call(show_search_result, "search", params);	
 }
 
+function submit_search() {
+	var keyword = $('#search_form_input').val();
+	get_search_result (keyword, 'all')	
+}
+
 function show_search_form() {
 	var content = '<div>';
 	content += '<input id="search_form_input" class="search_input" type="text" value="" />';
@@ -941,10 +962,15 @@ function show_search_form() {
 	content += "</div>";
 	$('#search_form').html(content);
 	$('#search_button').click(function () {
-		var keyword = $('#search_form_input').val();
-		get_search_result (keyword, 'all')
-//		show_search_result();
+		submit_search();
 		});		
+	$('#search_form_input').keypress(function(e) {
+	        // if the key pressed is the enter key
+	        if (e.which == 13)
+	        {
+				submit_search();
+	        }
+		});
 }
 
 //-----------------------------
@@ -1437,7 +1463,9 @@ $(document).ready(function() {
 			params += '&uri=' + Record.get();//ds_uri+ 'f2';
 			bkn_wsf_call(show_record, "record_read", params);	
 		}   
-	}
+	}	
+}); // document ready
+
 	
 // TODO	
 // big bugs
@@ -1472,6 +1500,54 @@ $(document).ready(function() {
 	// NEED TO TRACK STATE OF BKN_WSF CALLS
 	//  may want to refresh dataset list
 	//  may want to prevent actions (edit/delete) while one is in progress
-	
-}); // document ready
 
+
+// SNIPPETS
+
+// key press in specific class or id
+//j(".textBoxClass").keypress(function(e)
+//{
+//        // if the key pressed is the enter key
+//        if (e.which == 13)
+//        {
+//                // do work
+//        }
+//});
+
+
+// key press for specific form field
+//    function submitenter(myfield,e)
+//    {
+//        var keycode;
+//        if (window.event) keycode = window.event.keyCode;
+//        else if (e) keycode = e.which;
+//        else return true;
+//
+//        if (keycode == 13)
+//        {
+//            myfield.form.submit();
+//            return false;
+//        }
+//        else
+//            return true;
+//    }
+//<FORM ACTION="../cgi-bin/formaction.pl">
+//    name:     <INPUT NAME=realname SIZE=15><BR>
+//    password: <INPUT NAME=password TYPE=PASSWORD SIZE=10
+//       onKeyPress="return submitenter(this,event)"><BR>
+//<INPUT TYPE=SUBMIT VALUE="Submit">
+//</FORM>
+
+
+
+// key press anywhere
+//document.onkeypress = processKey;
+//
+//function processKey(e)
+//{
+//  if (null == e)
+//    e = window.event ;
+//  if (e.keyCode == 13)  {
+//    submitForm() ;
+//  }
+//}

@@ -106,7 +106,8 @@ function array_value_box(value) {
 function add_value_to_array_form(add_el_id) {
 
 	$('#'+add_el_id).before(array_value_box());
-	
+	// put the cursor in the new input box
+	$('#'+add_el_id).prev().find('input').focus();
 }
 
 function make_array_form(el_id, add_el_id) {
@@ -116,6 +117,8 @@ function make_array_form(el_id, add_el_id) {
 	var arr = [value,''];
 	var output = array_t(arr);
 	$('#'+add_el_id).before(output);
+	// put the cursor in the new input box
+	$('#'+add_el_id).prev().find('input').focus();
 	$('#'+add_el_id).remove();
 }
 
@@ -138,7 +141,7 @@ function kvp_t(key, value, parent_type) {
 			output += 'class="jsonvalue" type="text" value="'+value+'" />';
 			// need to wrap current value in an array and change the 'add' link
 			var add_el_id = 'add'+ el_id			
-			output += '<a class="add_value_button" id="'+add_el_id+'" href="javascript:';
+			output += '<a class="make_array_button" id="'+add_el_id+'" href="javascript:';
 			output += '\{make_array_form(\''+el_id+'\',\''+add_el_id+'\');\}">add</a>';		
 		}
 		else {
@@ -183,7 +186,7 @@ function array_t(array, parent_type) {
 		output += array_value_box(value);
 	});
 	add_el_id = 'add' + array_el_id
-	output += '<a class="add_value_button" id="'+add_el_id+'" href="javascript:\{add_value_to_array_form(\''+add_el_id+'\');\}">add</a>';
+	output += '<a class="add_array_value_button" id="'+add_el_id+'" href="javascript:\{add_value_to_array_form(\''+add_el_id+'\');\}">add</a>';
 	output += '</fieldset>';
 	return output;
 }
