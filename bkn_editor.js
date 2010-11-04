@@ -39,10 +39,18 @@ function save_selected_content(section) {
 			}	
 			var content = '';			
 			content += "&nbsp;&nbsp;&nbsp;&nbsp;";
+			
+			var downloader_service = "";
+			downloader_service += "download_file.php?file=";
+			downloader_service += response['file_location']
+			content += "<a href=\""+downloader_service+"\" ";
+			content += ">Download Collection ";
+			content += "</a>";
+
+			content += "&nbsp;&nbsp;&nbsp;&nbsp;";
 			content += "<a href=\""+response['location_url']+"\" ";
 			content += " target='_blank'";
-			content += ">Download Collection ";
-//			content += response['location_url']; // could display filename
+			content += ">Display JSON";
 			content += "</a>";
 			$('#selected_records_download').html(content);
 			
