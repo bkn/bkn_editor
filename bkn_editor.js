@@ -1,12 +1,9 @@
 
 
-function download_content(section) {
+function save_selected_content(section) {
 	
 	var data = '';
 	var file_name = 'bkn_editor.json'
-//	var script = "http://" + window.location.hostname + "/";
-//	script += "cgi-bin/file_op/save_file.py";
-	
 	if (section == 'selected_records') {
 		var t = new Date;
 		data = formattedJSON(Selection.get_records(), 'file');
@@ -24,6 +21,7 @@ function download_content(section) {
 //	data = Utf8.encode(data);
 	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
 	//http://services.bibsoup.org/cgi-bin/structwsf/save_file.py?file=jane.txt&folder=user_files&data=testing
+
 //deb('service: '+service+'?'+params);
     $.ajax({
         url: service,
@@ -46,7 +44,7 @@ function download_content(section) {
 			content += ">Download Collection ";
 //			content += response['location_url']; // could display filename
 			content += "</a>";
-			$('#selected_records_section').append(content);
+			$('#selected_records_download').html(content);
 			
 		}
     }); 
@@ -55,15 +53,20 @@ function download_content(section) {
 function show_template_selected_records() {
 
 	var content = '';
+	$('#selected_records_section').html('');
 	content += "<div class='block_header'>Selected Records</div>"
 	content += "<div id='selected_records' class='selected_records'></div>";
 	$('#selected_records_section').append(content);
 	content = "<div>";
+	content += "<span id='selected_records_save' class='selected_records_save'></span>";
+	content += "<span id='selected_records_download' class='selected_records_download'></span>";
 	content += "</div>";
-	content += "<a class='selected_records_download' href=\'javascript:{Selection.download();}\'>";
-	content += "Save Collection</a>";
 	$('#selected_records_section').append(content);
-	
+	content = '';	
+	content += "<a href=\'javascript:{Selection.save();}\'>";
+	content += "Save Collection</a>";
+	$('#selected_records_save').html(content);
+
 }
 	
 
@@ -529,6 +532,8 @@ Selection = function () {
 
 	Selection.add_record = function (record_uri, link_name) {
 		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
+		// clear download because it show previous saved collection
+		$('#selected_records_download').html(''); 
 		var content = ''
 		content += "<div id='"+item_id+"'>";
 		// link to remove from selection
@@ -543,13 +548,15 @@ Selection = function () {
 		$('#selected_records').append(content);
 //		$('#'+item_id).append('<div>'+record_uri+'</div>')
 
-		// Selection.download depends on value == null until data fetch is complete.
+		// Selection.save depends on value == null until data fetch is complete.
 		record_lookup[record_uri] = null;  
 		Selection.fetch_record_detail(record_uri)
 		return record_lookup.length;
 	};
 
 	Selection.remove_record = function(record_uri){
+		// clear download because it show previous saved collection
+		$('#selected_records_download').html(''); 
 		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
 		$('#'+item_id).remove();
 		delete record_lookup[record_uri];
@@ -579,7 +586,7 @@ Selection = function () {
 		return record_lookup;
 	};
 	
-	Selection.download = function () {
+	Selection.save = function () {
 		// Make sure all record data has been fetched
 		// Check every half second, timeout after 7 seconds
 		var fetches_complete = false;
@@ -601,7 +608,7 @@ Selection = function () {
 					if (fetches_complete) {
 						clearTimeout(timer_id);
 						status('');
-						download_content('selected_records');
+						save_selected_content('selected_records');
 					}
 				}
 			}
@@ -766,13 +773,13 @@ function display_record_form (record) {
 //	$('#more_attribute_button').html(content);
 
 	content = "";
-	content += "<input type='button' value='Save' id='save_button' class='_button'/>";
+	content += "<input type='button' value='Save' id='record_save_button' class='_button'/>";
 	content += "<input type='button' value='Delete' id='delete_button' class='_button'/>";
 // THIS SHOULD BE IN RECORD LIST
 //	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
 	$('#record_buttons').html(content);
 	
-	$('#save_button').click(function () {
+	$('#record_save_button').click(function () {
 		record_update(Record.get('uri'), Dataset.get());
 		});	
 	$('#delete_button').click(function () {
