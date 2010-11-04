@@ -1,12 +1,11 @@
 
 
-
 function download_content(section) {
 	
 	var data = '';
 	var file_name = 'bkn_editor.json'
-	var script = "http://" + window.location.hostname + "/";
-	script += "cgi-bin/test/save_file.py";
+//	var script = "http://" + window.location.hostname + "/";
+//	script += "cgi-bin/file_op/save_file.py";
 	
 	if (section == 'selected_records') {
 		var t = new Date;
@@ -25,7 +24,7 @@ function download_content(section) {
 //	data = Utf8.encode(data);
 	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
 	//http://services.bibsoup.org/cgi-bin/structwsf/save_file.py?file=jane.txt&folder=user_files&data=testing
-
+//deb('service: '+service+'?'+params);
     $.ajax({
         url: service,
         data: params,
@@ -39,9 +38,17 @@ function download_content(section) {
 			// this could happen if a python services fails.
 			if ((typeof response) == 'string') {
 				deb(response);
-			}				
-			window.location.href = response['location_url'];	
-		    }
+			}	
+			var content = '';			
+			content += "&nbsp;&nbsp;&nbsp;&nbsp;";
+			content += "<a href=\""+response['location_url']+"\" ";
+			content += " target='_blank'";
+			content += ">Download Collection ";
+//			content += response['location_url']; // could display filename
+			content += "</a>";
+			$('#selected_records_section').append(content);
+			
+		}
     }); 
 }
 
@@ -52,9 +59,9 @@ function show_template_selected_records() {
 	content += "<div id='selected_records' class='selected_records'></div>";
 	$('#selected_records_section').append(content);
 	content = "<div>";
-	content += "<a class='selected_records_download' href=\'javascript:{Selection.download();}\'>";
-	content += "Download selected records</a>";
 	content += "</div>";
+	content += "<a class='selected_records_download' href=\'javascript:{Selection.download();}\'>";
+	content += "Save Collection</a>";
 	$('#selected_records_section').append(content);
 	
 }
@@ -536,7 +543,8 @@ Selection = function () {
 		$('#selected_records').append(content);
 //		$('#'+item_id).append('<div>'+record_uri+'</div>')
 
-		record_lookup[record_uri] = null;
+		// Selection.download depends on value == null until data fetch is complete.
+		record_lookup[record_uri] = null;  
 		Selection.fetch_record_detail(record_uri)
 		return record_lookup.length;
 	};
@@ -572,9 +580,8 @@ Selection = function () {
 	};
 	
 	Selection.download = function () {
-		// setTimeout(expression, delay), clearTimeout(id)
-		// id = setInterval(expression, delay), clearInterval(id)
 		// Make sure all record data has been fetched
+		// Check every half second, timeout after 7 seconds
 		var fetches_complete = false;
 		var timer_id, interval_id;
 		var timeout = false;
@@ -1422,6 +1429,7 @@ $(document).ready(function() {
 //	- New Record button doesn't display
 
 // big features
+ 
 	// display expanded record detail in record list
 	// save selected records
 	//	- to dataset, 
@@ -1440,8 +1448,10 @@ $(document).ready(function() {
 	// bulk query given list of names
 
 // little features
-//	clicking 'more' should move focus to attribute input box
-//	pressing 'enter' while in search box should submit search
+	// force download - window.open(popurl,"","width=,height=,toolbar,location,status,scrollbars,menubar,resizable")
+    // update location bar   window.location.replace(url)
+	//	clicking 'more' should move focus to attribute input box
+	//	pressing 'enter' while in search box should submit search
 
 	// 
 	// NEED TO TRACK STATE OF BKN_WSF CALLS
