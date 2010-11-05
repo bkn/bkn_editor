@@ -18,7 +18,7 @@ function save_selected_content(section) {
 	var params ='&file=' + file_name
 	params += '&folder=user_files';
 	// YOU ARE HERE
-//	data = Utf8.encode(data);
+	data = Utf8.encode(data);
 	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
 	//http://services.bibsoup.org/cgi-bin/structwsf/save_file.py?file=jane.txt&folder=user_files&data=testing
 
@@ -267,7 +267,6 @@ BKN_WSF = function (v) {
 
 } // BKN_WSF
 
-// I JUST LEARNED THAT ID AND URI MUST BE THE SAME VALUE
 
 Dataset = function (v) {
 	var root = ''; http://people.bibkn.org/wsf/datasets/ 
@@ -409,90 +408,6 @@ Dataset = function (v) {
 			
 } // Dataset class
 
-Record = function (v) {
-	var id = '';
-	var uri = '';
-	var arg = $(document).getUrlParam("uri");
-	
-	Record.get = function (k) {
-		var response = uri;
-		if (k) {
-			if (k == 'id') {
-				response = id;
-			}
-		}
-		return response;
-	}
-	Record.set = function (v, k) {				
-		if (v) {
-			if (k) {
-				if (k == 'uri') {
-					uri = unslash_end(v);
-					id = Record.extract_id(v);							
-				}
-				else if (k == 'id') {
-					id = unslash_end(v);
-					uri = Dataset.get() + id;
-					
-				} // unknown key
-				else {
-					id = '';
-					uri = '';					
-				}
-			} // no key
-			else { // consider http prefix a  uri
-				if (v.substring(0,7) == 'http://') {
-					Record.set(v, 'uri');
-				}
-				else { // v is an id
-					Record.set(v, 'id');
-				}				
-			}
-		}			
-		else { // no value
-			id = '';
-			uri = '';
-		}
-		return uri;
-	}
-	
-	Record.extract_id = function (v) {
-		if (v) {
-			id = unslash_end(v).replace(Dataset.get('uri'),'');			
-		}
-		else {
-			id = '';
-		}
-		return id;
-	}
-
-	Record.extract_dataset_uri = function (v) {
-		var ds_uri = '';
-		// trailing slash differentiates a dataset uri from a record uri
-		if (v) {
-			// find '/' preceding record id
-			var end = v.lastIndexOf('/');
-			// root ends with '/'
-			ds_uri = slash_end(v.slice(0,end)); 	
-		}
-		return ds_uri;
-	}
-
-	// init
-	if (v) {
-		arg = v
-	}
-	else if (arg) { //  && (arg != null) && (arg != 'null') && (arg != '')
-		arg = decodeURIComponent(arg);
-	}
-	else {
-		id = '';
-		uri = '';
-		arg = '';
-	}
-	Record.set(arg);
-
-} // Record class
 
 Display = function () {
 	Display.refresh = function (called_from) {
@@ -536,41 +451,59 @@ Display(); // instantiate
 // SELECTION
 
 Selection = function () {
+	// TODO: USE COLLECTION CLASS INSTEAD OF RECORD_LOOKUP
 	var record_lookup = {};
 
 	Selection.add_record = function (record_uri, link_name) {
+		var list_item = Record_list.get('item', record_uri)
+		
+		// TODO: CREATE ITEM CLASS FOR SELECTION
 		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
 		// clear download because it show previous saved collection
 		$('#selected_records_download').html(''); 
 		var content = ''
 		content += "<div id='"+item_id+"'>";
+		
 		// link to remove from selection
 		content += "<a title='Remove from Selected Records' ";
 		content += " href=\'javascript:{Selection.remove_record(\""+record_uri+"\",\""+link_name+"\");}\'>";
 		content += "<img src='gold_dot.gif' class='select_link'></img></a>";	
+		
 		// link to display record
 		content += "&nbsp;&nbsp;<a title='Display Record Detail' class='record_link' ";
 		content += " href=\'javascript:{get_record(\""+record_uri+"\");}\'>";
-		content += link_name+"</a></div>";	
-		
+		content += link_name+"</a></div>";			
 		$('#selected_records').append(content);
-//		$('#'+item_id).append('<div>'+record_uri+'</div>')
 
 		// Selection.save depends on value == null until data fetch is complete.
+		// TODO: SHOULD NOT NEED TO FETCH. DATA IS IN COLLECTION
 		record_lookup[record_uri] = null;  
 		Selection.fetch_record_detail(record_uri)
+		// disable the selector link in the record list
+		Record_list.set('selected',record_uri,true);
+		list_item.display('visible', record_uri);
+//		set_record_selector_link('selected', record_uri, link_name);
 		return record_lookup.length;
 	};
 
-	Selection.remove_record = function(record_uri){
+	Selection.remove_record = function(record_uri, link_name){
+		var content = '';
+		var list_item = Record_list.get('item', record_uri)
 		// clear download because it show previous saved collection
 		$('#selected_records_download').html(''); 
+		// TODO: CREATE ITEM CLASS FOR SELECTION
 		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
 		$('#'+item_id).remove();
 		delete record_lookup[record_uri];
+		// enable the selector link in the record list
+		Record_list.set('selected',record_uri,false);
+		list_item.display('visible', record_uri);
+//		set_record_selector_link('unselected', record_uri, link_name);
+
 		return record_lookup.length;
 	};
 
+	// TODO: THIS CAN BE REMOVED. GET DATA FROM RECORD LIST COLLECTION
 	Selection.fetch_record_detail = function(record_uri) {
 		var params = ''
 		params += '&uri=' + Record.set(record_uri); // set
@@ -821,7 +754,7 @@ function display_record_form (record) {
 function slash_end (v) {
 	// make sure uri ends in slash
 	if (v && (v.charAt(v.length-1) != '/')) {
-		v = v + '/';
+		return v + '/';
 	}
 	return v;
 }
@@ -1068,56 +1001,248 @@ function select_dataset (dataset_id, page) {
 	get_record_list(dataset_id, page);
 }
 
+// TODO: CREATE COLLECTION CLASS AND INSTANTIATE record_list = new Collection
 
 //-----------------------------
-//RECORDS
+// RECORD_LIST
+Record_list = function () {
+	var collection = {};
+	
+	// For persistence. TODO: convert this class into a real class
+	Record_list.collection = function () {
+		return collection;
+	};
+	
+	function Item(r) {
+		this.data = {}
+		this.info = {
+			'uri': '',
+			'selector_id': '',
+			'label_id': '',
+			'label': '',
+			'visible': false,
+			'selected': false
+		};
+		if (r && (typeof r == 'string')) {
+			this.set('selector_id',r);
+			this.set('label_id',r);
+			this.set('uri') = r;
+		}
+		else if (r && (typeof r == 'object') && ('id' in r) && r['id']) {
+			this.data = r; // MAY WANT TO COPY THE OBJECT HERE // this must precede next calls
+			this.set('selector_id',r['id']);
+			this.set('label_id',r['id']);
+			this.set('uri', r['id']);
+			// can't call set label with id because set 
+			// tries to get the record which doesn't exist because
+			// Item has not finished instantiating 
+			this.set('label', r); 
+//deb('Item data: '+formattedJSON(this.data));
+		}
+	} // Item
+	Item.prototype.set = function(request, v){
+		var response = '';
+		var content = '';
+		switch (request) {
+			case 'uri':
+				this.info[request] = v;
+				response = this.info[request];
+				break;
+			case 'selected':
+				this.info[request] = v;
+				response = this.info[request];
+				break;
+			case 'visible':
+				this.info.visible = (v != undefined) ? v : true;
+				// TODO: NEED TO CHECK FOR EXISTENCE OF ELEMENT ID IN DOM
+				this.display('visible');
+				response = this.info[request];
+				break;
+			case 'selector_id':
+				this.info[request] = 'record_list_selector_';
+				this.info[request] += v.replace(/[\/\:\.\-]/g,'_');
+				response = this.info[request];
+				break;			
+			case 'label_id':
+				this.info[request] = 'record_list_label_';
+				this.info[request] += v.replace(/[\/\:\.\-]/g,'_');
+				response = this.info[request];
+				break;			
+			case 'label':
+				var link_name = '';
+				// TODO: MAY WANT TO SET r AT THE TOP OF THE METHOD
+				var r; 
+				if (v && (typeof v == 'object') && ('id' in v) && v['id']) {
+					r = v;
+				}
+				else if (v && (typeof v == 'string')) {
+					r  = Record_list.get('record',v);				
+					link_name = Record.extract_id(v);			
+				}
+				else {
+					response = v;
+					break;					
+				}
+				if (r && ('name' in r) && r['name']) {
+					link_name = r['name'];
+				}
+				else if (r && ('title' in r) && r['title']) {
+					link_name = r['title'];
+				}
+				this.info[request] = link_name;
+				response = this.info[request];
+				break;			
+			default:
+				break;			
+			}
+		return response;			
+	};
+	Item.prototype.get = function(request, v){
+		var response = '';
+		var content = '';
+		switch (request) {
+			case 'visible':
+			case 'selected':
+			case 'selector_id':
+			case 'label_id':
+			case 'label':
+				response = this.info[request];
+				break;
+			case 'selector_link':
+				content = '';
+				if (this.info.selected) {
+					content += "<img src='gray_dot.gif' class='select_link'></img>";
+				}
+				else {
+					content += "<a ";
+					content += " title='Add to Selected Records' ";
+					content += " href=\'javascript:"
+					content += "{Selection.add_record(";
+					content += "\""+this.info.uri+"\",";
+					content += "\""+this.info.label+"\");";
+					content += "}\'>";		
+					content += "<img src='gold_dot.gif' class='select_link'></img>";		
+					content += "</a>";						
+				}
+				response = content;
+				break;			
+			case 'label_link':
+				content += "<a title='Display Record Detail' class='record_link' ";
+				content += " href=\'javascript:{get_record(\""+this.info.uri+"\");}\'>";
+				content += this.info.label+"</a>";	
+				response = content;
+				break;			
+			default:
+				break;			
+			}
+		return response;			
+	};
+	Item.prototype.display = function(request, v){
+		var response = '';
+		var content = "";
+		switch (request) {
+			case 'visible':
+				if (this.info.visible && this.info.uri) {
+					if (this.info.selector_id) {
+						content = this.get('selector_link',this.info.uri) 
+						$('#'+this.info.selector_id).html(content);						
+					}
+					if (this.info.label_id) {
+						content = this.get('label_link',this.info.uri) 
+						$('#'+this.info.label_id).html(content);						
+					}
+				}		
+				break;			
+			default:
+				break;			
+			}
+		return response;			
 
-function clear_record_form() {
-//	$('#more_attribute_section').html("");
-	Record.set(null);
-	show_ids();
-	$('#record_buttons').html("");	
-	$('#more_attribute_button').html("");
-	$('#more_attribute_form').html("");
-	$('#record_form').html("");
-	// show_template_record
+	};	
+	
+	
+	Record_list.set = function (request,v, v2) {
+		var response = '';
+		content = '';
+		switch (request) {
+			case 'item':
+				// generate id if non exists
+				var k = 'no_id_'+ Math.uuid();
+				// v could be a record object
+				if (v && (typeof v == 'object') && ('id' in v) && v['id']) {
+					k = v['id']
+				}
+				else if (v && (typeof v == 'string')) {
+					k = v;
+				}
+				collection[k] = new Item(v);					
+				response = collection[k];
+				break;
+			case 'visible':
+//				collection[v].set('visible');
+//				break;			
+			case 'selected':
+//				collection[v].set('selected');
+				var b = (v2 != undefined) ? v2 : true;
+				collection[v].set(request, b);
+				response = collection[v].info[request];
+				break;
+
+			case 'selector_id':
+			case 'label_id':
+			case 'label':
+				collection[v].set(request, v);
+				response = collection[v].info[request];
+				break;			
+			default:
+				break;			
+			}
+		return response;
+	};
+
+	Record_list.get = function (request,v) {
+		var response = '';
+		var content = '';
+		switch (request) {
+			case 'collection':
+				response = collection;
+				break;			
+			case 'item':
+				if (v && (v in collection)) {
+					response = collection[v];
+				}
+				break;
+			case 'record':
+				// return the record data if it is available.
+				if (v && (v in collection)) {
+					response = collection[v].data ;
+				}
+			default:
+				break;			
+			}
+		return response;
+		
+	};
+
+	Record_list.display = function (request, v) {
+		var response = '';
+		var record = null;
+		switch (request) {
+			case 'visible':
+			default:
+				break;			
+			}
+		return response;				
+	};
 }
+Record_list(); // instantiate
+
+// ------------------------------------------------------
+
 function clear_record_list() {
 	Dataset.set(null);
 	show_ids();
 	$('#record_list').html(content);
-}
-
-function show_record (bibjson) {
-	status('')
-	$('#record_form').html("");
-	$('#record_buttons').html("");
-	
-	show_ids();	// THIS DISPLAYS 'CURRENT' IDS, MAY WANT TO CHECK RESULT THEN SET
-	if (bibjson && ('recordList' in bibjson) && (bibjson.recordList.length == 1)) {
-		// dislay the record id, strip the uri if necessary, 
-		var record = bibjson.recordList[0];
-		if ('id' in record) { //  && (record['id'].substring(0,7) == 'http://')		
-			Record.set(record['id']);
-			// find the last slash then extract string following slash
-			//record['id'] = record['id'].substring(record['id'].lastIndexOf('/')+1)
-			$('#record_id').html(Record.get('id'));
-		}
-		else {
-			Record.set(null);			
-		}
-		display_record_form(bibjson.recordList[0]);		
-	}
-//	else if (jQuery.isEmptyObject(bibjson)) {
-//		display_record_form({});				
-//	}
-	else if (bibjson) {
-		Record.set(null);
-		status("Error: Expecting one BibJSON record in recordList array");
-		show_json(bibjson);
-	}
-	// refresh record list if there was an edit
-	Display.refresh('show_record');
 }
 
 
@@ -1130,50 +1255,96 @@ function get_record (record_uri) {
 	params += '&dataset=' + Dataset.get();      // use current dataset
 	bkn_wsf_call(show_record, "record_read", params);	
 }
+//
+//function set_record_selector_link(state, selector_element_id, record_uri, link_name) {
+//	var content = "";
+//	if (state == 'selected') {
+//		content = "<img src='gray_dot.gif' class='select_link'></img>";		
+//	}
+//	else { // unselected
+//		content += "<a ";
+//		content += " title='Add to Selected Records' ";
+//		content += " href=\'javascript:"
+//		content += "{Selection.add_record(\""+record_uri+"\",\""+link_name+"\");}\'>";		
+//		content = "<img src='gold_dot.gif' class='select_link'></img>";		
+//		content += "</a>";	
+//	}
+//	$('#'+selector_element_id).html(content);
+//	return content;
+//}
 
 function show_record_row (r) {
 	var content = "<tr>";
-	var link_name = ""
+	var link_name = "";
+	var record_uri = "";
+	var record_element_id = "";
+	var list_item;
 
 	if (r && ('id' in r) && (r['id'])) {
-
-		if (('name' in r) && r['name']) {
-			link_name = r['name'];
-		}
-		else {
-			link_name = Record.extract_id(r['id']);			
-		}
-		content += "<td><a title='Add to Selected Records' ";
-		content += " href=\'javascript:{Selection.add_record(\""+r['id']+"\",\""+link_name+"\");}\'>";
-		content += "<img src='gold_dot.gif' class='select_link'></img></a></td>";	
+		record_uri = r['id'];
+		list_item = Record_list.set('item',r);
+//		record_selector_element_id = "record_selector_link"+record_uri;
+//		if (('name' in r) && r['name']) {
+//			link_name = r['name'];
+//		}
+//		else {
+//			link_name = Record.extract_id(record_uri);			
+//		}
+		content += "<td id='"+list_item.info.selector_id+"' ";
+		content += " class='record_list_selector'>";
+//		content += list_item.get('selector_link');
+		content += "</td>";		
+		content += "<td id='"+list_item.info.label_id+"' ";
+		content += " class='record_list_label'>";		
+//		content += list_item.get('label_link');
 		
-		content += "<td><a title='Display Record Detail' class='record_link' ";
-		content += " href=\'javascript:{get_record(\""+r['id']+"\");}\'>";
-		content += link_name+"</a></td>";	
+//		content += "<a title='Display Record Detail' class='record_link' ";
+//		content += " href=\'javascript:{get_record(\""+record_uri+"\");}\'>";
+//		content += list_item.info.label+"</a>";	
+		content += "</td>";	
 	}
 	else {
+		var bad_id = '';
 		if (r && ('error' in r)) {
 			// IF THE ERROR IS DUE TO BROWSE CACHE ISSUE DON'T DISPLAY THE ROW
 			// PASS THE 'PLUCKED' ROW AND CHECK IT
 			if (('reason' in r) && (r['reason'] == '403') || (r['reason'] == '400') ) {
-				content += "<td>Record not accessible.</td>"; 
+				content += "<td class='record_list_selector'></td>";		
+				content += "<td class='record_list_label'>Record not accessible.</td>";
 			}			
 			else {
-				content += "<td>error: "+r['error'];
-				if ('reason' in r) {content += " reason: "+r['reason']; }
-				if ('urllib2' in r) {content += " detail: "+r['urllib2']; }
+				content += "<td class='record_list_selector'></td>";		
+				content += "<td class='record_list_label'>error: "+r['error'];
+				if ('reason' in r) {
+					content += " reason: "+r['reason']; 
+				}
+				if ('urllib2' in r) {
+					content += " detail: "+r['urllib2']; 
+				}
 				content += " </td>";										
 			}
 		}
 		else {
-			content += "<td>error: record does not have an id</td>";			
+			content += "<td class='record_list_selector'></td>";		
+			content += "<td class='record_list_label'>error: record does not have an id</td>";			
 		}
 	}
 
-	//	content += "<td class='json_attribute'>"+k+"</td>";
-//	content += "<td class='json_string'>"+r[k]+"</td>";		
+//	content += "<td class='json_attribute'>"+k+"</td>";
+//	content += "<td class='json_string'>"+r[k]+"</td>";	
+	
 	content += "</tr>";
 	$('#record_table').append(content);
+	list_item.set('selected',false);
+	list_item.set('visible',true);
+
+//	if (record_uri) {		
+//		set_record_selector_link('unselected', 
+//									record_selector_element_id, 
+//									record_uri, 
+//									link_name);		
+//	}
+	
 	return;
 }
 
@@ -1202,6 +1373,7 @@ function show_record_nav (record_count) {
 	$('#record_nav').html(content);
 	
 }
+
 function show_record_list(bibjson) {
 	var content = '';
 	status('');
@@ -1241,6 +1413,8 @@ function show_record_list(bibjson) {
 		status("Error: No recordList in dataset. See details below.");
 		show_json(bibjson);
 	}	
+//deb('<br>collection,'+formattedJSON(Record_list.get('collection')));
+	
 }
 
 function page_record_list (dataset_uri, page) {
@@ -1269,6 +1443,142 @@ function get_record_list (dataset_uri, page) {
 	params += '&page='+ Dataset.get('page');
 	bkn_wsf_call(show_record_list, "browse", params);	
 }
+
+
+//-----------------------------
+// RECORD
+
+
+Record = function (v) {
+	var id = '';
+	var uri = '';
+	var arg = $(document).getUrlParam("uri");
+	
+	Record.get = function (k) {
+		var response = uri;
+		if (k) {
+			if (k == 'id') {
+				response = id;
+			}
+		}
+		return response;
+	}
+	Record.set = function (v, k) {				
+		if (v) {
+			if (k) {
+				if (k == 'uri') {
+					uri = unslash_end(v);
+					id = Record.extract_id(v);							
+				}
+				else if (k == 'id') {
+					id = unslash_end(v);
+					uri = Dataset.get() + id;
+					
+				} // unknown key
+				else {
+					id = '';
+					uri = '';					
+				}
+			} // no key
+			else { // consider http prefix a  uri
+				if (v.substring(0,7) == 'http://') {
+					Record.set(v, 'uri');
+				}
+				else { // v is an id
+					Record.set(v, 'id');
+				}				
+			}
+		}			
+		else { // no value
+			id = '';
+			uri = '';
+		}
+		return uri;
+	}
+	
+	Record.extract_id = function (v) {
+		if (v) {
+			id = unslash_end(v).replace(Dataset.get('uri'),'');			
+		}
+		else {
+			id = '';
+		}
+		return id;
+	}
+
+	Record.extract_dataset_uri = function (v) {
+		var ds_uri = '';
+		// trailing slash differentiates a dataset uri from a record uri
+		if (v) {
+			// find '/' preceding record id
+			var end = v.lastIndexOf('/');
+			// root ends with '/'
+			ds_uri = slash_end(v.slice(0,end)); 	
+		}
+		return ds_uri;
+	}
+
+	// init
+	if (v) {
+		arg = v
+	}
+	else if (arg) { //  && (arg != null) && (arg != 'null') && (arg != '')
+		arg = decodeURIComponent(arg);
+	}
+	else {
+		id = '';
+		uri = '';
+		arg = '';
+	}
+	Record.set(arg);
+
+} // Record class
+
+
+function clear_record_form() {
+//	$('#more_attribute_section').html("");
+	Record.set(null);
+	show_ids();
+	$('#record_buttons').html("");	
+	$('#more_attribute_button').html("");
+	$('#more_attribute_form').html("");
+	$('#record_form').html("");
+	// show_template_record
+}
+
+function show_record (bibjson) {
+	status('')
+	$('#record_form').html("");
+	$('#record_buttons').html("");
+	
+	show_ids();	// THIS DISPLAYS 'CURRENT' IDS, MAY WANT TO CHECK RESULT THEN SET
+	if (bibjson && ('recordList' in bibjson) && (bibjson.recordList.length == 1)) {
+		// dislay the record id, strip the uri if necessary, 
+		var record = bibjson.recordList[0];
+		if ('id' in record) { //  && (record['id'].substring(0,7) == 'http://')		
+			Record.set(record['id']);
+			// find the last slash then extract string following slash
+			//record['id'] = record['id'].substring(record['id'].lastIndexOf('/')+1)
+			$('#record_id').html(Record.get('id'));
+		}
+		else {
+			Record.set(null);			
+		}
+		display_record_form(bibjson.recordList[0]);		
+	}
+//	else if (jQuery.isEmptyObject(bibjson)) {
+//		display_record_form({});				
+//	}
+	else if (bibjson) {
+		Record.set(null);
+		status("Error: Expecting one BibJSON record in recordList array");
+		show_json(bibjson);
+	}
+	// refresh record list if there was an edit
+	Display.refresh('show_record');
+}
+
+
 function show_template_record() {
 
 	$('#record_wrapper').html("");
@@ -1464,7 +1774,10 @@ $(document).ready(function() {
 			bkn_wsf_call(show_record, "record_read", params);	
 		}   
 	}	
+
 }); // document ready
+
+
 
 	
 // TODO	
