@@ -477,8 +477,8 @@ Selection = function () {
 
 		// Selection.save depends on value == null until data fetch is complete.
 		// TODO: SHOULD NOT NEED TO FETCH. DATA IS IN COLLECTION
-		record_lookup[record_uri] = null;  
-		Selection.fetch_record_detail(record_uri)
+		record_lookup[record_uri] = list_item.data;
+//		Selection.fetch_record_detail(record_uri)
 		// disable the selector link in the record list
 		Record_list.set('selected',record_uri,true);
 		list_item.display('visible', record_uri);
@@ -504,25 +504,25 @@ Selection = function () {
 	};
 
 	// TODO: THIS CAN BE REMOVED. GET DATA FROM RECORD LIST COLLECTION
-	Selection.fetch_record_detail = function(record_uri) {
-		var params = ''
-		params += '&uri=' + Record.set(record_uri); // set
-		params += '&dataset=' + Record.extract_dataset_uri(record_uri);
-		bkn_wsf_call(function (response) {
-				var id = '';
-				if (('recordList' in response) && (response['recordList']) && 
-					($.isArray(response['recordList'])) && (response['recordList'].length > 0) &&
-					(response['recordList'][0]) && ('id' in response['recordList'][0]) &&
-					(response['recordList'][0]['id'])
-					) {
-					id = response['recordList'][0]['id'];
-					record_lookup[id] = response;					
-				}
-			}, 
-			"record_read", 
-			params);	
-		
-	}
+//	Selection.fetch_record_detail = function(record_uri) {
+//		var params = ''
+//		params += '&uri=' + Record.set(record_uri); // set
+//		params += '&dataset=' + Record.extract_dataset_uri(record_uri);
+//		bkn_wsf_call(function (response) {
+//				var id = '';
+//				if (('recordList' in response) && (response['recordList']) && 
+//					($.isArray(response['recordList'])) && (response['recordList'].length > 0) &&
+//					(response['recordList'][0]) && ('id' in response['recordList'][0]) &&
+//					(response['recordList'][0]['id'])
+//					) {
+//					id = response['recordList'][0]['id'];
+//					record_lookup[id] = response;					
+//				}
+//			}, 
+//			"record_read", 
+//			params);	
+//		
+//	};
 	Selection.get_records = function ()	{
 		return record_lookup;
 	};
@@ -533,43 +533,39 @@ Selection = function () {
 		var fetches_complete = false;
 		var timer_id, interval_id;
 		var timeout = false;
-		status('Fetching Selected Records detail ...');
-		interval_id = setInterval( function () {
-				var fetch_check = true;
-				if (timeout || fetches_complete) {
-					clearInterval(interval_id);
-				}
-				else if (!fetches_complete) {
-					for (var r in record_lookup) {
-						if (record_lookup[r] == null) {
-							fetch_check = false;
-						}
-					}
-					fetches_complete = fetch_check;
-					if (fetches_complete) {
-						clearTimeout(timer_id);
-						status('');
-						save_selected_content('selected_records');
-					}
-				}
-			}
-			,500);				
-
-		timer_id = setTimeout(function() {
-				if (!fetches_complete) {
-					clearInterval(interval_id);
-					timeout = true;
-					status('Timed out while fetching selected record detail.');
-				}
-				
-			}, 7000);
-
-//		do  {
-//			
-//		} while (!fetches_complete && !timeout);
-//		
-//		clearInterval(interval_id);
-
+		save_selected_content('selected_records');
+		
+// RECORDS NOT NEED TO BE FETCHED AFTER THE INITIAL RECORD LIST IS POPULATED
+//		status('Fetching Selected Records detail ...');
+//		interval_id = setInterval( function () {
+//				var fetch_check = true;
+//				if (timeout || fetches_complete) {
+//					clearInterval(interval_id);
+//				}
+//				else if (!fetches_complete) {
+//					for (var r in record_lookup) {
+//						if (record_lookup[r] == null) {
+//							fetch_check = false;
+//						}
+//					}
+//					fetches_complete = fetch_check;
+//					if (fetches_complete) {
+//						clearTimeout(timer_id);
+//						status('');
+//						save_selected_content('selected_records');
+//					}
+//				}
+//			}
+//			,500);				
+//
+//		timer_id = setTimeout(function() {
+//				if (!fetches_complete) {
+//					clearInterval(interval_id);
+//					timeout = true;
+//					status('Timed out while fetching selected record detail.');
+//				}
+//				
+//			}, 7000);
 	};
 
 }
@@ -1077,7 +1073,6 @@ Record_list = function () {
 				}
 				else if (v && (typeof v == 'string')) {
 					r  = Record_list.get('record',v);				
-					link_name = Record.extract_id(v);			
 				}
 				else {
 					response = v;
@@ -1088,6 +1083,12 @@ Record_list = function () {
 				}
 				else if (r && ('title' in r) && r['title']) {
 					link_name = r['title'];
+				}
+				else if (r && ('id' in r) && r['id']) {
+					link_name = Record.extract_id(r['id']);			
+				}
+				else {
+					link_name = 'record has no name, title, or id';
 				}
 				this.info[request] = link_name;
 				response = this.info[request];
@@ -1179,7 +1180,7 @@ Record_list = function () {
 				response = collection[k];
 				break;
 			case 'visible':
-//				collection[v].set('visible');
+				collection[v].set('visible');
 //				break;			
 			case 'selected':
 //				collection[v].set('selected');
@@ -1246,14 +1247,34 @@ function clear_record_list() {
 }
 
 
-function get_record (record_uri) {
+function get_record (r_uri) {
 	var params = '';
-	clear_record_form();
-	status('Fetching record detail ...');
+	var record = null;
+	var record_uri = r_uri;
+	if (record_uri) {
+		Record.set(record_uri);
+	}
+	else { // use the current record uri if none specified
+		record_uri = Record.get('uri');
+	}
+	clear_record_form();	
 	Dataset.set(Record.extract_dataset_uri(record_uri));
-	params += '&uri=' + Record.set(record_uri); // set
-	params += '&dataset=' + Dataset.get();      // use current dataset
-	bkn_wsf_call(show_record, "record_read", params);	
+	// check if the record detail has been fetched
+	record = Record_list.get('record', record_uri);
+	if (record && (typeof record == 'object')) {
+		var result = {
+			"recordList": [record],
+			"datalist": {}
+		};
+		show_record(result);
+	}
+	else {
+		status('Fetching record detail ...');	
+		params += '&uri='+record_uri;
+		params += '&dataset=' + Dataset.get();      // use current dataset
+		bkn_wsf_call(show_record, "record_read", params);			
+	}
+
 }
 //
 //function set_record_selector_link(state, selector_element_id, record_uri, link_name) {
@@ -1278,7 +1299,7 @@ function show_record_row (r) {
 	var link_name = "";
 	var record_uri = "";
 	var record_element_id = "";
-	var list_item;
+	var list_item = null;
 
 	if (r && ('id' in r) && (r['id'])) {
 		record_uri = r['id'];
@@ -1335,8 +1356,10 @@ function show_record_row (r) {
 	
 	content += "</tr>";
 	$('#record_table').append(content);
-	list_item.set('selected',false);
-	list_item.set('visible',true);
+	if (list_item) {
+		list_item.set('selected',false);
+		list_item.set('visible',true);		
+	}
 
 //	if (record_uri) {		
 //		set_record_selector_link('unselected', 
@@ -1555,7 +1578,7 @@ function show_record (bibjson) {
 	if (bibjson && ('recordList' in bibjson) && (bibjson.recordList.length == 1)) {
 		// dislay the record id, strip the uri if necessary, 
 		var record = bibjson.recordList[0];
-		if ('id' in record) { //  && (record['id'].substring(0,7) == 'http://')		
+		if (record && ('id' in record) && record['id']) { //  && (record['id'].substring(0,7) == 'http://')		
 			Record.set(record['id']);
 			// find the last slash then extract string following slash
 			//record['id'] = record['id'].substring(record['id'].lastIndexOf('/')+1)
@@ -1764,14 +1787,15 @@ $(document).ready(function() {
 				Dataset.set(decodeURIComponent(ds));			
 			}
 			get_record_list(Dataset.get());
-			if (rec != null) {
+			if (rec) {
 				Record.set(decodeURIComponent(rec));
 			}
 		}
 		if (Record.get('uri')) {
-			params += '&dataset=' + Dataset.get();
-			params += '&uri=' + Record.get();//ds_uri+ 'f2';
-			bkn_wsf_call(show_record, "record_read", params);	
+//			params += '&dataset=' + Dataset.get();
+//			params += '&uri=' + Record.get();//ds_uri+ 'f2';
+//			bkn_wsf_call(show_record, "record_read", params);	
+			get_record();
 		}   
 	}	
 
