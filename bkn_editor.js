@@ -14,14 +14,19 @@ function save_selected_content(section) {
 	
 	var service = "http://" + window.location.hostname + "/";
 	service += "cgi-bin/file_op/save_file.py";
+//	service += "cgi-bin/file_op/file_test.py";
 	
 	var params ='&file=' + file_name
 	params += '&folder=user_files';
-	// YOU ARE HERE
-	data = Utf8.encode(data);
+// need to decode data before sending.
+//deb('utf8encode:<br>'+Utf8.encode(data))
+//deb('utf8decode:<br>'+Utf8.decode(data))
+//deb('htmldecode:<br>'+Encoder.htmlDecode(data));
+//deb('HTML2Numerical:<br>'+Encoder.HTML2Numerical(data))
+//deb('NumericalToHTML:<br>'+Encoder.NumericalToHTML(data))
+//data = Utf8.decode(data);	
+	
 	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
-	//http://services.bibsoup.org/cgi-bin/structwsf/save_file.py?file=jane.txt&folder=user_files&data=testing
-
 //deb('service: '+service+'?'+params);
     $.ajax({
         url: service,
@@ -76,9 +81,6 @@ function show_template_selected_records() {
 	$('#selected_records_save').html(content);
 
 }
-	
-
-
 
 BKN_WSF = function (v) {
 	part = {
@@ -258,6 +260,9 @@ BKN_WSF = function (v) {
 			        		BKN_WSF.error(response);
 			        	}
 			        	else {
+// utf8							
+//deb('response: <br>'+Utf8.decode(formattedJSON(response)));	
+
 		        			callback(response);		        		
 			        	}
 			}
@@ -273,7 +278,7 @@ Dataset = function (v) {
 	var id = '';
 	var uri = '';
 	var page = 0;
-	var page_size = 25;
+	var page_size = 10;
 	var arg = $(document).getUrlParam("dataset");
 	var template = {
 			"type":"dataset",
@@ -286,7 +291,6 @@ Dataset = function (v) {
 				],				
 			"linkage": ["http://www.bibkn.org/drupal/bibjson/iron_linkage.json"]
 			}		
-	// turn vars into object
 	
 	Dataset.get = function (k) {
 		var response = uri;
@@ -482,7 +486,6 @@ Selection = function () {
 		// disable the selector link in the record list
 		Record_list.set('selected',record_uri,true);
 		list_item.display('visible', record_uri);
-//		set_record_selector_link('selected', record_uri, link_name);
 		return record_lookup.length;
 	};
 
@@ -498,31 +501,10 @@ Selection = function () {
 		// enable the selector link in the record list
 		Record_list.set('selected',record_uri,false);
 		list_item.display('visible', record_uri);
-//		set_record_selector_link('unselected', record_uri, link_name);
 
 		return record_lookup.length;
 	};
 
-	// TODO: THIS CAN BE REMOVED. GET DATA FROM RECORD LIST COLLECTION
-//	Selection.fetch_record_detail = function(record_uri) {
-//		var params = ''
-//		params += '&uri=' + Record.set(record_uri); // set
-//		params += '&dataset=' + Record.extract_dataset_uri(record_uri);
-//		bkn_wsf_call(function (response) {
-//				var id = '';
-//				if (('recordList' in response) && (response['recordList']) && 
-//					($.isArray(response['recordList'])) && (response['recordList'].length > 0) &&
-//					(response['recordList'][0]) && ('id' in response['recordList'][0]) &&
-//					(response['recordList'][0]['id'])
-//					) {
-//					id = response['recordList'][0]['id'];
-//					record_lookup[id] = response;					
-//				}
-//			}, 
-//			"record_read", 
-//			params);	
-//		
-//	};
 	Selection.get_records = function ()	{
 		return record_lookup;
 	};
@@ -533,44 +515,11 @@ Selection = function () {
 		var fetches_complete = false;
 		var timer_id, interval_id;
 		var timeout = false;
-		save_selected_content('selected_records');
-		
-// RECORDS NOT NEED TO BE FETCHED AFTER THE INITIAL RECORD LIST IS POPULATED
-//		status('Fetching Selected Records detail ...');
-//		interval_id = setInterval( function () {
-//				var fetch_check = true;
-//				if (timeout || fetches_complete) {
-//					clearInterval(interval_id);
-//				}
-//				else if (!fetches_complete) {
-//					for (var r in record_lookup) {
-//						if (record_lookup[r] == null) {
-//							fetch_check = false;
-//						}
-//					}
-//					fetches_complete = fetch_check;
-//					if (fetches_complete) {
-//						clearTimeout(timer_id);
-//						status('');
-//						save_selected_content('selected_records');
-//					}
-//				}
-//			}
-//			,500);				
-//
-//		timer_id = setTimeout(function() {
-//				if (!fetches_complete) {
-//					clearInterval(interval_id);
-//					timeout = true;
-//					status('Timed out while fetching selected record detail.');
-//				}
-//				
-//			}, 7000);
+		save_selected_content('selected_records');		
 	};
 
 }
 Selection(); // instantiate
-
 
 
 function status (message) {
@@ -585,7 +534,6 @@ function show_json(response){
 
 }
 
-
 function bkn_wsf_call(callback, call, params) {
 	if ((BKN_WSF.get('root') != 'http://datasets.bibsoup.org/wsf/') &&
 		(Dataset.get('uri') != 'http://people.bibkn.org/wsf/datasets/jack_update_test/'))
@@ -595,6 +543,10 @@ function bkn_wsf_call(callback, call, params) {
 			return;
 		}
 	}
+deb('params: <br>'+Utf8.encode(params));	
+params = Utf8.encode(params);	
+
+
 	BKN_WSF.request(callback, call, 
 					encodeURIComponent(params), 
 					"post", 
@@ -609,9 +561,6 @@ function record_to_json() {
 	var _kvp = null;
 	$('#record_form > .kvp').each(function (idx) {
 		_kvp = kvp($(this));
-
-//show_json(_kvp);		
-		
 	    for (var attrname in _kvp) {
 	    	json[attrname] = _kvp[attrname];
 	    }	
@@ -633,18 +582,6 @@ function add_to_json() {
 	});
    return json;
 }	
-
-// this will be replaced by ReformedObject method
-function reform_json_to_record(record, form) {
-	
-	var content = "";
-//	for (attrname in record) {
-		content += (kvp_t(attrname, record[attrname], form));
-//	}
-	return content;
-	
-}
-
 
 function dataset_create(dataset_id, title, description) {
 	clear_record_form();
@@ -707,44 +644,27 @@ function show_template_more_attributes() {
 				show_more_box();
 	        }
 		});
-	
-//	$('#more_attribute_button').click(function() {
-//		show_more_box();
-//	});
 }
 
 function display_record_form (record) {
 	var content = '';
-	content = "";
-	content += Reformed.show(record);	
+	content = "";	
+	// Decode utf8 for display 
+//	and so that the proper string is sent back to server when form is parsed
+	content += Utf8.decode(Reformed.show(record));	
 	$('#record_form').html(content);
 
 	show_template_more_attributes();
-//	$('#more_attribute_form').html("");
-//	show_more_box();
-//	content = "<div><a href='javascript:\{show_more_box();\}'>more</a></div>";
-//	$('#more_attribute_button').html(content);
-
 	content = "";
 	content += "<input type='button' value='Save' id='record_save_button' class='_button'/>";
 	content += "<input type='button' value='Delete' id='delete_button' class='_button'/>";
-// THIS SHOULD BE IN RECORD LIST
-//	content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
-	$('#record_buttons').html(content);
-	
+	$('#record_buttons').html(content);	
 	$('#record_save_button').click(function () {
 		record_update(Record.get('uri'), Dataset.get());
 		});	
 	$('#delete_button').click(function () {
 		record_delete(Record.get('uri'), Dataset.get());
 		});	
-
-// THIS SHOULD BE IN RECORD LIST
-//	$('#new_record_button').click(function () {
-//		show_template_record_create(Record.get('uri'));
-//		});	
-	
-
 }
 
 function slash_end (v) {
@@ -817,12 +737,10 @@ function show_ids() {
 	var permalink = '';
 	permalink += "" + window.location.protocol + "//" 
 	permalink +=  window.location.hostname + window.location.pathname + "?";	
-//	permalink += 'http://localhost/bkn/bkn_editor/bkn_editor.html?';
 	permalink += '&repository='+ BKN_WSF.get('root');
 	permalink += '&dataset='+Dataset.get();
 	permalink += '&record='+Record.get();
 	permalink = '<a title="Link to current display" href="'+permalink+'" >permalink</a>';
-	//Record.get('id')
 	$('#permalink').html(permalink);
 }
 
@@ -852,7 +770,6 @@ function show_repository_list () {
 
 function show_search_result(response) {
 	show_record_list(response)
-//	show_json(response)	
 }
 
 
@@ -1180,6 +1097,7 @@ Record_list = function () {
 				response = collection[k];
 				break;
 			case 'visible':
+// TODO clean this up
 				collection[v].set('visible');
 //				break;			
 			case 'selected':
@@ -1276,23 +1194,6 @@ function get_record (r_uri) {
 	}
 
 }
-//
-//function set_record_selector_link(state, selector_element_id, record_uri, link_name) {
-//	var content = "";
-//	if (state == 'selected') {
-//		content = "<img src='gray_dot.gif' class='select_link'></img>";		
-//	}
-//	else { // unselected
-//		content += "<a ";
-//		content += " title='Add to Selected Records' ";
-//		content += " href=\'javascript:"
-//		content += "{Selection.add_record(\""+record_uri+"\",\""+link_name+"\");}\'>";		
-//		content = "<img src='gold_dot.gif' class='select_link'></img>";		
-//		content += "</a>";	
-//	}
-//	$('#'+selector_element_id).html(content);
-//	return content;
-//}
 
 function show_record_row (r) {
 	var content = "<tr>";
@@ -1351,8 +1252,6 @@ function show_record_row (r) {
 		}
 	}
 
-//	content += "<td class='json_attribute'>"+k+"</td>";
-//	content += "<td class='json_string'>"+r[k]+"</td>";	
 	
 	content += "</tr>";
 	$('#record_table').append(content);
@@ -1520,6 +1419,8 @@ Record = function (v) {
 	}
 	
 	Record.extract_id = function (v) {
+		// TODO: IF DATASET URI IS NOT IN STRING 
+		// THEN GET ID BASED ON STRING FOLLOWING LAST SLASH
 		if (v) {
 			id = unslash_end(v).replace(Dataset.get('uri'),'');			
 		}
@@ -1589,9 +1490,6 @@ function show_record (bibjson) {
 		}
 		display_record_form(bibjson.recordList[0]);		
 	}
-//	else if (jQuery.isEmptyObject(bibjson)) {
-//		display_record_form({});				
-//	}
 	else if (bibjson) {
 		Record.set(null);
 		status("Error: Expecting one BibJSON record in recordList array");
@@ -1622,11 +1520,6 @@ function show_template_record_create (record_uri, dataset_uri) {
 	var content = "";
 
 	show_template_more_attributes();
-//	$('#more_attribute_form').html("");
-//	show_more_box();
-//	content = "<div><a href='javascript:\{show_more_box();\}'>more</a></div>";
-//	$('#more_attribute_button').html(content);
-	
 	content = "<input type='button' value='Create' id='create_record_button' class='_button'/>";
 	$('#record_buttons').html(content);	
 	$('#create_record_button').click(function () {
@@ -1813,8 +1706,6 @@ $(document).ready(function() {
 	// display expanded record detail in record list
 	// save selected records
 	//	- to dataset, 
-	//	- to file, 
-	//	- display json
 	// link 'ref' to display new record (with or without Save?)	
 	//  DISPLAY FACETS
 	// upload json file
@@ -1828,63 +1719,24 @@ $(document).ready(function() {
 	// bulk query given list of names
 
 // little features
-	// force download - window.open(popurl,"","width=,height=,toolbar,location,status,scrollbars,menubar,resizable")
     // update location bar   window.location.replace(url)
-	//	clicking 'more' should move focus to attribute input box
-	//	pressing 'enter' while in search box should submit search
-
-	// 
-	// NEED TO TRACK STATE OF BKN_WSF CALLS
-	//  may want to refresh dataset list
+	//  may want to refresh dataset list after bkn_wsf responses
 	//  may want to prevent actions (edit/delete) while one is in progress
 
 
 // SNIPPETS
 
-// key press in specific class or id
-//j(".textBoxClass").keypress(function(e)
-//{
-//        // if the key pressed is the enter key
-//        if (e.which == 13)
-//        {
-//                // do work
-//        }
-//});
-
-
 // key press for specific form field
 //    function submitenter(myfield,e)
-//    {
-//        var keycode;
-//        if (window.event) keycode = window.event.keyCode;
-//        else if (e) keycode = e.which;
-//        else return true;
-//
-//        if (keycode == 13)
-//        {
-//            myfield.form.submit();
-//            return false;
-//        }
-//        else
-//            return true;
-//    }
+//    {...}
 //<FORM ACTION="../cgi-bin/formaction.pl">
 //    name:     <INPUT NAME=realname SIZE=15><BR>
 //    password: <INPUT NAME=password TYPE=PASSWORD SIZE=10
-//       onKeyPress="return submitenter(this,event)"><BR>
+//    onKeyPress="return submitenter(this,event)"><BR>
 //<INPUT TYPE=SUBMIT VALUE="Submit">
 //</FORM>
 
 
-
 // key press anywhere
 //document.onkeypress = processKey;
-//
-//function processKey(e)
-//{
-//  if (null == e)
-//    e = window.event ;
-//  if (e.keyCode == 13)  {
-//    submitForm() ;
-//  }
-//}
+//function processKey(e){...}
