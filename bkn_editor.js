@@ -379,22 +379,20 @@ Dataset = function (v) {
 			// find '/' preceding id
 			var end = unslash_end(v).lastIndexOf('/');
 			// root ends with '/'
-			root = slash_end(v.slice(0,end)); 	
+			return slash_end(v.slice(0,end)); 	
 		}
 		else {
-			root = '';
+			return '';
 		}
-		return root;
 	}
 
 	Dataset.extract_id = function (v) {
 		if (v) {
-			id = unslash_end(v.replace(Dataset.get('root'),'')); //unslash_end(uri).slice(start);	
+			return unslash_end(v.replace(Dataset.get('root'),'')); //unslash_end(uri).slice(start);	
 		}
 		else {
-			id = '';
+			return '';
 		}
-		return id;
 
 	}
 	
@@ -782,7 +780,7 @@ function get_search_result (query, dataset_uri, page) {
 		dataset_uri = 'all'; //Dataset.get();
 		//Record.set(null); // sometimes we want to keep the record just refresh list
 	}
-	else {
+	else if (dataset_uri != 'all') {
 		Dataset.set(dataset_uri,'uri')
 	}
 	//show_ids();
@@ -796,8 +794,13 @@ function get_search_result (query, dataset_uri, page) {
 	bkn_wsf_call(show_search_result, "search", params);	
 }
 
+function get_search_term() {
+	return $('#search_form_input').val();
+}
+
 function submit_search() {
-	var keyword = $('#search_form_input').val();
+	var keyword = get_search_term();
+	Dataset.set('0', 'page');
 	get_search_result (keyword, 'all')	
 }
 
@@ -911,6 +914,7 @@ function select_dataset (dataset_id, page) {
 	Dataset.set(dataset_id);
 	show_template_record();
 	show_ids();
+	// TODO: page should always be set to 0
 	get_record_list(dataset_id, page);
 }
 
@@ -1275,21 +1279,38 @@ function show_record_nav (record_count) {
 	var next = page + 1;
 	var prev = page - 1;
 	var content = "";
+	var ds_uri = Dataset.get();
+	var keyword = '';
+	
+	// the result could be based on a search with no database specified
+	if (!ds_uri) {
+		ds_uri = 'all';
+		keyword	= get_search_term();
+	}
 	
 	content += "<table><tr>"
 	if (prev >= 0) {
-		content += "<td><a class='nav_link' ";
-		content += " href=\'javascript:{page_record_list(\""+Dataset.get()+"\", \""+prev+"\");}\'>";
-		content += "previous</a></td>";	
-		
+		content += "<td><a class='nav_link'  href=\'javascript:{";
+		if (ds_uri == 'all') {
+			content += "get_search_result(\""+keyword+"\",\""+ds_uri+"\", \""+prev+"\");";				
+		}
+		else {
+			content += "page_record_list(\""+ds_uri+"\", \""+prev+"\");";
+		}
+		content += "}\'>previous</a>&nbsp;&nbsp;&nbsp;</td>";	
 	}
 	
 	// This is weird but simple. Good enough until a function is created to get_total_record_count
 	// When the response has less records then the page size we know we are at the end
 	if (record_count >= (Number(Dataset.get('page_size')))) {
-		content += "<td><a class='nav_link' ";
-		content += " href=\'javascript:{page_record_list(\""+Dataset.get()+"\", \""+next+"\");}\'>";
-		content += "next</a></td>";	
+		content += "<td><a class='nav_link'  href=\'javascript:{";
+		if (ds_uri == 'all') {
+			content += "get_search_result(\""+keyword+"\",\""+ds_uri+"\", \""+next+"\");";		
+		}
+		else {
+			content += "page_record_list(\""+ds_uri+"\", \""+next+"\");";		
+		}
+		content += "}\'>next</a></td>";	
 		content += "</tr></table>"		
 	}
 	$('#record_nav').html(content);
@@ -1301,7 +1322,7 @@ function show_record_list(bibjson) {
 	status('');
 	var current_dataset = Dataset.get();
 	$('#record_list').html(content);
-	if (current_dataset && (current_dataset != 'all/')) {
+	if (current_dataset) { //  && (current_dataset != 'all/')
 		content += "<input type='button' value='New Record' id='new_record_button' class='_button'/>";
 		$('#record_list').html(content);
 		$('#new_record_button').click(function () {
@@ -1422,12 +1443,11 @@ Record = function (v) {
 		// TODO: IF DATASET URI IS NOT IN STRING 
 		// THEN GET ID BASED ON STRING FOLLOWING LAST SLASH
 		if (v) {
-			id = unslash_end(v).replace(Dataset.get('uri'),'');			
+			return unslash_end(v).replace(Dataset.get('uri'),'');			
 		}
 		else {
-			id = '';
+			return '';
 		}
-		return id;
 	}
 
 	Record.extract_dataset_uri = function (v) {
@@ -1675,9 +1695,11 @@ $(document).ready(function() {
 	    var rec = $(document).getUrlParam("record");
 //		show_search_form();
 		get_dataset_list();
+		// TODO: implement search/query and fix section below to removre 'all'
 		if ((ds != null) && (rec != null)) {
-			if (ds == 'all/') {	// this means search, but we aren't saving the search term yet
-				Dataset.set(Record.extract_dataset_uri(rec));
+			// We want to dislay a specific record.
+			if (ds == 'all') {	// this means search, but we aren't saving the search term yet
+//				Dataset.set(Record.extract_dataset_uri(rec));
 			}
 			else {
 				Dataset.set(decodeURIComponent(ds));			
