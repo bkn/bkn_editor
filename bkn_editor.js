@@ -543,7 +543,7 @@ function bkn_wsf_call(callback, call, params) {
 			return;
 		}
 	}
-deb('params: <br>'+Utf8.encode(params));	
+//deb('params: <br>'+Utf8.encode(params));	
 params = Utf8.encode(params);	
 
 
@@ -739,7 +739,7 @@ function show_ids() {
 	permalink +=  window.location.hostname + window.location.pathname + "?";	
 	permalink += '&repository='+ BKN_WSF.get('root');
 	permalink += '&dataset='+Dataset.get();
-	permalink += '&record='+Record.get();
+	permalink += '&record='+Record.get('uri');
 	permalink = '<a title="Link to current display" href="'+permalink+'" >permalink</a>';
 	$('#permalink').html(permalink);
 }
@@ -1475,7 +1475,8 @@ function show_record (bibjson) {
 	$('#record_form').html("");
 	$('#record_buttons').html("");
 	
-	show_ids();	// THIS DISPLAYS 'CURRENT' IDS, MAY WANT TO CHECK RESULT THEN SET
+// CHANGED 10/8	
+//	show_ids();	// THIS DISPLAYS 'CURRENT' IDS, MAY WANT TO CHECK RESULT THEN SET
 	if (bibjson && ('recordList' in bibjson) && (bibjson.recordList.length == 1)) {
 		// dislay the record id, strip the uri if necessary, 
 		var record = bibjson.recordList[0];
@@ -1495,6 +1496,8 @@ function show_record (bibjson) {
 		status("Error: Expecting one BibJSON record in recordList array");
 		show_json(bibjson);
 	}
+// CHANGED 10/8	
+	show_ids();
 	// refresh record list if there was an edit
 	Display.refresh('show_record');
 }
