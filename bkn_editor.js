@@ -1,5 +1,4 @@
 
-
 function save_selected_content(section) {
 	
 	var data = '';
@@ -270,7 +269,7 @@ BKN_WSF = function (v) {
 	}
 
 
-} // BKN_WSF
+}; // BKN_WSF
 
 
 Dataset = function (v) {
@@ -694,7 +693,7 @@ function extract_url_parameter(url, param) {
 		param = param.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");		
 		var regex_filter = "[\\?&]"+param+"=([^&#]*)";
 		var regex = new RegExp( regex_filter );
-		var value = regex.exec( url );
+		value = regex.exec( url );
 	}
 	if( value == null )
 		return "";
@@ -749,7 +748,7 @@ function show_repository_list () {
 	var content = '';
 	var repos = [ 'http://datasets.bibsoup.org',
 //	              'http://www.bibkn.org',
-	              'http://people.bibkn.org',
+	              'http://people.bibkn.org'
 	             ];
 	$('#repository_list').append('<div id="repository_table" class="repository_table"></div>');
 	for (var i=0; i < repos.length; i++) {
@@ -943,7 +942,7 @@ Record_list = function () {
 		if (r && (typeof r == 'string')) {
 			this.set('selector_id',r);
 			this.set('label_id',r);
-			this.set('uri') = r;
+			this.set('uri',r);
 		}
 		else if (r && (typeof r == 'object') && ('id' in r) && r['id']) {
 			this.data = r; // MAY WANT TO COPY THE OBJECT HERE // this must precede next calls
@@ -1165,7 +1164,7 @@ Record_list(); // instantiate
 function clear_record_list() {
 	Dataset.set(null);
 	show_ids();
-	$('#record_list').html(content);
+	$('#record_list').html("");
 }
 
 
@@ -1684,8 +1683,8 @@ $(document).ready(function() {
 	show_template_page();
 	BKN_WSF.set(BKN_WSF.get('root')+'ws/', 'service_root');
 	Dataset.set(BKN_WSF.get()+'datasets/','root')
-	$('#center_block').append("<div id='debug_area' class='debug_area></div>");
-	debug_id = document.getElementById('debug_area');
+	$('#center_block').append("<div id='debug_area' class='debug_area'></div>");
+//	var debug_id = document.getElementById('debug_area');
     deb('The section below is for test and debug information.')	
 
 	show_repository_list();
