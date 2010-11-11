@@ -4,7 +4,7 @@ function save_selected_content(section) {
 	var data = '';
 	var file_name = 'bkn_editor.json'
 	if (section == 'selected_records') {
-		var t = new Date;
+		var t = new Date();
 		data = formattedJSON(Selection.get_records(), 'file');
 		file_name = 'selected_records';
 		file_name += ''+t.getFullYear()+t.getMonth()+t.getDay()+t.getHours()+t.getMinutes()+t.getSeconds();     
@@ -15,7 +15,7 @@ function save_selected_content(section) {
 	service += "cgi-bin/file_op/save_file.py";
 //	service += "cgi-bin/file_op/file_test.py";
 	
-	var params ='&file=' + file_name
+	var params ='&file=' + file_name;
 	params += '&folder=user_files';
 // need to decode data before sending.
 //deb('utf8encode:<br>'+Utf8.encode(data))
@@ -81,12 +81,12 @@ function show_template_selected_records() {
 
 }
 
-BKN_WSF = function (v) {
-	part = {
+var BKN_WSF = function (v) {
+	var part = {
 		'root': '', // http://people.bibkn.org/wsf/
 		'service_root': ''	// http://people.bibkn.org/wsf/ws/			
 	};
-	request_stack = [];
+	var request_stack = [];
 	
 	if (v) {
 		part.root = slash_end(v);
@@ -111,7 +111,8 @@ BKN_WSF = function (v) {
 			}
 		}
 		return part.root;
-	}
+	};
+	
 	BKN_WSF.get = function (k) {
 		if (k) {
 			if (k == 'service_root') {
@@ -130,7 +131,7 @@ BKN_WSF = function (v) {
 		else {
 			return part.root;			
 		}		
-	}
+	};
 	
 	BKN_WSF.pluck = function (k) {
 		var response = {};
@@ -178,7 +179,7 @@ BKN_WSF = function (v) {
 		
 		}
 		return response;
-	}
+	};
 
 	BKN_WSF.error = function (response) {
 		//var xobj = '';
@@ -197,7 +198,7 @@ BKN_WSF = function (v) {
 			code = response['reason'];
 		}
 		else {
-			code = "UNKNOWN RESPONSE TYPE"
+			code = "UNKNOWN RESPONSE TYPE";
 		}
 		
 	    if (code == '403') {
@@ -210,7 +211,7 @@ BKN_WSF = function (v) {
 	    }
 		
 		return ;
-	}
+	};
 
 
 	BKN_WSF.request = function (callback, service, params, method, accept) {
@@ -228,7 +229,7 @@ BKN_WSF = function (v) {
 	    wsf_params += "&params=";
 	    if (params) {wsf_params += params;};
 
-		response_format = 'jsonp';
+		var response_format = 'jsonp';
 		if (accept) {response_format = accept;};
 //	deb(wsf_php_proxy +"?"+wsf_params);
 		var d = new Date();
@@ -266,13 +267,13 @@ BKN_WSF = function (v) {
 			        	}
 			}
 	    }); 
-	}
+	};
 
 
 }; // BKN_WSF
 
 
-Dataset = function (v) {
+var Dataset = function (v) {
 	var root = ''; http://people.bibkn.org/wsf/datasets/ 
 	var id = '';
 	var uri = '';
@@ -289,7 +290,7 @@ Dataset = function (v) {
 				"http://www.bibkn.org/drupal/bibjson/bibjson_schema.json"
 				],				
 			"linkage": ["http://www.bibkn.org/drupal/bibjson/iron_linkage.json"]
-			}		
+			};
 	
 	Dataset.get = function (k) {
 		var response = uri;
@@ -317,16 +318,16 @@ Dataset = function (v) {
 			}
 		}
 		return response;
-	}
+	};
 
 	Dataset.set = function (v,k) {
 		var response = null;
 		if (v && !k) {
 			if (v.substring(0,7) == 'http://') {
-				response = Dataset.set(v, 'uri')
+				response = Dataset.set(v, 'uri');
 			}
 			else {
-				response = Dataset.set(v, 'id')
+				response = Dataset.set(v, 'id');
 			}	
 		}
 		else if (v && k) {
@@ -371,7 +372,8 @@ Dataset = function (v) {
 			response = null;
 		}
 		return response;
-	}
+	};
+	
 	Dataset.extract_root = function (v) {
 		// trailing slash differentiates a dataset uri from a record uri
 		if (v) {
@@ -383,7 +385,7 @@ Dataset = function (v) {
 		else {
 			return '';
 		}
-	}
+	};
 
 	Dataset.extract_id = function (v) {
 		if (v) {
@@ -393,11 +395,11 @@ Dataset = function (v) {
 			return '';
 		}
 
-	}
+	};
 	
 	// init
 	if (v) {
-		arg = v
+		arg = v;
 	}
 	else if (arg && (arg != null) && (arg != 'null') && (arg != '')) {
 		arg = decodeURIComponent(arg);
@@ -407,56 +409,56 @@ Dataset = function (v) {
 	}
 	Dataset.set(arg);
 			
-} // Dataset class
+}; // Dataset class
 
 
-Display = function () {
+var Display = function () {
 	Display.refresh = function (called_from) {
 		var request = '';
 		switch (called_from) {
-		case 'show_record':
-			request = BKN_WSF.pluck('show_record');
-			if (request && ('service' in request)) {
-				var service = request['service'];
-				// 10/26/10 removed (service == 'record_update') || 
-				if ((service == 'record_add')) {
-					get_record_list(Dataset.get());
+			case 'show_record':
+				request = BKN_WSF.pluck('show_record');
+				if (request && ('service' in request)) {
+					var service = request['service'];
+					// 10/26/10 removed (service == 'record_update') || 
+					if ((service == 'record_add')) {
+						get_record_list(Dataset.get());
+					}
 				}
-			}
-			break;
-		case 'show_record_list':
-			request = BKN_WSF.pluck();
-			if (request && ('service' in request) && (request['service'] == 'record_delete')) {
+				break;
+			case 'show_record_list':
+				request = BKN_WSF.pluck();
+				if (request && ('service' in request) && (request['service'] == 'record_delete')) {
+					$('#more_attribute_button').html("");
+					$('#record_buttons').html('');
+					$('#record_form').html('');
+					status('Fresh list of records.');
+				}			
+				break;
+			case 'show_dataset_list':
+				request = BKN_WSF.pluck();
 				$('#more_attribute_button').html("");
-				$('#record_buttons').html('');
 				$('#record_form').html('');
-				status('Fresh list of records.');
-			}			
-			break;
-		case 'show_dataset_list':
-			request = BKN_WSF.pluck();
-			$('#more_attribute_button').html("");
-			$('#record_form').html('');
-			$('#record_buttons').html('');
-			$('#record_list').html('');
-			$('#record_nav').html('');
-			break;
-		default:
-			break;
-		}
-	}
-}
+				$('#record_buttons').html('');
+				$('#record_list').html('');
+				$('#record_nav').html('');
+				break;
+			default:
+				break;
+			}
+	};
+};
 Display(); // instantiate
 
 //-----------------------------
 // SELECTION
 
-Selection = function () {
+var Selection = function () {
 	// TODO: USE COLLECTION CLASS INSTEAD OF RECORD_LOOKUP
 	var record_lookup = {};
 
 	Selection.add_record = function (record_uri, link_name) {
-		var list_item = Record_list.get('item', record_uri)
+		var list_item = Record_list.get('item', record_uri);
 		
 		// TODO: CREATE ITEM CLASS FOR SELECTION
 		var item_id = 'selected_'+record_uri.replace(/[\/\:\.\-]/g,'_');
@@ -488,7 +490,7 @@ Selection = function () {
 
 	Selection.remove_record = function(record_uri, link_name){
 		var content = '';
-		var list_item = Record_list.get('item', record_uri)
+		var list_item = Record_list.get('item', record_uri);
 		// clear download because it show previous saved collection
 		$('#selected_records_download').html(''); 
 		// TODO: CREATE ITEM CLASS FOR SELECTION
@@ -507,15 +509,10 @@ Selection = function () {
 	};
 	
 	Selection.save = function () {
-		// Make sure all record data has been fetched
-		// Check every half second, timeout after 7 seconds
-		var fetches_complete = false;
-		var timer_id, interval_id;
-		var timeout = false;
 		save_selected_content('selected_records');		
 	};
 
-}
+};
 Selection(); // instantiate
 
 
@@ -921,7 +918,7 @@ function select_dataset (dataset_id, page) {
 
 //-----------------------------
 // RECORD_LIST
-Record_list = function () {
+var Record_list = function () {
 	var collection = {};
 	
 	// For persistence. TODO: convert this class into a real class
@@ -1391,7 +1388,7 @@ function get_record_list (dataset_uri, page) {
 // RECORD
 
 
-Record = function (v) {
+var Record = function (v) {
 	var id = '';
 	var uri = '';
 	var arg = $(document).getUrlParam("uri");
