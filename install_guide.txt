@@ -1,0 +1,24 @@
+﻿BKN Editor Installation Guide
+ 
+Download the BKN Editor application and required service scripts from,
+ 
+https://github.com/bkn/bkn_editor/tarball/master
+Required scripts include bkn_wsf.py and save_file.py. 
+Versions of these file are included in the bkn_editor respository. 
+The latest versions are at,
+ 
+  https://github.com/bkn/bkn_wsf/tarball/master
+  https://github.com/bkn/file_op/tarball/master
+ 
+The files should be copied into a web accessible directory. 
+bkn_editor also expects two scripts to be in specific locations under the cgi-bin directory 
+of the same server where bkn_editor is installed.
+ 
+  cgi-bin/structwsf/bkn_wsf.py
+  cgi-bin/file_op/save_file.py
+ 
+For the Selected Records functionality to work, the ‘user_files’ directory under bkn_editor 
+must be owned by the web server. For example the ls listing might look like one of these,
+ 
+  drwxr--r-- 3 _www           admin        102 Nov 15 09:13 user_files
+  drwxr--r-- 2 www-data jalves  4096 2010-11-10 19:47 user_files
