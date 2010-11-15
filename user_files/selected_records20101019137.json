@@ -1,0 +1,27 @@
+{
+  "http://people.bibkn.org/wsf/datasets/UCBStat/ucbstat_person_jim_pitman_657": {
+    "profile": "http://vcresearch.berkeley.edu/faculty/faculty_profile?fid=657&exp_search_terms=Pitman&s_type=or&s_match=stem&acttype=facname", 
+    "name": "Jim Pitman", 
+    "ucb_faculty_id": "657", 
+    "homepage": "http://www.stat.berkeley.edu/~pitman", 
+    "affiliation": {
+      "ref": "@@http://people.bibkn.org/wsf/datasets/UCBStat/ucbstat_affiliation_ucb_berkeley"
+    }, 
+    "position": "Professor, Department Vice-Chair", 
+    "type": "Person", 
+    "id": "http://people.bibkn.org/wsf/datasets/UCBStat/ucbstat_person_jim_pitman_657"
+  }, 
+  "http://people.bibkn.org/conStruct/datasets/130/resource/Pitman__James_William": {
+    "acmid": "81309482576", 
+    "name": "Pitman, James William", 
+    "homepage": {}, 
+    "memimsid": "5825", 
+    "mrauthid": "140080", 
+    "mgid": "30968", 
+    "profileWebpage": {}, 
+    "honorWebpage": {}, 
+    "type": "Person", 
+    "id": "http://people.bibkn.org/conStruct/datasets/130/resource/Pitman__James_William", 
+    "prefLabel": "Pitman, Jim"
+  }
+}

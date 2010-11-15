@@ -142,13 +142,22 @@ if (cgi_fields):
     response = {}
     referer = get_referer_parts()
     local = get_script_parts()
+    bibjson = None
+    try:
+        bibjson = simplejson.loads(data)
+    except:
+        error = True
+        bibjson = {}
+        response['error'] = 'data is not in JSON format'
     
     server = os.getenv("SERVER_NAME")
     docroot = str(os.getenv("DOCUMENT_ROOT"))
     if (not server) or ('server' not in referer) or (not referer['server']):
         error = True
+        response['error'] = 'unable to get server or referer name'
     elif (referer['server'] != server):
         error = True # disallow write if referer is not on server
+        response['error'] = 'referer is not on same server as save_file.py'
     else:
         if not root: 
             # use referer path from docroot
@@ -179,21 +188,20 @@ if (cgi_fields):
     else:
         folder = slash_end(folder)
 
-    if not data: 
-        data=''
     
-    if (not error) and file:
+    if (not error) and file and bibjson:
         file_location = file_path+folder+file
         location_url = url_path+folder+file
         response['location_url'] = location_url
         response['file_location'] = file_location
 
         f = codecs.open(file_location,'w', "utf-8")
-        f.write(data)
+        f.write(simplejson.dumps(bibjson, indent=2))
         f.close()
     
     if callback:
         print 'Content-type: text/plain \n\n'
+#        print 'Content-Disposition: attachment; filename='+response['location_url']        
         print callback+'('+simplejson.dumps(response)+')'    
     else:
         print 'Content-type: text/plain \n\n'
