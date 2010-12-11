@@ -1,34 +1,25 @@
 
-function save_selected_content(section) {
+
+function make_app_url() {
+	var app_url = "" + window.location.protocol + "//"; 
+	app_url +=  window.location.hostname + window.location.pathname;
+	return app_url	;
+}
+
+function open_content(callback, file_name, folder, record_id) {
 	
-	var data = '';
-	var file_name = 'bkn_editor.json'
-	if (section == 'selected_records') {
-		var t = new Date();
-		data = formattedJSON(Selection.get_records(), 'file');
-		file_name = 'selected_records';
-		file_name += ''+t.getFullYear()+t.getMonth()+t.getDay()+t.getHours()+t.getMinutes()+t.getSeconds();     
-		file_name += '.json';
-	}
-	
-	var service = "http://" + window.location.hostname + "/";
-	service += "cgi-bin/file_op/save_file.py";
-//	service += "cgi-bin/file_op/file_test.py";
-	
+	var script = "http://" + window.location.hostname + "/";
+	script += "cgi-bin/file_op/file_info.py";	
 	var params ='&file=' + file_name;
-	params += '&folder=user_files';
-// need to decode data before sending.
-//deb('utf8encode:<br>'+Utf8.encode(data))
-//deb('utf8decode:<br>'+Utf8.decode(data))
-//deb('htmldecode:<br>'+Encoder.htmlDecode(data));
-//deb('HTML2Numerical:<br>'+Encoder.HTML2Numerical(data))
-//deb('NumericalToHTML:<br>'+Encoder.NumericalToHTML(data))
-//data = Utf8.decode(data);	
-	
-	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
-//deb('service: '+service+'?'+params);
+	// TODO: use config file for root like 'user_files' 
+	params += '&folder=' + folder;	
+	params += '&service=file_read';
+	if (record_id) {
+		params += '&record_id='+record_id;
+	}
+//deb('script: '+script+'?'+params);
     $.ajax({
-        url: service,
+        url: script,
         data: params,
         type: "post",
         cache: false,
@@ -36,29 +27,32 @@ function save_selected_content(section) {
         error: function(xobj, status, error){
 			deb('error');
 			        },
-        success: function (response) {
-			// this could happen if a python services fails.
-			if ((typeof response) == 'string') {
-				deb(response);
-			}	
-			var content = '';			
-			content += "&nbsp;&nbsp;&nbsp;&nbsp;";
-			
-			var downloader_service = "";
-			downloader_service += "download_file.php?file=";
-			downloader_service += response['file_location']
-			content += "<a href=\""+downloader_service+"\" ";
-			content += ">Download Collection ";
-			content += "</a>";
+        success: callback
+    }); 
+}
 
-			content += "&nbsp;&nbsp;&nbsp;&nbsp;";
-			content += "<a href=\""+response['location_url']+"\" ";
-			content += " target='_blank'";
-			content += ">Display JSON";
-			content += "</a>";
-			$('#selected_records_download').html(content);
-			
-		}
+
+
+
+function save_content(data, callback, file_name, folder) {
+	
+	var script = "http://" + window.location.hostname + "/";
+	script += "cgi-bin/file_op/save_file.py";
+	
+	var params ='&file=' + file_name;
+	params += '&folder=' + folder;	
+	params += '&data='+ encodeURIComponent(data);//(formattedJSON(r,'file'));
+//deb('script: '+script+'?'+params);
+    $.ajax({
+        url: script,
+        data: params,
+        type: "post",
+        cache: false,
+        dataType: "jsonp", 
+        error: function(xobj, status, error){
+			deb('error');
+			        },
+        success: callback
     }); 
 }
 
@@ -81,59 +75,88 @@ function show_template_selected_records() {
 
 }
 
-var BKN_WSF = function (v) {
-	var part = {
-		'root': '', // http://people.bibkn.org/wsf/
-		'service_root': ''	// http://people.bibkn.org/wsf/ws/			
-	};
+var BKN = function () {
 	var request_stack = [];
+	var env =  {
+		'repository_id':'',
+		'repository_type': '',
+		'repository_tree': {}	
+	};
 	
-	if (v) {
-		part.root = slash_end(v);
-	}
-	else {
-		part.root = '';		
-	}
 	
-	BKN_WSF.set = function (v,k) {
-		if (v && !k) {
-			part.root = slash_end(v);
-		}
-		else {
-			if (k == 'service_root') {
-				part.service_root = slash_end(v);
-			}
-			else if (k == 'root') {
-				part.root = slash_end(v);
+	BKN.set = function (v, k) {
+		if (v && k) {
+			if (k == 'repository_tree') {
+				// TODO check the format of v in case it needs to be converted to a lookup
+				env[k] = v; 				
 			}
 			else {
-				return '';
+				env[k] = v; 
 			}
 		}
-		return part.root;
 	};
-	
-	BKN_WSF.get = function (k) {
+
+	BKN.get = function (k, v) {
+		var response = '';
 		if (k) {
-			if (k == 'service_root') {
-				return part.service_root;			
+			if (v && (k == 'repository_tree')) {
+				if ((v in env['repository_tree']) &&
+						('recordList' in env['repository_tree'][v])) {
+					response = {
+						'recordList' : env['repository_tree'][v]['recordList']
+					};
+				}
+				else {
+					response = null;
+				}
+			} // k not in env
+			else if (k in env) {
+				 response = env[k]; 				
 			}
-			else if (k == 'request_stack') {
-				return request_stack;
-			}
-			else if (k == 'root') {
-				return part.root;
-			}
-			else if (k == 'url') {
-				return part.root.replace('/wsf/','');
-			}
-		}
-		else {
-			return part.root;			
-		}		
+		} // k
+		return response;
 	};
 	
-	BKN_WSF.pluck = function (k) {
+	BKN.save_repository_tree = function (response) {
+		BKN.set(response, 'repository_tree');
+		show_repository_list();
+	}
+	
+	BKN.start = function () {
+		var params = '';
+	    var ds = $(document).getUrlParam("dataset");
+	    var rec = $(document).getUrlParam("record");
+		var repository = $(document).getUrlParam("repository");
+		var repo_type = $(document).getUrlParam("repo_type");
+		// TODO: implement search/query and fix section below to removre 'all'
+		if (repository) {
+			BKN.set(repository, 'repository_id');
+			get_dataset_list();		
+			if (ds) {
+				// We want to dislay a specific record.
+				if (ds == 'all') {	// this means search, but we aren't saving the search term yet
+	//				Dataset.set(Record.extract_dataset_uri(rec));
+				}
+				else {
+					Dataset.set(decodeURIComponent(ds));			
+				}
+				// WAIT FOR get_dataset_list to return?
+				get_record_list(Dataset.get());
+	
+				// WAIT FOR get_record_list to return?
+				if (rec) {
+					Record.set(decodeURIComponent(rec));
+					get_record(Record.get('id'));
+				}   
+			} // ds
+		}
+	};
+	
+	BKN.service_stack = function (v) {
+		request_stack.push(v);
+	};
+	
+	BKN.service_pluck = function (k) {
 		var response = {};
 		if (request_stack.length == 0) {
 			//deb("error: can not find a request matching response.");
@@ -179,9 +202,218 @@ var BKN_WSF = function (v) {
 		
 		}
 		return response;
+	};	
+};
+BKN(); 
+
+var FILE_OP = function (v) {
+	var part = {
+		'root': '',
+		'repository_id': '',
+		'repository_tree': null
+		};
+
+	FILE_OP.set = function(v, k) {
+		if (v && !k) {
+			FILE_OP.set(v, 'root')
+		}
+		else {
+			if (k == 'root') {
+				part.root = slash_end(v);				
+			}
+			else if (k == 'repository_id') {
+				part.repository_id = v;				
+				BKN.set(part.repository_id, 'repository_id');			
+				Dataset.set(FILE_OP.get('root')+part.repository_id,'root');	
+			}
+			else if (k == 'repository_tree') {
+				part.repository_tree = v;				
+			}
+			else {
+				return '';
+			}
+		}
+		return part.root;
 	};
 
-	BKN_WSF.error = function (response) {
+	FILE_OP.get = function (k) {
+		var response = part.repository_id;
+		if (k) {
+			if (k == 'root') {
+				response = part.root;
+			}
+			else if (k == 'repository_id') {
+				response = part.repository_id;
+			}
+		}
+		else {
+			response = part.root;			
+		}		
+		return response;
+	};
+	
+	FILE_OP.save_repository_tree = function (response) {
+		FILE_OP.set(response, 'repository_tree');		
+		BKN.save_repository_tree(response);		
+	};
+	
+	FILE_OP.start = function (response) {
+		FILE_OP.save_repository_tree(response);
+		BKN.start();		
+	};
+
+	// callback for refresh of dataset_list from new tree 
+	FILE_OP.repository_update = function(response){
+		FILE_OP.save_repository_tree(response);
+		bkn_data_request(show_dataset_list, 'dataset_list', '');
+		select_dataset(Dataset.get());
+	};
+	
+	// callback for 'dataset_create'
+	FILE_OP.dataset_created = function() {
+		bkn_file_call(FILE_OP.repository_update, 'repository_tree');
+	};
+	
+	FILE_OP.request = function(callback, service, params){	
+		// TODO switch statement to set script name
+		var script = "http://" + window.location.hostname + "/";
+		script += "cgi-bin/file_op/file_info.py";	
+	//deb('script: '+script+'?'+params);
+
+	    $.ajax({
+	        url: script,
+	        data: params+'&service='+service,
+	        type: "post",
+	        cache: false,
+	        dataType: "jsonp", 
+	        error: function(xobj, status, error){
+				deb('error');
+				},
+	        success: callback
+	    }); 
+		
+	};
+	
+	FILE_OP.saved = function(response) {
+		// this could happen if a python services fails.
+		if ((typeof response) == 'string') {
+			status('Save Failed');
+			deb(response);
+		}
+		else {
+			status('Saved changes.');
+		}		
+	};	
+
+	
+	FILE_OP.record_add = function (record) {		
+		if ('id' in record) {
+			var list_item = Record_list.set('item',record);
+			var bibjson = Record_list.get('record_list');
+	//		clear_record_list();
+			show_record_list(bibjson);
+			get_record(record.id);	// safe to call because it does not require http request
+			save_content(
+					formattedJSON(bibjson, 'file'), 
+					FILE_OP.saved,
+					Dataset.get('id'), 
+					FILE_OP.get('root') + FILE_OP.get('repository_id')
+				);			
+		} // TODO handle error if no id
+
+	};
+
+	FILE_OP.record_update = function (record) {
+		if ('id' in record) {	
+			var list_item = Record_list.get('item',record.id);
+			list_item.set('data', record);
+			var bibjson = Record_list.get('record_list');
+			show_record_list(bibjson);
+			get_record(record.id);	// safe to call because it does not require http request
+			save_content(
+					formattedJSON(bibjson, 'file'), 
+					FILE_OP.saved,
+					Dataset.get('id'), 
+					FILE_OP.get('root') + FILE_OP.get('repository_id')
+					);			
+		} // TODO handle error if no id
+	};
+
+	FILE_OP.record_delete = function (record_uri) {		
+		var record_id = Record.extract_id(record_uri);
+		if (record_id) {
+			Record_list.remove('record_delete', record_id);
+			var bibjson = Record_list.get('record_list');
+			show_record_list(bibjson);
+			clear_record_form();
+			save_content(
+					formattedJSON(bibjson, 'file'), 
+					FILE_OP.saved,
+					Dataset.get('id'), 
+					FILE_OP.get('root') + FILE_OP.get('repository_id')
+					);			
+		} // TODO handle error if no id
+	};
+
+};
+FILE_OP();
+
+var STRUCT_WSF = function (v) {
+	var part = {
+		'root': '', 
+		'service_root': '',
+		'repository_tree': {
+//			'http://www.bibkn.org/wsf/': 		{'title': 'bibkn.org'},
+			'http://datasets.bibsoup.org/wsf/': {'title': 'datasets.bibsoup.org'},
+			'http://people.bibkn.org/wsf/': 	{'title': 'people.bibsoup.org'}
+		}
+	};
+	
+	if (v) {
+		part.root = slash_end(v);
+	}
+	else {
+		part.root = '';		
+	}
+	
+	
+	STRUCT_WSF.set = function (v,k) {
+		if (v && !k) {
+			STRUCT_WSF.set(v, 'root')
+		}
+		else {
+			if (k == 'service_root') {
+				part.service_root = slash_end(v);
+			}
+			else if (k == 'root') {
+				part.root = slash_end(v);				
+				STRUCT_WSF.set(part.root+'ws/', 'service_root');
+				Dataset.set(part.root+'datasets/','root');
+				BKN.set(part.root,'repository_id');
+			}
+			else {
+				return '';
+			}
+		}
+		return part.root;
+	};
+	
+	STRUCT_WSF.get = function (k) {
+		var response = '';
+		if (k) {
+			if (k in part) { //== 'service_root'
+				response = part[k]; //part.service_root;			
+			}
+			else if (k == 'website') {
+				response = part.root.replace('/wsf/','');
+			}
+		}
+		else {
+			response = part.root;			
+		}		
+		return response;
+	};
+	STRUCT_WSF.error = function (response) {
 		//var xobj = '';
 		var error = ('error' in response) ? response['error'] : "UNKNOWN ERROR";
 		var code = '';
@@ -202,7 +434,7 @@ var BKN_WSF = function (v) {
 		}
 		
 	    if (code == '403') {
-	    	var content = "You need to <a href='"+BKN_WSF.get('url')+"'>LOGIN</a> the repository ";// 
+	    	var content = "You need to <a href='"+STRUCT_WSF.get('website')+"'>LOGIN</a> the repository ";// 
 	    	content += " and have permission for the <a href='http://people.bibkn.org/conStruct/dataset/'>dataset</a>.";
 	    	status(content);
 	    }
@@ -214,13 +446,13 @@ var BKN_WSF = function (v) {
 	};
 
 
-	BKN_WSF.request = function (callback, service, params, method, accept) {
+	STRUCT_WSF.request = function (callback, service, params, method, accept) {
 		var wsf_script = "cgi-bin/structwsf/bkn_wsf.py";
 		var wsf_location = "http://" + window.location.hostname + "/";
 		var wsf_php_proxy = "" + wsf_location + wsf_script;
 	    var wsf_params = ""; 
-//	    wsf_params += "&ws=" + BKN_WSF.get('service_root');
-		wsf_params += "&bkn_root=" + BKN_WSF.get('root');
+//	    wsf_params += "&ws=" + STRUCT_WSF.get('service_root');
+		wsf_params += "&bkn_root=" + STRUCT_WSF.get('root');
 		wsf_params += "&service="+service;
 	    wsf_params += "&method=";
 	    if (method) {wsf_params += method;} else {wsf_params += "post";};
@@ -233,7 +465,7 @@ var BKN_WSF = function (v) {
 		if (accept) {response_format = accept;};
 //	deb(wsf_php_proxy +"?"+wsf_params);
 		var d = new Date();
-		request_stack.push({
+		BKN.service_stack({
 			"time": d.getTime(),
 			"callback":callback, 
 			"service":service, 
@@ -248,7 +480,7 @@ var BKN_WSF = function (v) {
 	        cache: false,
 	        dataType: "jsonp", //response_format,
 	        error: function(xobj, status, error){
-				    	BKN_WSF.error({'xobj':xobj, 'status':status,'error':error});
+				    	STRUCT_WSF.error({'xobj':xobj, 'status':status,'error':error});
 			},
 	        success: function (response) {
 						// this could happen if a python services fails.
@@ -257,7 +489,7 @@ var BKN_WSF = function (v) {
 						}				
 
 			        	if (response && ('error' in response)) {
-			        		BKN_WSF.error(response);
+			        		STRUCT_WSF.error(response);
 			        	}
 			        	else {
 // utf8							
@@ -270,11 +502,61 @@ var BKN_WSF = function (v) {
 	};
 
 
-}; // BKN_WSF
+// TODO: consolidate add and update functions
+
+	STRUCT_WSF.record_add = function(record, record_uri, dataset_uri){	
+		var params = set_add_update_params(record, null, dataset_uri)
+	//NEED TO REVIEW EDITS BEFORE UPDATE
+	//link to ref subobjects and display one level
+		
+		bkn_data_request(
+				function (response) {
+					show_record(response);
+					status("Create succeeded");
+					//NEED TO UPDATE RECORD LIST IF NAME CHANGES	
+					}, 
+				'record_add', params
+				);
+	
+	};
+
+	STRUCT_WSF.record_update = function (record, record_uri, dataset_uri) {
+		var params = set_add_update_params(record, record_uri, dataset_uri)
+		//NEED TO REVIEW EDITS BEFORE UPDATE
+		//link to ref subobjects and display one level
+	
+		bkn_data_request(
+				function (response) {
+					show_record(response);
+					status("Update succeeded");
+					}, 
+				'record_update', params
+				);
+		
+	};
+
+	STRUCT_WSF.record_delete = function (record_uri, dataset_uri) {
+		var params = '';
+		params += '&dataset=' + Dataset.set(dataset_uri); // set
+		params += '&uri=' +     Record.set(record_uri);   // set
+		bkn_data_request(
+				function(response) {
+					status("Delete succeeded");
+					// TODO: call clear_record_form
+					var request = BKN.service_pluck('record_delete'); // SHOULD VERIFY THE REQUEST
+					Record.set(null);
+					$('#record_id').html("");
+					get_record_list(Dataset.get()); // refresh the list
+					}, 
+				"record_delete", params
+				);
+	};
+}; // STRUCT_WSF
+STRUCT_WSF();
 
 
 var Dataset = function (v) {
-	var root = ''; http://people.bibkn.org/wsf/datasets/ 
+	var root = '';  
 	var id = '';
 	var uri = '';
 	var page = 0;
@@ -323,7 +605,7 @@ var Dataset = function (v) {
 	Dataset.set = function (v,k) {
 		var response = null;
 		if (v && !k) {
-			if (v.substring(0,7) == 'http://') {
+			if (v.indexOf('/') != -1) { // v.substring(0,7) == 'http://'
 				response = Dataset.set(v, 'uri');
 			}
 			else {
@@ -410,6 +692,7 @@ var Dataset = function (v) {
 	Dataset.set(arg);
 			
 }; // Dataset class
+Dataset(); 
 
 
 var Display = function () {
@@ -417,7 +700,7 @@ var Display = function () {
 		var request = '';
 		switch (called_from) {
 			case 'show_record':
-				request = BKN_WSF.pluck('show_record');
+				request = BKN.service_pluck('show_record');
 				if (request && ('service' in request)) {
 					var service = request['service'];
 					// 10/26/10 removed (service == 'record_update') || 
@@ -427,7 +710,7 @@ var Display = function () {
 				}
 				break;
 			case 'show_record_list':
-				request = BKN_WSF.pluck();
+				request = BKN.service_pluck();
 				if (request && ('service' in request) && (request['service'] == 'record_delete')) {
 					$('#more_attribute_button').html("");
 					$('#record_buttons').html('');
@@ -436,7 +719,7 @@ var Display = function () {
 				}			
 				break;
 			case 'show_dataset_list':
-				request = BKN_WSF.pluck();
+				request = BKN.service_pluck();
 				$('#more_attribute_button').html("");
 				$('#record_form').html('');
 				$('#record_buttons').html('');
@@ -456,6 +739,7 @@ Display(); // instantiate
 var Selection = function () {
 	// TODO: USE COLLECTION CLASS INSTEAD OF RECORD_LOOKUP
 	var record_lookup = {};
+	var record_list = [];
 
 	Selection.add_record = function (record_uri, link_name) {
 		var list_item = Record_list.get('item', record_uri);
@@ -504,14 +788,56 @@ var Selection = function () {
 		return record_lookup.length;
 	};
 
-	Selection.get_records = function ()	{
-		return record_lookup;
+	Selection.get_records = function (k)	{
+		var response = {};
+		if (k && (k == 'lookup')) {
+			response = record_lookup;
+		}
+		else {
+			response = {'recordList':[]};
+			for (r in record_lookup) {
+				response.recordList.push(record_lookup[r]);
+			}
+		}
+		return response;
+	};
+
+	Selection.options = function (response) {
+		// this could happen if a python services fails.
+		if ((typeof response) == 'string') {
+			deb(response);
+		}	
+		var content = '';			
+		content += "&nbsp;&nbsp;&nbsp;&nbsp;";
+
+		var downloader_service = "";
+//		downloader_service += "http://" + window.location.hostname + "/";
+//		downloader_service += "cgi-bin/file_op/";
+		downloader_service += "download_file.php?";
+		downloader_service += 'file=' + response['file_location']
+		content += "<a href=\""+downloader_service+"\" ";
+		content += ">Download Collection ";
+		content += "</a>";
+
+		content += "&nbsp;&nbsp;&nbsp;&nbsp;";
+		content += "<a href=\""+response['location_url']+"\" ";
+		content += " target='_blank'";
+		content += ">Display JSON";
+		content += "</a>";
+		$('#selected_records_download').html(content);			
 	};
 	
 	Selection.save = function () {
-		save_selected_content('selected_records');		
+		var folder = 'user_files/selected_records'; // TODO: get from FILE_OP or config
+		var data = '';
+		var file_name = '';
+		var t = new Date();
+		data = formattedJSON(Selection.get_records(), 'file');
+//		file_name = 'selected_records';
+		file_name += ''+t.getFullYear()+t.getMonth()+t.getDay()+t.getHours()+t.getMinutes()+t.getSeconds();     
+		file_name += '.json';
+		save_content(data, Selection.options, file_name, folder);		
 	};
-
 };
 Selection(); // instantiate
 
@@ -521,15 +847,95 @@ function status (message) {
 }
 
 function show_json(response){
-
 	deb(formattedJSON(response));
-// add test to display if result is text
-	//	deb("RESPONSE as text: " + response);
+}
 
+
+function bkn_file_call(callback, service, params) {	
+	
+	var response = null;
+	var file_op_params = '';
+	var file_name = '';
+	var folder = '';
+	var root = '';
+	var bibjson = null;
+	
+
+//deb('service: '+service);
+	switch (service) {
+		case 'repository_tree':
+			// list should be list of folders at root (user_files)  
+			file_op_params = '&folder=' + FILE_OP.get('root');		
+			FILE_OP.request(callback, 'folder_tree', file_op_params);	
+			break;
+		case 'repository_list':
+			// list should be list of folders at root (user_files)  
+			folder = 'user_files';
+			file_op_params = '&folder=' + folder;	
+			FILE_OP.request(callback, 'folder_list', file_op_params);	
+			break;
+		case 'dataset_list_ids':
+		case 'dataset_list':
+			// get selected repository
+			bibjson = BKN.get('repository_tree', BKN.get('repository_id'));			
+			show_dataset_list(bibjson);			
+			break;
+			
+		case 'browse':
+			// TODO handle paging - 
+			// need a special handler for file 
+			// different than structwsf behavior
+//			Dataset.get('page_size');
+//			Dataset.get('page');
+			root = FILE_OP.get('root');
+			folder = root+BKN.get('repository_id');
+			file_name = Dataset.extract_id(extract_url_parameter(params, 'datasets'));
+			// TODO replace the following with call to FILE_OP
+			open_content(show_record_list, file_name, folder)			
+			break;		
+		case 'record_read':
+			// record could already be in memory - see Record_list
+			// params: uri, dataset, record_id
+			root = FILE_OP.get('root');
+			folder = root+FILE_OP.get('repository_id');
+			file_name = Dataset.extract_id(extract_url_parameter(params, 'dataset'));
+			// TODO replace the following with call to FILE_OP
+			var record_id = Record.extract_id(extract_url_parameter(params, 'uri'));
+			open_content(show_record, file_name, folder, record_id);
+			break;
+		case 'dataset_create':
+			root = FILE_OP.get('root');
+			folder = root+FILE_OP.get('repository_id');
+			file_name = unslash_end(extract_url_parameter(params, 'uri'));
+			Dataset.set(file_name+'.json');	// pass in a uri
+			file_name = Dataset.get('id');  // get back an id
+			bibjson = 	{
+							'recordList':[], 
+							'dataset':{
+								'title':extract_url_parameter(params, 'title'),
+								'description':extract_url_parameter(params, 'description')						
+							}
+						};		
+			save_content(
+				formattedJSON(bibjson, 'file'),
+				FILE_OP.dataset_created, 
+				file_name, 
+				folder
+				);
+			break;
+		case 'record_add':
+		case 'record_update':
+		case 'record_delete':
+			break;
+		case 'search':
+		default:
+			deb("I can't handle files yet.");
+			break;
+	};	
 }
 
 function bkn_wsf_call(callback, call, params) {
-	if ((BKN_WSF.get('root') != 'http://datasets.bibsoup.org/wsf/') &&
+	if ((STRUCT_WSF.get('root') != 'http://datasets.bibsoup.org/wsf/') &&
 		(Dataset.get('uri') != 'http://people.bibkn.org/wsf/datasets/jack_update_test/'))
 		{
 		if (call in ['record_update','record_add', 'record_delete','dataset_create', 'dataset_delete']) {
@@ -537,18 +943,28 @@ function bkn_wsf_call(callback, call, params) {
 			return;
 		}
 	}
-//deb('params: <br>'+Utf8.encode(params));	
-params = Utf8.encode(params);	
-
-
-	BKN_WSF.request(callback, call, 
+	params = Utf8.encode(params);	
+	STRUCT_WSF.request(callback, call, 
 					encodeURIComponent(params), 
 					"post", 
 					encodeURIComponent("application/iron+json")
 					);
-
 }
 
+function bkn_data_request (callback, call, params) {
+	var repository_type = BKN.get('repository_type');
+	if (repository_type == 'structwsf') {
+		bkn_wsf_call(callback, call, params);	
+	}
+	else if (repository_type == 'host') {
+		bkn_file_call(callback, call, params)
+	}
+	/*
+	 * If repository is bkn_wsf then use structwsf
+	 * else if repository is file server then use save_file.py, allow upload
+	 * else if rep is local file then use upload
+	 */
+}
 
 function record_to_json() {
 	var json = {};
@@ -586,7 +1002,7 @@ function dataset_create(dataset_id, title, description) {
 	params += '&uri=' + Dataset.get('uri');
 	if (title) {params += '&title='+title;}
 	if (description) {params += '&description='+description;}
-	bkn_wsf_call(get_dataset_list, "dataset_create", params);
+	bkn_data_request(get_dataset_list, "dataset_create", params);
 }
 
 function show_dataset_create_form() {
@@ -705,6 +1121,8 @@ function show_template_page () {
 	$('body').append("<div id='left_sidebar' class='left_sidebar'></div>");
 	$('body').append("<div id='center_block' class='center_block'></div>");
 	$('#left_sidebar').append("<div id='active_info' class='active_info'></div>");
+	// TODO create style class for _type
+	$('#left_sidebar').append("<div id='repository_type' class='repository_list'></div>");	
 	$('#left_sidebar').append("<div id='repository_list' class='repository_list'></div>");	
 //	$('#left_sidebar').append("<div id='search_form' class='search_form'></div>");
 	$('#left_sidebar').append("<div id='dataset_list' class='dataset_list'></div>");
@@ -720,40 +1138,79 @@ function show_template_page () {
 	$('#active_info').append("<div class='info_title'>Record<div id='record_id' class='record_id'></div></div>");
 	$('#active_info').append("<div class='permalink' id='permalink'></div>");
 
+	show_repository_types();
 	show_template_record();
 	show_template_selected_records();
 }
 
 function show_ids() {
-	$('#repository_root').html(BKN_WSF.get('url'));
+	$('#repository_root').html(BKN.get('repository_id'));
 	$('#dataset_id').html(Dataset.get('id'));
 	$('#record_id').html(Record.get('id'));
+//http://localhost/bkn/bkn_editor/bkn_editor.html?
+//&repository=
+//&dataset=http://datasets.bibsoup.org/wsf/datasets/quickie/
+//&record=http://datasets.bibsoup.org/wsf/datasets/quickie/5BD0739B-E31D-4375-BAB8-9684A3635906	
 	var permalink = '';
 	permalink += "" + window.location.protocol + "//" 
 	permalink +=  window.location.hostname + window.location.pathname + "?";	
-	permalink += '&repository='+ BKN_WSF.get('root');
+	permalink += '&repo_type=' + BKN.get('repository_type');
+	permalink += '&repository='+ BKN.get('repository_id');//STRUCT_WSF.get('root');
 	permalink += '&dataset='+Dataset.get();
 	permalink += '&record='+Record.get('uri');
 	permalink = '<a title="Link to current display" href="'+permalink+'" >permalink</a>';
 	$('#permalink').html(permalink);
 }
 
-function show_repository_list () {
+function show_repository_types() {
+	$('#repository_type').html('<div class="block_header">Repository Types</div>');
+	var content = '';	
+	content = '<div><a title= "Display list of repositories of this type."';
+	content +=' class="repo_item" href="';
+	content += make_app_url() + '?';
+	content += '&repo_type=host';
+	content += '">Hosted Files</a></div>';
+	$('#repository_type').append(content);		
+
+	content = '<div><a title= "Display list of repositories of this type."';
+	content +=' class="repo_item" href="';
+	content += make_app_url() + '?';
+	content += '&repo_type=structwsf';
+	content += '">StructWSF</a></div>';
+	$('#repository_type').append(content);		
+	
+}
+
+function show_repository_list() {
 	$('#repository_list').html('<div class="block_header">Dataset Repositories</div>');
-	var app_url = "" + window.location.protocol + "//" 
-	app_url +=  window.location.hostname + window.location.pathname + "?";
+	
+	var repository_type = BKN.get('repository_type');
+	var repos = BKN.get('repository_tree');
 	var content = '';
-	var repos = [ 'http://datasets.bibsoup.org',
-//	              'http://www.bibkn.org',
-	              'http://people.bibkn.org'
-	             ];
+
 	$('#repository_list').append('<div id="repository_table" class="repository_table"></div>');
-	for (var i=0; i < repos.length; i++) {
-		content = '<div><a title= "Display list of datasets for this repository" class="repo_item" href="';
-		content += app_url+'repository='+repos[i]+'/wsf/">';
-		content += repos[i].replace('http://','')+'</a></div>';
+		
+	for (r in repos) {	
+		content = '<div><a title= "Display list of datasets for this repository"';
+		content +=' class="repo_item" href="';
+		content += make_app_url() + '?'+'repository='+r;
+		content += '&repo_type=' + repository_type;
+		content += '">';
+		if ('title' in repos[r]) {
+			content += repos[r].title;	
+		}
+		else {
+			content += r;		
+		}
+		content += '</a></div>';
 		$('#repository_table').append(content);		
 	}
+
+//	content = '<div><a title="Display list of files on the host server"';
+//	content += ' class="repo_item" href="';
+//	content += app_url+'repository=host">HOST</a></div>';
+//	$('#repository_table').append(content);		
+	
 	status('Select a repository.')
 }
 
@@ -777,7 +1234,7 @@ function get_search_result (query, dataset_uri, page) {
 		//Record.set(null); // sometimes we want to keep the record just refresh list
 	}
 	else if (dataset_uri != 'all') {
-		Dataset.set(dataset_uri,'uri')
+		Dataset.set(dataset_uri); // ,'uri' removed to work with files
 	}
 	//show_ids();
 	if (page) {
@@ -787,7 +1244,7 @@ function get_search_result (query, dataset_uri, page) {
 	params += '&datasets=' + dataset_uri;
 	params += '&items='+ Dataset.get('page_size');
 	params += '&page='+ Dataset.get('page');
-	bkn_wsf_call(show_search_result, "search", params);	
+	bkn_data_request(show_search_result, "search", params);	
 }
 
 function get_search_term() {
@@ -876,7 +1333,7 @@ function show_dataset_list(bibjson) {
 	
 	content = "";
 	var d = null;
-	if ('recordList' in bibjson) {
+	if (bibjson && ('recordList' in bibjson)) {
 		for (var i=0; i < bibjson['recordList'].length; i++) {
 			d = bibjson['recordList'][i];
 			show_dataset_row(d);
@@ -898,11 +1355,11 @@ function get_dataset_list () {
 	clear_record_list();
 	status('Fetching list of datasets ...');
 // workaround issue: slow response time retrieving dataset names on bknpeople
-	if (BKN_WSF.get('root') == 'http://people.bibkn.org/wsf/') {
-		bkn_wsf_call(show_dataset_list, "dataset_list_ids", params);			
+	if (STRUCT_WSF.get('root') == 'http://people.bibkn.org/wsf/') {
+		bkn_data_request(show_dataset_list, "dataset_list_ids", params);			
 	}
 	else {
-		bkn_wsf_call(show_dataset_list, "dataset_list", params);		
+		bkn_data_request(show_dataset_list, 'dataset_list', params);		
 	}
 }
 
@@ -920,11 +1377,6 @@ function select_dataset (dataset_id, page) {
 // RECORD_LIST
 var Record_list = function () {
 	var collection = {};
-	
-	// For persistence. TODO: convert this class into a real class
-	Record_list.collection = function () {
-		return collection;
-	};
 	
 	function Item(r) {
 		this.data = {}
@@ -953,10 +1405,14 @@ var Record_list = function () {
 //deb('Item data: '+formattedJSON(this.data));
 		}
 	} // Item
+	
 	Item.prototype.set = function(request, v){
 		var response = '';
 		var content = '';
 		switch (request) {
+			case 'data':
+				this.data = v;
+				break;
 			case 'uri':
 				this.info[request] = v;
 				response = this.info[request];
@@ -1029,7 +1485,7 @@ var Record_list = function () {
 			case 'selector_link':
 				content = '';
 				if (this.info.selected) {
-					content += "<img src='gray_dot.gif' class='select_link'></img>";
+//					content += "<img src='gray_dot.gif' class='select_link'></img>";
 				}
 				else {
 					content += "<a ";
@@ -1076,7 +1532,8 @@ var Record_list = function () {
 			}
 		return response;			
 
-	};	
+	};
+	
 	
 	
 	Record_list.set = function (request,v, v2) {
@@ -1093,7 +1550,7 @@ var Record_list = function () {
 				else if (v && (typeof v == 'string')) {
 					k = v;
 				}
-				collection[k] = new Item(v);					
+				collection[k] = new Item(v);										
 				response = collection[k];
 				break;
 			case 'visible':
@@ -1126,6 +1583,12 @@ var Record_list = function () {
 			case 'collection':
 				response = collection;
 				break;			
+			case 'record_list':
+				response = {'recordList':[]};
+				for (r in collection) {
+					response.recordList.push(collection[r].data);
+				}
+				break;			
 			case 'item':
 				if (v && (v in collection)) {
 					response = collection[v];
@@ -1136,6 +1599,7 @@ var Record_list = function () {
 				if (v && (v in collection)) {
 					response = collection[v].data ;
 				}
+				break;			
 			default:
 				break;			
 			}
@@ -1145,7 +1609,6 @@ var Record_list = function () {
 
 	Record_list.display = function (request, v) {
 		var response = '';
-		var record = null;
 		switch (request) {
 			case 'visible':
 			default:
@@ -1153,7 +1616,19 @@ var Record_list = function () {
 			}
 		return response;				
 	};
-}
+	
+	Record_list.remove = function (request, v) {
+		var response = '';
+		switch (request) {
+			case 'record_delete':
+				delete collection[v];
+			default:
+				break;			
+			}
+		return response;				
+	};
+	
+};
 Record_list(); // instantiate
 
 // ------------------------------------------------------
@@ -1166,8 +1641,10 @@ function clear_record_list() {
 
 
 function get_record (r_uri) {
+	
 	var params = '';
 	var record = null;
+	var repository_type = BKN.get('repository_type');
 	var record_uri = r_uri;
 	if (record_uri) {
 		Record.set(record_uri);
@@ -1176,7 +1653,13 @@ function get_record (r_uri) {
 		record_uri = Record.get('uri');
 	}
 	clear_record_form();	
-	Dataset.set(Record.extract_dataset_uri(record_uri));
+	
+	
+	// TODO: move code into classes for file_op and structwsf	
+	if (repository_type == 'structwsf') {
+		Dataset.set(Record.extract_dataset_uri(record_uri));
+	}	
+
 	// check if the record detail has been fetched
 	record = Record_list.get('record', record_uri);
 	if (record && (typeof record == 'object')) {
@@ -1190,10 +1673,11 @@ function get_record (r_uri) {
 		status('Fetching record detail ...');	
 		params += '&uri='+record_uri;
 		params += '&dataset=' + Dataset.get();      // use current dataset
-		bkn_wsf_call(show_record, "record_read", params);			
+		bkn_data_request(show_record, 'record_read', params);			
 	}
 
 }
+
 
 function show_record_row (r) {
 	var content = "<tr>";
@@ -1371,7 +1855,7 @@ function get_record_list (dataset_uri, page) {
 		//Record.set(null); // sometimes we want to keep the record just refresh list
 	}
 	else {
-		Dataset.set(dataset_uri,'uri')
+		Dataset.set(dataset_uri); // ,'uri' - removed to work with files
 	}
 	//show_ids();
 	if (page) {
@@ -1380,7 +1864,7 @@ function get_record_list (dataset_uri, page) {
 	params += '&datasets=' + dataset_uri;
 	params += '&items='+ Dataset.get('page_size');
 	params += '&page='+ Dataset.get('page');
-	bkn_wsf_call(show_record_list, "browse", params);	
+	bkn_data_request(show_record_list, 'browse', params);	
 }
 
 
@@ -1419,8 +1903,8 @@ var Record = function (v) {
 					uri = '';					
 				}
 			} // no key
-			else { // consider http prefix a  uri
-				if (v.substring(0,7) == 'http://') {
+			else { // an id can not include a slash
+				if (v.indexOf('/') != -1) {  //v.substring(0,7) == 'http://'
 					Record.set(v, 'uri');
 				}
 				else { // v is an id
@@ -1472,7 +1956,8 @@ var Record = function (v) {
 	}
 	Record.set(arg);
 
-} // Record class
+}; // Record class
+Record();
 
 
 function clear_record_form() {
@@ -1542,37 +2027,36 @@ function show_template_record_create (record_uri, dataset_uri) {
 	content = "<input type='button' value='Create' id='create_record_button' class='_button'/>";
 	$('#record_buttons').html(content);	
 	$('#create_record_button').click(function () {
-		record_add(Record.get('uri'), Dataset.get());
+		record_add();
 		});	
 }
 
-function record_add (record_uri, dataset_uri) {
+
+
+function set_add_update_params(record, record_uri, dataset_uri) {
+	
+	var repository_type = BKN.get('repository_type');
+	var params = '';
+	params += '&dataset=' + Dataset.set(dataset_uri); // set
+	
+	var bibjson = {'recordList': [record]};
+	if (repository_type == 'structwsf') {
+		bibjson['dataset'] = Dataset.get('template');
+	}	
+	params += "&document=" + JSON.stringify(bibjson);
+	params += '&uri=' + Record.get();
+	
+	return params
+}
+
+function record_add() {
+	var repo_type = $(document).getUrlParam("repo_type");	
 	var record = {};	
 	var add_attributes = add_to_json();
 	if (add_attributes) {
 		$.extend(true, record, add_attributes);		
 	}
-	
-	var params = set_add_update_params(record, null, dataset_uri)
-//NEED TO REVIEW EDITS BEFORE UPDATE
-//link to ref subobjects and display one level
-	
-	bkn_wsf_call(
-			function (response) {
-				show_record(response);
-				status("Create succeeded");
-//NEED TO UPDATE RECORD LIST IF NAME CHANGES
 
-				}, 
-			"record_add", params
-			);
-}
-
-function set_add_update_params(record, record_uri, dataset_uri) {
-	
-	var params = '';
-	params += '&dataset=' + Dataset.set(dataset_uri); // set
-	
 	// STRIP THE DATASET URI PREFIX
 	if (('id' in record) && record['id']) {
 		record['id'] = record['id'].replace(dataset_uri,'')
@@ -1584,134 +2068,129 @@ function set_add_update_params(record, record_uri, dataset_uri) {
 		status('Unique id generated: '+record['id']);
 	}
 	
-	// TODO: this should not be necessary. It record_uri is sent by record_update
-	// we can get the id from the record which must have an id
-	// a future implementation may auto-generate the id
-	if (record_uri) { 
-		Record.set(record_uri);
+	if (repo_type == 'structwsf') {
+		STRUCT_WSF.record_add(record, record.id, Dataset.get());		
 	}
-	
-	params += '&uri=' + Record.get();
-	
-	var bibjson = {
-				'dataset': Dataset.get('template'),
-				'recordList': [record]
-				};
-	params += "&document=" + JSON.stringify(bibjson);
-	
-	return params
+	else {
+		FILE_OP.record_add(record);
+	}
 }
 
 function record_update (record_uri, dataset_uri) {
+		
 	status("Updating record ...");
+	var repo_type = $(document).getUrlParam("repo_type");	
 	var record = record_to_json();	
 	var add_attributes = add_to_json();
 	if (add_attributes) {
 		$.extend(true, record, add_attributes);		
 	}
+
+	// STRIP THE DATASET URI PREFIX
+	if (('id' in record) && record['id']) {
+		record['id'] = record['id'].replace(dataset_uri,'')
+		Record.set(record['id']);
+	}
 	
-	var params = set_add_update_params(record, record_uri, dataset_uri)
-//NEED TO REVIEW EDITS BEFORE UPDATE
-//link to ref subobjects and display one level
-	
-	bkn_wsf_call(
-			function (response) {
-				show_record(response);
-				status("Update succeeded");
-				}, 
-			"record_update", params
-			);
+	if (repo_type == 'structwsf') {
+		STRUCT_WSF.record_update(record, record_uri, dataset_uri);		
+	}
+	else {
+		FILE_OP.record_update(record);
+	}
 }	
 
 function record_delete (record_uri, dataset_uri) {
 	status("Deleting record ...");
-	var params = '';
-	params += '&dataset=' + Dataset.set(dataset_uri); // set
-	params += '&uri=' +     Record.set(record_uri);   // set
-	bkn_wsf_call(
-			function(response) {
-				status("Delete succeeded");
-				var request = BKN_WSF.pluck('record_delete'); // SHOULD VERIFY THE REQUEST
-				Record.set(null);
-				$('#record_id').html("");
-				get_record_list(Dataset.get()); // refresh the list
-				}, 
-			"record_delete", params
-			);
+	var repo_type = $(document).getUrlParam("repo_type");	
+
+	if (repo_type == 'structwsf') {
+		STRUCT_WSF.record_delete(record_uri, dataset_uri);		
+	}
+	else {
+		FILE_OP.record_delete(record_uri);
+	}
+
 }
 
 // MAIN
 $(document).ready(function() {
 	$('body').append("<div id='page_header_wrapper' class='page_header_wrapper'></div>");
-
 	$('#page_header_wrapper').html("<div class='logo'>bknEditor</div>");
 	$('#page_header_wrapper').append(
 			"<div class='page_subheader'>Brought to you by Bibliographic Knowledge Network<br>DEVELOPMENT TEST VERSION</div>");
-
-/*
- * STUFF FOR TESTING
-//	BKN_WSF.set('http://people.bibkn.org/wsf/','root');
-//	Dataset.set('jack_update_test');	
-//	show_template_page();
-//	get_record_list(Dataset.get());
-	
-*/	
-	// instantiate classes
-	BKN_WSF();
-	Dataset(); 
-	Record();
-    if ($(document).getUrlParam("repository")) {
-    	BKN_WSF(decodeURIComponent($(document).getUrlParam("repository")));
-    }
-    else if (location.search.substring(0,5) == '?url=') {
-		//http://people.bibkn.org/conStruct/view/?uri=http%3A%2F%2Fpeople.bibkn.org%2Fwsf%2Fdatasets%2Fjack_update_test%2Ff2&dataset=http%3A%2F%2Fpeople.bibkn.org%2Fwsf%2Fdatasets%2Fjack_update_test%2F
-		
-		// This supports javascript bookmarklet from the drupal page for a record
-		var bkn_params = '';
-		status("Record referred by bookmarklet.");
-		//NEED TO EXTRACT DOMAIN AND DATASET ROOT
-		BKN_WSF.set('http://people.bibkn.org/wsf/','root');
-		bkn_params = location.search.slice(5);	
-		Dataset(extract_url_parameter(bkn_params, 'dataset'));
-		Record(extract_url_parameter(bkn_params, 'uri'));
-	}
-
-//deb('bknroot:'+BKN_WSF.get('root')+':');
-	show_template_page();
-	BKN_WSF.set(BKN_WSF.get('root')+'ws/', 'service_root');
-	Dataset.set(BKN_WSF.get()+'datasets/','root')
+	show_template_page();	
 	$('#center_block').append("<div id='debug_area' class='debug_area'></div>");
-//	var debug_id = document.getElementById('debug_area');
     deb('The section below is for test and debug information.')	
 
-	show_repository_list();
-	if (BKN_WSF.get('root')) {
+	var repository = $(document).getUrlParam("repository");
+	var repo_type = $(document).getUrlParam("repo_type");
+	
+	if (repo_type && (repo_type == 'host')) {
+		BKN.set('host', 'repository_type');
+		FILE_OP.set('user_files/', 'root'); // TODO: make this configurable or url param
+	    if (repository) {
+			FILE_OP.set(repository, 'repository_id');
+		}		
+
+		var file_op_params = '&folder=' + FILE_OP.get('root');	
+//		FILE_OP.request(FILE_OP.start, 'folder_tree', file_op_params);	
+		bkn_data_request(FILE_OP.start,'repository_tree',file_op_params)
+		
+//		FILE_OP.set('', 'repository_tree'); // this calls BKN.ready()
+
+
+	}
+	else if (repo_type && repo_type == 'structwsf') {
+		BKN.set(repo_type, 'repository_type');
+		BKN.save_repository_tree(STRUCT_WSF.get('repository_tree'));			
+	    if (repository) {
+//	    	STRUCT_WSF(decodeURIComponent(repository));
+			STRUCT_WSF.set(repository, 'root');
+			
 		var params = '';
 	    var ds = $(document).getUrlParam("dataset");
 	    var rec = $(document).getUrlParam("record");
-//		show_search_form();
-		get_dataset_list();
 		// TODO: implement search/query and fix section below to removre 'all'
-		if ((ds != null) && (rec != null)) {
-			// We want to dislay a specific record.
-			if (ds == 'all') {	// this means search, but we aren't saving the search term yet
-//				Dataset.set(Record.extract_dataset_uri(rec));
-			}
-			else {
-				Dataset.set(decodeURIComponent(ds));			
-			}
-			get_record_list(Dataset.get());
-			if (rec) {
-				Record.set(decodeURIComponent(rec));
-			}
+		if (repository) {			
+			get_dataset_list();		
+			if (ds) {
+				// We want to dislay a specific record.
+				if (ds == 'all') {	// this means search, but we aren't saving the search term yet
+	//				Dataset.set(Record.extract_dataset_uri(rec));
+				}
+				else {
+					Dataset.set(decodeURIComponent(ds));			
+				}
+				get_record_list(Dataset.get());
+	
+				if (rec) {
+					Record.set(decodeURIComponent(rec));
+					get_record();
+				}   
+			} // ds
 		}
-		if (Record.get('uri')) {
-//			params += '&dataset=' + Dataset.get();
-//			params += '&uri=' + Record.get();//ds_uri+ 'f2';
-//			bkn_wsf_call(show_record, "record_read", params);	
-			get_record();
-		}   
-	}	
+			
+	    }
+	}
+	else {
+		status('Select a repository type.');
+	}
+
+//deb('bknroot:'+STRUCT_WSF.get('root')+':');
+
+//	repo_type = BKN.get('repository_type');
+//	if (repo_type == 'host') {
+//		bkn_data_request(BKN.save_repository_tree, 'repository_tree','');		
+//	}
+//	else {
+//		BKN.save_repository_tree(STRUCTWSF.get('repository_tree'));
+////		BKN.set(STRUCTWSF.get('repository_tree'), 'repository_tree');
+////		show_repository_list();	
+//	}
+
+	if ((repo_type =='host') || (repo_type == 'structwsf')) {
+	} // host or structwsf
 
 }); // document ready
 

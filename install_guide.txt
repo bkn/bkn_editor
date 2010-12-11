@@ -3,22 +3,49 @@
 Download the BKN Editor application and required service scripts from,
  
 https://github.com/bkn/bkn_editor/tarball/master
-Required scripts include bkn_wsf.py and save_file.py. 
-Versions of these file are included in the bkn_editor respository. 
+Required scripts include bkn_wsf.py, file_info.py and save_file.py. 
+Versions of these file are included in the bkn_editor repository. 
 The latest versions are at,
  
   https://github.com/bkn/bkn_wsf/tarball/master
   https://github.com/bkn/file_op/tarball/master
  
 The files should be copied into a web accessible directory. 
-bkn_editor also expects two scripts to be in specific locations under the cgi-bin directory 
+bkn_editor also expects scripts to be in specific locations under the cgi-bin directory 
 of the same server where bkn_editor is installed.
  
   cgi-bin/structwsf/bkn_wsf.py
   cgi-bin/file_op/save_file.py
+  cgi-bin/file_op/file_info.py
  
-For the Selected Records functionality to work, the ‘user_files’ directory under bkn_editor 
-must be owned by the web server. For example the ls listing might look like one of these,
+A few subdirectories are required in the directory where bkn_editor is installed. 
+bkn_editor uses a directory for storing data called 'user_files'. 
+Each subdirectory under 'user_files' represents a data repository.
+You can have as many repositories as you like.
+Every file in a repository represents a dataset. 
+Below, <repository_name> represents the name of a repository to store datasets (files).
+
+mkdir user_files
+mkdir user_files/selected_records
+mkdir user_files/<repository_name>
+
+These directories must be writable by the web server. 
+You will need to set ownership and permissions. For instance,
+
+chown -R _www:staff user_files
+chmod -R a+rx user_files
+chmod -R u+w user_files
+
+The ls listings might look like,
  
-  drwxr--r-- 3 _www           admin        102 Nov 15 09:13 user_files
-  drwxr--r-- 2 www-data jalves  4096 2010-11-10 19:47 user_files
+  drwxr-xr-- 3 _www           staff        102 Nov 15 09:13 user_files
+  drwxr-xr-- 3 _www           staff        102 Nov 15 09:13 user_files/selected_records
+  
+  
+  
+Additional Note:
+
+The application uses a php file called download_file.php. 
+The file is in the same directory as bkn_editor.
+So the directory needs to be able to execute a php script.
+If not an error is reported when clicking on 'Download Collection' for Selected Records.
